@@ -1,0 +1,14 @@
+{
+  "name": "LocalCloud",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "Risi Bidani",
+  "license": "MIT",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  }
+}

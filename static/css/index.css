@@ -1,0 +1,14 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+
+.MainContainer {
+  width: 60vw;
+  min-height: 100vh;
+  background-color: lightgrey;
+}
+
+.mainTitle {
+  text-align: center;
+}
