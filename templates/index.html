@@ -9,9 +9,18 @@
     <title>Local Cloud</title>
   </head>
   <body>
+    <nav>
+      <div class="navContainer">
+        <button class="navButton">New Folder</button>
+        <input type="file" name="files" id="upload-files" onclick="fileCount()" hidden multiple />
+        <label for="upload-files"> Upload </label>
+        <span id="numFiles"></span>
+      </div>
+    </nav>
     <div class="MainContainer">
       <h1 class="mainTitle">Your Home Cloud</h1>
       <button id="down">DOWNLOAD</button>
+      <span id="check"> <%= files %> </span>
     </div>
     <script>
       document.getElementById("down").onclick = () => {
@@ -26,6 +35,17 @@
         //   console.error("Error:", error);
         // });
       };
+      function fileCount() {
+        let uploader = document.getElementById("upload-files");
+        let dispNumFiles = document.getElementById("numFiles");
+        if (uploader.files.length >= 1) {
+          dispNumFiles.innerText = `Number of files: ${uploader.files.length}`;
+        }
+      }
+    </script>
+    <script>
+      let files = `<%- files%>`;
+      console.log(files);
     </script>
   </body>
 </html>

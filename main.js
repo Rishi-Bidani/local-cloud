@@ -3,14 +3,22 @@ const app = express();
 const http = require("http").Server(app);
 const router = express.Router();
 const path = require("path");
+const fs = require("fs");
 
-app.use(express.static(__dirname + "static"));
-app.set("views", path.join(__dirname, "templates"));
+app.use(express.static(path.join(__dirname + "/static")));
+app.use(express.static(path.join(__dirname + "/uploads")));
+app.set("views", path.join(__dirname, "/templates"));
 app.engine("html", require("ejs").renderFile);
 app.set("view engine", "html");
 
 app.get("/", (req, res) => {
-  res.render("index");
+  fs.readdir("uploads", (err, files) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("index", { files: files });
+    }
+  });
 });
 
 // define a route to download a file
