@@ -53,3 +53,21 @@ label {
   cursor: pointer;
   font-weight: bold;
 }
+
+section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  padding: 0 2rem;
+}
+
+.fileStyle {
+  border: solid 2px black;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}

@@ -7,6 +7,7 @@ const fs = require("fs");
 
 app.use(express.static(path.join(__dirname + "/static")));
 app.use(express.static(path.join(__dirname + "/uploads")));
+app.use(express.static(path.join(__dirname + "/frontEndjs")));
 app.set("views", path.join(__dirname, "/templates"));
 app.engine("html", require("ejs").renderFile);
 app.set("view engine", "html");
@@ -24,7 +25,7 @@ app.get("/", (req, res) => {
 // define a route to download a file
 app.get("/download/:file(*)", (req, res) => {
   var file = req.params.file;
-  var fileLocation = path.join("./", file);
+  var fileLocation = path.join("./uploads", file);
   console.log(fileLocation);
   res.download(fileLocation, file);
 });
