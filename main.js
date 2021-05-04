@@ -5,12 +5,22 @@ const router = express.Router();
 const path = require("path");
 const fs = require("fs");
 
+const bodyParser = require("body-parser");
+const multer = require("multer");
+const upload = multer();
+
 app.use(express.static(path.join(__dirname + "/static")));
 app.use(express.static(path.join(__dirname + "/uploads")));
 app.use(express.static(path.join(__dirname + "/frontEndjs")));
 app.set("views", path.join(__dirname, "/templates"));
 app.engine("html", require("ejs").renderFile);
 app.set("view engine", "html");
+
+// for parsing application/json
+app.use(express.json());
+// for parsing application/xwww-
+app.use(express.urlencoded({ extended: true }));
+//form-urlencoded
 
 app.get("/", (req, res) => {
   fs.readdir("uploads", (err, files) => {
@@ -28,6 +38,17 @@ app.get("/download/:file(*)", (req, res) => {
   var fileLocation = path.join("./uploads", file);
   console.log(fileLocation);
   res.download(fileLocation, file);
+});
+app.post("/newFolder", (req, res) => {
+  let folderName = req.body.FolderName;
+  console.log(folderName);
+  folderPath = path.join("./uploads", folderName);
+  fs.mkdir(folderPath, (err) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+  res.redirect("/");
 });
 
 // Use default port during production, else 5000

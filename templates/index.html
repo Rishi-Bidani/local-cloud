@@ -9,9 +9,16 @@
     <title>Local Cloud</title>
   </head>
   <body>
-    <nav>
+    <button id="navHide">
+      <svg viewBox="0 0 100 80" width="40" height="40">
+        <rect width="100" height="20"></rect>
+        <rect y="30" width="100" height="20"></rect>
+        <rect y="60" width="100" height="20"></rect>
+      </svg>
+    </button>
+    <nav class="resize">
       <div class="navContainer">
-        <button class="navButton">New Folder</button>
+        <button class="navButton" id="newFolder">New Folder</button>
         <input type="file" name="files" id="upload-files" onclick="fileCount()" hidden multiple />
         <label for="upload-files"> Upload </label>
         <span id="numFiles"></span>
@@ -19,34 +26,43 @@
     </nav>
     <div class="MainContainer">
       <h1 class="mainTitle">Your Home Cloud</h1>
-      <!-- <button id="down">DOWNLOAD</button> -->
       <h3>Files</h3>
       <section class="filesSection">
         <!-- <div class="fileStyle">File 1</div>
         <div class="fileStyle">File 2</div>
         <div class="fileStyle">File 3</div> -->
       </section>
+      <h3>Folders</h3>
+
+      <section class="folderSection"></section>
     </div>
     <script>
-      document.getElementById("down").onclick = () => {
-        window.open("/download/svg cheat sheet.pdf");
-        // fetch("/download/svg cheat sheet.pdf", {
-        //   method: "GET", // or 'PUT'
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //     Accept: "application/json",
-        //   },
-        // }).catch((error) => {
-        //   console.error("Error:", error);
-        // });
+      document.getElementById("newFolder").onclick = () => {
+        let addFolderForm = document.createElement("form");
+        addFolderForm.setAttribute("action", "/newFolder");
+        addFolderForm.setAttribute("method", "POST");
+        let textInp = document.createElement("input");
+        textInp.setAttribute("type", "text");
+        textInp.setAttribute("name", "FolderName");
+        addFolderForm.appendChild(textInp);
+        let subFolderBut = document.createElement("input");
+        subFolderBut.setAttribute("type", "submit");
+        addFolderForm.appendChild(subFolderBut);
+        let addFolderNavButton = document.getElementById("newFolder");
+
+        addFolderNavButton.insertAdjacentElement("afterend", addFolderForm);
       };
-      function fileCount() {
-        let uploader = document.getElementById("upload-files");
-        let dispNumFiles = document.getElementById("numFiles");
-        if (uploader.files.length >= 1) {
-          dispNumFiles.innerText = `Number of files: ${uploader.files.length}`;
+      document.getElementById("navHide").onclick = () => {
+        let navbar = document.getElementsByTagName("nav")[0];
+        let mainContainer = Array.from(document.getElementsByClassName("MainContainer"))[0];
+        if (navbar.style.display != "none") {
+          navbar.style.display = "none";
+          mainContainer.style.marginLeft = "3rem";
+        } else {
+          navbar.style.display = "flex";
+          mainContainer.style.marginLeft = "0rem";
         }
-      }
+      };
     </script>
     <script>
       class sepFilesAndFolders {
@@ -74,6 +90,18 @@
           });
           return Promise.all(promiseFiles);
         }
+        getFolders() {
+          let promiseFolders = [];
+          this.data.forEach((elem, index) => {
+            let lastItem = elem.split(".")[elem.split(".").length - 1];
+            if (this.validExtensions.includes(lastItem)) {
+            } else if (lastItem == elem) {
+              promiseFolders.push(elem);
+            } else {
+            }
+          });
+          return Promise.all(promiseFolders);
+        }
       }
     </script>
     <script>
@@ -89,13 +117,33 @@
           };
         });
       }
+      function createDivForFolders(arrFolders, parentElement) {
+        arrFolders.forEach((elem, index) => {
+          let createDiv = document.createElement("div");
+          createDiv.innerText = elem;
+          createDiv.setAttribute("name", elem);
+          createDiv.classList.add("folderStyle");
+          parentElement.appendChild(createDiv);
+        });
+      }
+      function fileCount() {
+        let uploader = document.getElementById("upload-files");
+        let dispNumFiles = document.getElementById("numFiles");
+        if (uploader.files.length >= 1) {
+          dispNumFiles.innerText = `Number of files: ${uploader.files.length}`;
+        }
+      }
     </script>
     <script>
       let files = `<%- files%>`;
       let fnf = new sepFilesAndFolders(files);
       let filesSection = document.getElementsByTagName("section")[0];
+      let folderSection = document.getElementsByTagName("section")[1];
       fnf.getFiles().then((arr) => {
         createDivForFiles(arr, filesSection);
+      });
+      fnf.getFolders().then((arr) => {
+        createDivForFolders(arr, folderSection);
       });
     </script>
   </body>

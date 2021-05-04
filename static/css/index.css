@@ -16,12 +16,10 @@ body {
 
 nav {
   width: 20vw;
-  min-width: 10rem;
-  height: 100vh;
+  min-width: 12rem;
+  /* height: 100vh; */
   display: flex;
   align-items: center;
-  /* background-color: var(--orange-web); */
-  /* position: absolute; */
 }
 .navContainer {
   padding: 2rem 1rem;
@@ -29,6 +27,18 @@ nav {
   width: 100%;
   text-align: center;
   /* background-color: aqua; */
+}
+
+.resize {
+  resize: horizontal;
+  overflow: auto;
+}
+#navHide {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border: none;
+  cursor: pointer;
 }
 
 .navButton {
@@ -58,11 +68,29 @@ section {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2rem;
-  padding: 0 2rem;
+  padding: 1rem 2rem;
 }
 
 .fileStyle {
-  border: solid 2px black;
+  border: solid 2px var(--oxford-blue);
+  background-color: white;
+  /* background: linear-gradient(to left, white 50%, var(--oxford-blue) 50%) right; */
+  /* background-size: 200%; */
+  /* transition: 0.5s ease-out; */
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.fileStyle:hover {
+  /* background-position: left; */
+  font-weight: bold;
+  padding: 1rem;
+}
+.folderStyle {
+  border: solid 2px var(--oxford-blue);
   background-color: white;
   border-radius: 0.5rem;
   padding: 0.5rem;
@@ -70,4 +98,14 @@ section {
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+.folderStyle:hover {
+  /* background-position: left; */
+  font-weight: bold;
+  padding: 1rem;
+}
+
+h3 {
+  padding: 0.5rem 2rem;
+  margin-top: 1rem;
 }
