@@ -22,14 +22,103 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //form-urlencoded
 
-app.get("/", (req, res) => {
-  fs.readdir("uploads", (err, files) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("index", { files: files });
+// app.get("/", (req, res) => {
+//   res.redirect("/cloud");
+// });
+
+// app.get("/cloud/:dir", (req, res) => {
+//   let path = req.params.dir;
+//   fs.readdir(`${path}`, (err, files) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       res.render("index", { files: files });
+//     }
+//   });
+// });
+
+// class handleFiles {
+//   constructor() {
+//     this.promiseFiles = [];
+//     this.promiseFolders = [];
+//   }
+//   async fillFilesAndFolders() {
+//     let files = await fs.promises.readdir("uploads", { withFileTypes: true });
+//     for (let file of files) {
+//       if (file.isFile()) {
+//         this.promiseFiles.push(file.name);
+//       } else if (file.isDirectory()) {
+//         this.promiseFolders.push(file.name);
+//       }
+//     }
+//     return {
+//       sendFiles: this.promiseFiles,
+//       sendFolders: this.promiseFolders,
+//     };
+//   }
+// }
+
+async function fillFilesAndFolders() {
+  const promiseFolders = [],
+    promiseFiles = [];
+  let files = await fs.promises.readdir("uploads", { withFileTypes: true });
+  for (let file of files) {
+    if (file.isFile()) {
+      promiseFiles.push(file.name);
+    } else if (file.isDirectory()) {
+      promiseFolders.push(file.name);
     }
+  }
+  return {
+    sendFiles: promiseFiles,
+    sendFolders: promiseFolders,
+  };
+}
+
+// async function executefnf() {
+//   fs.readdir("uploads", (err, files) => {
+//     files.forEach((file) => {
+//       if (fs.statSync(path.resolve(`uploads/${file}`)).isFile()) {
+//         promiseFiles.push(file);
+//       } else if (fs.statSync(path.resolve(`uploads/${file}`)).isDirectory()) {
+//         promiseFolders.push(file);
+//       } else {
+//       }
+//     });
+//   });
+//   return {
+//     sendFiles: await Promise.all(promiseFiles),
+//     sendFolders: await Promise.all(promiseFolders),
+//   };
+// }
+
+app.get("/:dir?", (req, res) => {
+  let dir = req.params.dir;
+  console.log(dir);
+  // let fileHandler = new handleFiles();
+
+  // executefnf().then((data) => {
+  //   if (data.sendFiles.length > 1 && data.sendFolders.length > 1) {
+  //     data.sendFiles = [...new Set(data.sendFiles)];
+  //     data.sendFolders = [...new Set(data.sendFolders)];
+  //   }
+  //   console.log(data);
+  //   res.render("index", data);
+  // });
+  // fileHandler.fillFilesAndFolders().then((data) => {
+  //   console.log(data);
+  //   res.render("index", data);
+  // });
+  fillFilesAndFolders().then((data) => {
+    console.log(data);
+    res.render("index", data);
   });
+});
+
+app.post("/navigateDirectories", (req, res) => {
+  let getPath = req.body;
+  console.log(getPath);
+  res.redirect(`/cloud/uploads/${getPath}`);
 });
 
 // define a route to download a file
@@ -39,6 +128,7 @@ app.get("/download/:file(*)", (req, res) => {
   console.log(fileLocation);
   res.download(fileLocation, file);
 });
+
 app.post("/newFolder", (req, res) => {
   let folderName = req.body.FolderName;
   console.log(folderName);
