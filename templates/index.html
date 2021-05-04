@@ -26,6 +26,7 @@
     </nav>
     <div class="MainContainer">
       <h1 class="mainTitle">Your Home Cloud</h1>
+      <h5 id="folderNav">Uploads ></h5>
       <h3>Files</h3>
       <section class="filesSection">
         <!-- <div class="fileStyle">File 1</div>
@@ -36,34 +37,6 @@
 
       <section class="folderSection"></section>
     </div>
-    <script>
-      document.getElementById("newFolder").onclick = () => {
-        let addFolderForm = document.createElement("form");
-        addFolderForm.setAttribute("action", "/newFolder");
-        addFolderForm.setAttribute("method", "POST");
-        let textInp = document.createElement("input");
-        textInp.setAttribute("type", "text");
-        textInp.setAttribute("name", "FolderName");
-        addFolderForm.appendChild(textInp);
-        let subFolderBut = document.createElement("input");
-        subFolderBut.setAttribute("type", "submit");
-        addFolderForm.appendChild(subFolderBut);
-        let addFolderNavButton = document.getElementById("newFolder");
-
-        addFolderNavButton.insertAdjacentElement("afterend", addFolderForm);
-      };
-      document.getElementById("navHide").onclick = () => {
-        let navbar = document.getElementsByTagName("nav")[0];
-        let mainContainer = Array.from(document.getElementsByClassName("MainContainer"))[0];
-        if (navbar.style.display != "none") {
-          navbar.style.display = "none";
-          mainContainer.style.marginLeft = "3rem";
-        } else {
-          navbar.style.display = "flex";
-          mainContainer.style.marginLeft = "0rem";
-        }
-      };
-    </script>
     <script>
       class sepFilesAndFolders {
         constructor(data) {
@@ -103,8 +76,22 @@
           return Promise.all(promiseFolders);
         }
       }
+      class NavigateDir {
+        constructor() {
+          this.arrDir = [];
+          this.dir = "";
+        }
+        async addNavDir(folder) {
+          this.arrDir.push(folder);
+        }
+        returnPath() {
+          this.dir = this.arrDir.join("/");
+          return this.dir;
+        }
+      }
     </script>
     <script>
+      let NavOfDir = new NavigateDir();
       function createDivForFiles(arrFiles, parentElement) {
         arrFiles.forEach((elem, index) => {
           let createDiv = document.createElement("div");
@@ -124,6 +111,28 @@
           createDiv.setAttribute("name", elem);
           createDiv.classList.add("folderStyle");
           parentElement.appendChild(createDiv);
+          createDiv.onclick = () => {
+            NavOfDir.addNavDir(elem).then(() => {
+              let path = NavOfDir.returnPath();
+              console.log(path);
+              let thisPath = {
+                thispath: path,
+              };
+              fetch("/navigateDirectories", {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                method: "POST",
+                body: thisPath,
+              })
+                .then((result) => {
+                  console.log("Success:", result);
+                })
+                .catch((error) => {
+                  console.error("Error:", error);
+                });
+            });
+          };
         });
       }
       function fileCount() {
@@ -135,16 +144,40 @@
       }
     </script>
     <script>
-      let files = `<%- files%>`;
-      let fnf = new sepFilesAndFolders(files);
+      document.getElementById("newFolder").onclick = () => {
+        let addFolderForm = document.createElement("form");
+        addFolderForm.setAttribute("action", "/newFolder");
+        addFolderForm.setAttribute("method", "POST");
+        let textInp = document.createElement("input");
+        textInp.setAttribute("type", "text");
+        textInp.setAttribute("name", "FolderName");
+        addFolderForm.appendChild(textInp);
+        let subFolderBut = document.createElement("input");
+        subFolderBut.setAttribute("type", "submit");
+        addFolderForm.appendChild(subFolderBut);
+        let addFolderNavButton = document.getElementById("newFolder");
+
+        addFolderNavButton.insertAdjacentElement("afterend", addFolderForm);
+      };
+      document.getElementById("navHide").onclick = () => {
+        let navbar = document.getElementsByTagName("nav")[0];
+        let mainContainer = Array.from(document.getElementsByClassName("MainContainer"))[0];
+        if (navbar.style.display != "none") {
+          navbar.style.display = "none";
+          mainContainer.style.marginLeft = "3rem";
+        } else {
+          navbar.style.display = "flex";
+          mainContainer.style.marginLeft = "0rem";
+        }
+      };
+    </script>
+    <script>
+      let files = `<%- sendFiles%>`;
+      let folders = `<%- sendFolders%> `;
       let filesSection = document.getElementsByTagName("section")[0];
       let folderSection = document.getElementsByTagName("section")[1];
-      fnf.getFiles().then((arr) => {
-        createDivForFiles(arr, filesSection);
-      });
-      fnf.getFolders().then((arr) => {
-        createDivForFolders(arr, folderSection);
-      });
+      createDivForFiles(files.split(","), filesSection);
+      createDivForFolders(folders.split(","), folderSection);
     </script>
   </body>
 </html>
