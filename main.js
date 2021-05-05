@@ -153,7 +153,7 @@ app.get("/download/:file(*)", (req, res) => {
 });
 
 app.post("/newFolder", (req, res) => {
-  let folderName = req.body.FolderName;
+  let folderName = req.body.FolderName.trim();
   console.log(folderName);
   folderPath = path.join("./uploads", folderName);
   fs.mkdir(folderPath, (err) => {

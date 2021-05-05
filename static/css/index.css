@@ -87,7 +87,9 @@ section {
 .fileStyle:hover {
   /* background-position: left; */
   font-weight: bold;
-  padding: 1rem;
+  /* padding: 1rem; */
+  border: 4px solid darkblue;
+  padding: 0.4rem;
 }
 .folderStyle {
   border: solid 2px var(--oxford-blue);
@@ -102,7 +104,9 @@ section {
 .folderStyle:hover {
   /* background-position: left; */
   font-weight: bold;
-  padding: 1rem;
+  /* padding: 1rem; */
+  border: 4px solid darkblue;
+  padding: 0.4rem;
 }
 
 h3 {

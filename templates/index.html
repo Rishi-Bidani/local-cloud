@@ -86,7 +86,10 @@
         }
         returnPath() {
           this.dir = this.arrDir.join("/");
-          return this.dir;
+          return this.dir.trim();
+        }
+        returnNavPath() {
+          return "uploads > " + this.arrDir.join(" > ");
         }
       }
     </script>
@@ -115,6 +118,7 @@
           parentElement.appendChild(createDiv);
           createDiv.onclick = () => {
             NavOfDir.addNavDir(elem).then(() => {
+              foldernav.innerText = NavOfDir.returnNavPath();
               // globalPathArr.push(path);
               let thisPath = {
                 // thispath: globalPathArr.join("/"),
