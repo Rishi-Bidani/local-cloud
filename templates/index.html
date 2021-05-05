@@ -91,6 +91,7 @@
       }
     </script>
     <script>
+      let globalPathArr = [];
       let NavOfDir = new NavigateDir();
       function createDivForFiles(arrFiles, parentElement) {
         arrFiles.forEach((elem, index) => {
@@ -100,7 +101,7 @@
           createDiv.classList.add("fileStyle");
           parentElement.appendChild(createDiv);
           createDiv.onclick = () => {
-            window.open(`/download/${elem}`);
+            window.open(`/download/${globalPathArr.join("/")}/${elem}`);
           };
         });
       }
@@ -115,18 +116,25 @@
             NavOfDir.addNavDir(elem).then(() => {
               let path = NavOfDir.returnPath();
               console.log(path);
+              globalPathArr.push(path);
               let thisPath = {
-                thispath: path,
+                thispath: globalPathArr.join("/"),
               };
+              console.log(thisPath);
               fetch("/navigateDirectories", {
                 headers: {
                   "Content-Type": "application/json",
+                  Accept: "application/json",
                 },
                 method: "POST",
-                body: thisPath,
+                body: JSON.stringify(thisPath),
               })
+                .then((response) => {
+                  return response.json();
+                })
                 .then((result) => {
                   console.log("Success:", result);
+                  navigation(result);
                 })
                 .catch((error) => {
                   console.error("Error:", error);
@@ -141,6 +149,14 @@
         if (uploader.files.length >= 1) {
           dispNumFiles.innerText = `Number of files: ${uploader.files.length}`;
         }
+      }
+      function navigation(data) {
+        let filesSection = document.getElementsByTagName("section")[0];
+        let folderSection = document.getElementsByTagName("section")[1];
+        filesSection.innerHTML = "";
+        folderSection.innerHTML = "";
+        createDivForFiles(data.sendFiles, filesSection);
+        createDivForFolders(data.sendFolders, folderSection);
       }
     </script>
     <script>

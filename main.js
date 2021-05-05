@@ -75,6 +75,25 @@ async function fillFilesAndFolders() {
   };
 }
 
+async function FilesAndFoldersArgs(getpath) {
+  const promiseFolders = [],
+    promiseFiles = [];
+  let files = await fs.promises.readdir(path.join("uploads", `${getpath}`), {
+    withFileTypes: true,
+  });
+  for (let file of files) {
+    if (file.isFile()) {
+      promiseFiles.push(file.name);
+    } else if (file.isDirectory()) {
+      promiseFolders.push(file.name);
+    }
+  }
+  return {
+    sendFiles: promiseFiles,
+    sendFolders: promiseFolders,
+  };
+}
+
 // async function executefnf() {
 //   fs.readdir("uploads", (err, files) => {
 //     files.forEach((file) => {
@@ -116,9 +135,13 @@ app.get("/:dir?", (req, res) => {
 });
 
 app.post("/navigateDirectories", (req, res) => {
-  let getPath = req.body;
+  let getPath = req.body.thispath;
   console.log(getPath);
-  res.redirect(`/cloud/uploads/${getPath}`);
+  // res.redirect(`/cloud/uploads/${getPath}`);
+  FilesAndFoldersArgs(getPath).then((response) => {
+    console.log(response);
+    res.json(response);
+  });
 });
 
 // define a route to download a file
