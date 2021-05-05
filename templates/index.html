@@ -77,8 +77,8 @@
         }
       }
       class NavigateDir {
-        constructor() {
-          this.arrDir = [];
+        constructor(arr) {
+          this.arrDir = arr;
           this.dir = "";
         }
         async addNavDir(folder) {
@@ -92,7 +92,8 @@
     </script>
     <script>
       let globalPathArr = [];
-      let NavOfDir = new NavigateDir();
+      let foldernav = document.getElementById("folderNav");
+      let NavOfDir = new NavigateDir(globalPathArr);
       function createDivForFiles(arrFiles, parentElement) {
         arrFiles.forEach((elem, index) => {
           let createDiv = document.createElement("div");
@@ -101,7 +102,7 @@
           createDiv.classList.add("fileStyle");
           parentElement.appendChild(createDiv);
           createDiv.onclick = () => {
-            window.open(`/download/${globalPathArr.join("/")}/${elem}`);
+            window.open(`/download/${NavOfDir.returnPath()}/${elem}`);
           };
         });
       }
@@ -114,11 +115,10 @@
           parentElement.appendChild(createDiv);
           createDiv.onclick = () => {
             NavOfDir.addNavDir(elem).then(() => {
-              let path = NavOfDir.returnPath();
-              console.log(path);
-              globalPathArr.push(path);
+              // globalPathArr.push(path);
               let thisPath = {
-                thispath: globalPathArr.join("/"),
+                // thispath: globalPathArr.join("/"),
+                thispath: NavOfDir.returnPath(),
               };
               console.log(thisPath);
               fetch("/navigateDirectories", {
@@ -159,6 +159,7 @@
         createDivForFolders(data.sendFolders, folderSection);
       }
     </script>
+    <!-- New Folder and Hide nav -->
     <script>
       document.getElementById("newFolder").onclick = () => {
         let addFolderForm = document.createElement("form");
