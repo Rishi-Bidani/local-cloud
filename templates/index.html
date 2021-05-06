@@ -80,6 +80,7 @@
         constructor(arr) {
           this.arrDir = arr;
           this.dir = "";
+          this.navDir = "uploads > ";
         }
         async addNavDir(folder) {
           this.arrDir.push(folder);
@@ -89,7 +90,25 @@
           return this.dir.trim();
         }
         returnNavPath() {
-          return "uploads > " + this.arrDir.join(" > ");
+          // return "uploads > " + this.arrDir.join(" > ");
+          this.navDir += `<span class='joiner' onclick='backnav(this)'> ${
+            this.arrDir[this.arrDir.length - 1]
+          } > </span>`;
+          return this.navDir;
+        }
+        resetPathNames() {
+          this.navDir = "uploads > ";
+          for (let i = 0; i < this.arrDir.length; i++) {
+            this.navDir += `<span class='joiner' onclick='backnav(this)'> ${this.arrDir[i]} > </span>`;
+          }
+          return this.navDir;
+        }
+        popper(ind) {
+          // This will remove everything after the index provided
+          this.arrDir = this.arrDir.slice(0, ind + 1);
+          this.resetPathNames();
+          document.getElementById("folderNav").innerHTML = this.resetPathNames();
+          return this.returnPath();
         }
       }
     </script>
@@ -109,6 +128,34 @@
           };
         });
       }
+      function backnav(el) {
+        // console.log(el.target);
+        let indexOfBackNav = [...document.querySelectorAll(`.${el.className}`)].indexOf(el);
+        let fetchpath = {
+          thispath: NavOfDir.popper(indexOfBackNav),
+        };
+        fetcher(fetchpath);
+      }
+      function fetcher(thisPath) {
+        fetch("/navigateDirectories", {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(thisPath),
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((result) => {
+            console.log("Success:", result);
+            navigation(result);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
       function createDivForFolders(arrFolders, parentElement) {
         arrFolders.forEach((elem, index) => {
           let createDiv = document.createElement("div");
@@ -118,31 +165,13 @@
           parentElement.appendChild(createDiv);
           createDiv.onclick = () => {
             NavOfDir.addNavDir(elem).then(() => {
-              foldernav.innerText = NavOfDir.returnNavPath();
-              // globalPathArr.push(path);
+              foldernav.innerHTML = NavOfDir.returnNavPath();
               let thisPath = {
-                // thispath: globalPathArr.join("/"),
                 thispath: NavOfDir.returnPath(),
               };
               console.log(thisPath);
-              fetch("/navigateDirectories", {
-                headers: {
-                  "Content-Type": "application/json",
-                  Accept: "application/json",
-                },
-                method: "POST",
-                body: JSON.stringify(thisPath),
-              })
-                .then((response) => {
-                  return response.json();
-                })
-                .then((result) => {
-                  console.log("Success:", result);
-                  navigation(result);
-                })
-                .catch((error) => {
-                  console.error("Error:", error);
-                });
+              // FETCH ================
+              fetcher(thisPath);
             });
           };
         });

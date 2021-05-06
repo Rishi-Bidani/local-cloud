@@ -117,3 +117,10 @@ h3 {
 #folderNav {
   margin-left: 2rem;
 }
+
+.joiner {
+  cursor: pointer;
+}
+.joiner:hover {
+  color: blueviolet;
+}
