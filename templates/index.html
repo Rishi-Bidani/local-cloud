@@ -38,44 +38,6 @@
       <section class="folderSection"></section>
     </div>
     <script>
-      class sepFilesAndFolders {
-        constructor(data) {
-          this.data = data.split(",");
-          this.files = [];
-          this.folders = [];
-          this.validExtensions = [
-            "pdf",
-            "xlsx", "docx","pptx", "txt",
-            "jpeg",  "jpg", "png",
-            "py", "js", "html", "json", "css", "gitignore", "md", "lock", "m",
-            "mp3", "mp4"
-        ]; //prettier-ignore
-        }
-        getFiles() {
-          let promiseFiles = [];
-          this.data.forEach((elem, index) => {
-            let lastItem = elem.split(".")[elem.split(".").length - 1];
-            if (this.validExtensions.includes(lastItem)) {
-              // console.log(elem);
-              promiseFiles.push(elem);
-            } else {
-            }
-          });
-          return Promise.all(promiseFiles);
-        }
-        getFolders() {
-          let promiseFolders = [];
-          this.data.forEach((elem, index) => {
-            let lastItem = elem.split(".")[elem.split(".").length - 1];
-            if (this.validExtensions.includes(lastItem)) {
-            } else if (lastItem == elem) {
-              promiseFolders.push(elem);
-            } else {
-            }
-          });
-          return Promise.all(promiseFolders);
-        }
-      }
       class NavigateDir {
         constructor(arr) {
           this.arrDir = arr;
@@ -83,7 +45,7 @@
           this.navDir = "uploads > ";
         }
         async addNavDir(folder) {
-          this.arrDir.push(folder);
+          this.arrDir.push(folder.trim());
         }
         returnPath() {
           this.dir = this.arrDir.join("/");
@@ -114,6 +76,7 @@
     </script>
     <script>
       let globalPathArr = [];
+      let foldClickState = false;
       let foldernav = document.getElementById("folderNav");
       let NavOfDir = new NavigateDir(globalPathArr);
       function createDivForFiles(arrFiles, parentElement) {
@@ -134,10 +97,10 @@
         let fetchpath = {
           thispath: NavOfDir.popper(indexOfBackNav),
         };
-        fetcher(fetchpath);
+        fetcher(fetchpath, "navigateDirectories");
       }
-      function fetcher(thisPath) {
-        fetch("/navigateDirectories", {
+      function fetcher(thisPath, urlPath) {
+        fetch(`/${urlPath}`, {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
@@ -171,7 +134,7 @@
               };
               console.log(thisPath);
               // FETCH ================
-              fetcher(thisPath);
+              fetcher(thisPath, "navigateDirectories");
             });
           };
         });
@@ -205,6 +168,11 @@
         let subFolderBut = document.createElement("input");
         subFolderBut.setAttribute("type", "submit");
         addFolderForm.appendChild(subFolderBut);
+        let hiddenPath = document.createElement("input");
+        hiddenPath.setAttribute("type", "hidden");
+        hiddenPath.setAttribute("name", "thispath");
+        hiddenPath.setAttribute("value", NavOfDir.returnPath());
+        addFolderForm.appendChild(hiddenPath);
         let addFolderNavButton = document.getElementById("newFolder");
 
         addFolderNavButton.insertAdjacentElement("afterend", addFolderForm);

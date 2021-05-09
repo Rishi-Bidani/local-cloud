@@ -153,9 +153,9 @@ app.get("/download/:file(*)", (req, res) => {
 });
 
 app.post("/newFolder", (req, res) => {
+  let sentFolderPath = req.body.thispath;
   let folderName = req.body.FolderName.trim();
-  console.log(folderName);
-  folderPath = path.join("./uploads", folderName);
+  folderPath = path.join(`./uploads/${sentFolderPath}`, folderName);
   fs.mkdir(folderPath, (err) => {
     if (err) {
       console.log(err);
