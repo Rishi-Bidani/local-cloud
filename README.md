@@ -13,8 +13,11 @@ You can now access and transfer files from your different devices with ease.
 
 <br />
 <a name="images"></a>
+
 ## Images:file_folder:
+
 ![image](https://user-images.githubusercontent.com/64310471/117706042-6fbc3100-b1ea-11eb-8edd-54222ff5e244.png)
+
 ![image](https://user-images.githubusercontent.com/64310471/117706211-a3975680-b1ea-11eb-9b04-513ff068f3f6.png)
 
 <br />
