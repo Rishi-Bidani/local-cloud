@@ -7,7 +7,17 @@ const fs = require("fs");
 
 const bodyParser = require("body-parser");
 const multer = require("multer");
-const upload = multer();
+
+var storage = multer.diskStorage({
+  destination: path.join(__dirname, "/uploads"),
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+var upload = multer({ storage: storage });
+
+// const upload = multer({ dest: path.join(__dirname, "/uploads") });
 
 app.use(express.static(path.join(__dirname + "/static")));
 app.use(express.static(path.join(__dirname + "/uploads")));
@@ -22,41 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //form-urlencoded
 
-// app.get("/", (req, res) => {
-//   res.redirect("/cloud");
-// });
-
-// app.get("/cloud/:dir", (req, res) => {
-//   let path = req.params.dir;
-//   fs.readdir(`${path}`, (err, files) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.render("index", { files: files });
-//     }
-//   });
-// });
-
-// class handleFiles {
-//   constructor() {
-//     this.promiseFiles = [];
-//     this.promiseFolders = [];
-//   }
-//   async fillFilesAndFolders() {
-//     let files = await fs.promises.readdir("uploads", { withFileTypes: true });
-//     for (let file of files) {
-//       if (file.isFile()) {
-//         this.promiseFiles.push(file.name);
-//       } else if (file.isDirectory()) {
-//         this.promiseFolders.push(file.name);
-//       }
-//     }
-//     return {
-//       sendFiles: this.promiseFiles,
-//       sendFolders: this.promiseFolders,
-//     };
-//   }
-// }
+// app.use(multer({ dest: path.join(__dirname, "/uploads") }));
 
 async function fillFilesAndFolders() {
   const promiseFolders = [],
@@ -94,40 +70,9 @@ async function FilesAndFoldersArgs(getpath) {
   };
 }
 
-// async function executefnf() {
-//   fs.readdir("uploads", (err, files) => {
-//     files.forEach((file) => {
-//       if (fs.statSync(path.resolve(`uploads/${file}`)).isFile()) {
-//         promiseFiles.push(file);
-//       } else if (fs.statSync(path.resolve(`uploads/${file}`)).isDirectory()) {
-//         promiseFolders.push(file);
-//       } else {
-//       }
-//     });
-//   });
-//   return {
-//     sendFiles: await Promise.all(promiseFiles),
-//     sendFolders: await Promise.all(promiseFolders),
-//   };
-// }
-
 app.get("/:dir?", (req, res) => {
   let dir = req.params.dir;
   console.log(dir);
-  // let fileHandler = new handleFiles();
-
-  // executefnf().then((data) => {
-  //   if (data.sendFiles.length > 1 && data.sendFolders.length > 1) {
-  //     data.sendFiles = [...new Set(data.sendFiles)];
-  //     data.sendFolders = [...new Set(data.sendFolders)];
-  //   }
-  //   console.log(data);
-  //   res.render("index", data);
-  // });
-  // fileHandler.fillFilesAndFolders().then((data) => {
-  //   console.log(data);
-  //   res.render("index", data);
-  // });
   fillFilesAndFolders().then((data) => {
     console.log(data);
     res.render("index", data);
@@ -137,7 +82,6 @@ app.get("/:dir?", (req, res) => {
 app.post("/navigateDirectories", (req, res) => {
   let getPath = req.body.thispath;
   console.log(getPath);
-  // res.redirect(`/cloud/uploads/${getPath}`);
   FilesAndFoldersArgs(getPath).then((response) => {
     console.log(response);
     res.json(response);
@@ -162,6 +106,19 @@ app.post("/newFolder", (req, res) => {
     }
   });
   res.redirect("/");
+});
+
+app.post("/file-upload", upload.any(), (req, res) => {
+  console.log(req.body.path);
+  console.log(req.files);
+  res.end("Files Uploaded");
+
+  // fs.readFile(req.files.displayImage.path, function (err, data) {
+  //   var newPath = __dirname + "/uploads";
+  //   fs.writeFile(newPath, data, function (err) {
+  //     res.redirect("back");
+  //   });
+  // });
 });
 
 // Use default port during production, else 5000

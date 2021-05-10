@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/index.css" />
     <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/frontendjs/dist/dropzone.css" />
+
     <title>Local Cloud</title>
   </head>
   <body>
@@ -19,8 +21,9 @@
     <nav class="resize">
       <div class="navContainer">
         <button class="navButton" id="newFolder">New Folder</button>
-        <input type="file" name="files" id="upload-files" onclick="fileCount()" hidden multiple />
-        <label for="upload-files"> Upload </label>
+        <!-- <input type="file" name="files" id="upload-files" onclick="fileCount()" hidden multiple /> -->
+        <button class="navButton" id="uploading">Upload</button>
+        <!-- <label for="upload-files"> Upload </label> -->
         <span id="numFiles"></span>
       </div>
     </nav>
@@ -36,6 +39,23 @@
       <h3>Folders</h3>
 
       <section class="folderSection"></section>
+    </div>
+    <!-- Modal Drag Drop -->
+    <div class="hidethis" id="uploadModal">
+      <div class="modal">
+        <span id="closeModalButton">X</span>
+        <form
+          action="/file-upload"
+          enctype="multipart/form-data"
+          class="dropzone"
+          id="dropzone"
+          name="dropzone"
+          method="POST"
+        >
+          <input type="hidden" name="path" id="thisWillContainPath" />
+        </form>
+        <button id="uploadButton"><a href="/">Finish Upload</a></button>
+      </div>
     </div>
     <script>
       class NavigateDir {
@@ -189,6 +209,21 @@
         }
       };
     </script>
+    <!-- For Uploading -->
+    <script>
+      let uploadBut = document.getElementById("uploading");
+      let modalDiv = document.getElementById("uploadModal");
+      let closeBut = document.getElementById("closeModalButton");
+      let thisWillSendPath = document.getElementById("thisWillContainPath");
+      uploadBut.onclick = () => {
+        console.log("modal click");
+        modalDiv.style.display = "block";
+        thisWillSendPath.value = `${NavOfDir.returnPath()}`;
+      };
+      closeBut.onclick = () => {
+        modalDiv.style.display = "none";
+      };
+    </script>
     <script>
       let files = `<%- sendFiles%>`;
       let folders = `<%- sendFolders%> `;
@@ -197,5 +232,8 @@
       createDivForFiles(files.split(","), filesSection);
       createDivForFolders(folders.split(","), folderSection);
     </script>
+
+    <!-- DRAG DROP JS STUFF -->
+    <script src="/frontendjs/dist/dropzone.js"></script>
   </body>
 </html>
