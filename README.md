@@ -8,8 +8,9 @@ You can now access and transfer files from your different devices with ease.
 
 - [Images](#images):file_folder:
 - [Setup Requirements](#setup) :rocket:
+- [Access the Website](#access):key:
 - [Libraries Used](#dependencies):computer:
-- [Future Plans](#plan):bulb:
+- [Future Plans](#plans):bulb:
 
 <br />
 <a name="images"></a>
@@ -28,7 +29,22 @@ You can now access and transfer files from your different devices with ease.
 - A computer :smiley:
 - <a href="https://nodejs.org/en/"> node.js </a>
 
-<a name="dependences"></a>
+<a name="access"></a>
+
+## How to access the website :key:
+
+1. Open your desired terminal/command prompt - cmd, terminal, git bash on the computer you plan to use as your cloud server
+
+2. Type `ipconfig` and find the IPv4 address
+
+![image](https://user-images.githubusercontent.com/64310471/117740661-8a100200-b21e-11eb-803a-07423054fac3.png)
+
+3. The website will be available on IPv4 Address:5000
+   For example: 192.168.1.7:5000
+
+4. YOu can access the website on any device at that address
+
+<a name="dependencies"></a>
 
 ## Libraries used - Links to npm :computer:
 
