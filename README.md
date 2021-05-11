@@ -28,6 +28,11 @@ You can now access and transfer files from your different devices with ease.
 
 - A computer :smiley:
 - <a href="https://nodejs.org/en/"> node.js </a>
+- Yarn (please use yarn), it can be downloaded via npm
+
+  ```
+  npm install -g yarn
+  ```
 
 <a name="access"></a>
 
@@ -37,12 +42,19 @@ You can now access and transfer files from your different devices with ease.
 
 2. Type `ipconfig` and find the IPv4 address
 
-![image](https://user-images.githubusercontent.com/64310471/117740661-8a100200-b21e-11eb-803a-07423054fac3.png)
+   ![image](https://user-images.githubusercontent.com/64310471/117740661-8a100200-b21e-11eb-803a-07423054fac3.png)
 
 3. The website will be available on IPv4 Address:5000
    For example: 192.168.1.7:5000
 
-4. YOu can access the website on any device at that address
+4. To start the server run the following 2 commands
+
+   ```
+   yarn install
+   yarn start
+   ```
+
+5. You can access the website on any device at that address
 
 <a name="dependencies"></a>
 
