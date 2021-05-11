@@ -111,6 +111,16 @@ app.post("/newFolder", (req, res) => {
 app.post("/file-upload", upload.any(), (req, res) => {
   console.log(req.body.path);
   console.log(req.files);
+
+  for (let i = 0; i < req.files.length; i++) {
+    let oldPath = path.join(__dirname, "uploads", req.files[i].originalname);
+    let newPath = path.join(__dirname, "uploads", req.body.path, req.files[i].originalname);
+
+    fs.rename(oldPath, newPath, (err) => {
+      if (err) console.log(err);
+    });
+  }
+
   res.end("Files Uploaded");
 
   // fs.readFile(req.files.displayImage.path, function (err, data) {
