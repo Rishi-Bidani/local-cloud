@@ -1,5 +1,7 @@
 # local-cloud
 
+This project is still under development:bangbang:
+
 This program can turn your desktop into a local cloud server. This is a website which will run locally over your wifi(without port forwarding) and will be accessible to all your devices.
 
 You can now access and transfer files from your different devices with ease.
