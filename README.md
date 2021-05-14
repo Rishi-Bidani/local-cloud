@@ -6,6 +6,15 @@ This program can turn your desktop into a local cloud server. This is a website 
 
 You can now access and transfer files from your different devices with ease.
 
+<br />
+
+# Currently Working On
+- Changine the project structure and using vuejs, these changes can be found under localcloudvue branch of the same repository
+
+- Some additional features and website design revamping
+
+<br />
+
 ## Table Of Contents
 
 - [Images](#images):file_folder:
