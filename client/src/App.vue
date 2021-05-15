@@ -1,8 +1,8 @@
 <template>
   <div class="main-container">
-    <sidebar-menu :menu="menu" />
+    <sidebar-menu :width="width" :menu="menu" :collapsed="collapsed" />
     <div class="main-body">
-      <img alt="Vue logo" src="./assets/logo.png" />
+      <img alt="Cloud logo" src="./assets/CloudStorageIcon.svg" id="icon" />
       <Home msg="Welcome to Your Vue.js App" />
     </div>
   </div>
@@ -10,46 +10,59 @@
 
 <script>
 import Home from "./components/Home.vue";
-import { SidebarMenu } from 'vue-sidebar-menu';
-import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+import { SidebarMenu } from "vue-sidebar-menu";
+import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 
 export default {
   name: "App",
   components: {
     Home,
-    SidebarMenu
+    SidebarMenu,
   },
-  data(){
+  data() {
     return {
-        menu: [
-          {
-            header: 'Main Navigation',
-            hiddenOnCollapse: true
+      width: "290px",
+      widthCollapsed: "50px",
+      collapsed: true,
+      menu: [
+        {
+          header: "Cloud Options",
+          hiddenOnCollapse: true,
+        },
+        {
+          href: "/",
+          title: "New Folder",
+          icon: {
+            element: "img",
+            attributes: {
+              src: "./assets/folder.svg",
+              // alt: "new Folder",
+            },
           },
-          {
-            href: '/',
-            title: 'Dashboard',
-            icon: 'fa fa-user'
-          },
-          {
-            href: '/charts',
-            title: 'Charts',
-            icon: 'fa fa-chart-area',
-            child: [
-              {
-                href: '/charts/sublink',
-                title: 'Sub Link'
-              }
-            ]
-          }
-        ]
-    }
-  }
+        },
+        {
+          href: "/",
+          title: "Upload",
+          icon: "fa fa-chart-area",
+          // child: [
+          //   {
+          //     href: "/charts/sublink",
+          //     title: "Sub Link",
+          //   },
+          // ],
+        },
+        {
+          header: "File Properties",
+          hiddenOnCollapse: true,
+        },
+      ],
+    };
+  },
 };
 </script>
 
 <style>
-*{
+* {
   padding: 0;
   margin: 0;
 }
@@ -60,12 +73,16 @@ export default {
   text-align: center;
   color: #2c3e50;
   height: 100vh;
+  background-color: bisque;
 }
-.main-container{
+.main-container {
+  margin-left: 50px;
   background-color: red;
-  width: 100vw;
 }
-.main-body{
-  width: 100%;
+.main-body {
+  width: fit-content;
+}
+#icon {
+  height: 2rem;
 }
 </style>
