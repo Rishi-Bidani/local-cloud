@@ -1,6 +1,13 @@
 <template>
   <div class="main-container">
-    <h1>{{ folders.data }}</h1>
+    <!-- <h1>{{ folders }}</h1> -->
+    <ul>
+      <li v-for="(folder, index) in folders" :key="Folder - index">
+        <img src="../assets/folder.svg" alt="Folder" />
+        {{ index }}
+        {{ folder }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -8,38 +15,40 @@
 import FileHandling from "../fileHandling";
 export default {
   name: "Home",
-  data(){
-    return{
+  data() {
+    return {
       folders: [],
       files: [],
-      error:""
-    }
+      error: "",
+    };
   },
-  async created(){
+  async created() {
     try {
-      this.folders = await FileHandling.getDirectories(".");
+      // this.folders = await FileHandling.getDirectories(".");
+      this.folders = FileHandling.getDirectories(".").then((arrItems) => {
+        this.folders = arrItems.data.sendFolders;
+      });
     } catch (error) {
       this.error = error;
     }
-  }
+  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.main-container {
+  margin-left: 50px;
 }
 ul {
-  list-style-type: none;
-  padding: 0;
+  list-style: none;
 }
 li {
-  display: inline-block;
-  margin: 0 10px;
+  text-align: left;
+  padding: 0.5rem 0;
 }
-a {
-  color: #42b983;
+img {
+  height: 2rem;
+  vertical-align: bottom;
 }
-
 </style>
