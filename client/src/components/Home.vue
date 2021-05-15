@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="main-container">
     <h1>{{ folders.data }}</h1>
   </div>
 </template>
@@ -41,4 +41,5 @@ li {
 a {
   color: #42b983;
 }
+
 </style>
