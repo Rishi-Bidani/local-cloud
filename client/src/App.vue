@@ -3,14 +3,16 @@
     <sidebar-menu :width="width" :menu="menu" :collapsed="collapsed" :relative="relative" />
     <div class="main-body">
       <div class="body-vertical">
+        <!--  -->
         <div class="horizontal margin-left-1">
           <img alt="Cloud logo" src="./assets/CloudStorageIcon.svg" id="icon" />
-          <span class="title">YOUR HOME CLOUD</span>
+          <span class="title center">YOUR HOME CLOUD</span>
         </div>
 
         <div class="folders">
           <Home msg="Welcome to Your Vue.js App" />
         </div>
+        <!--  -->
       </div>
     </div>
   </div>
@@ -35,7 +37,7 @@ export default {
     return {
       width: "290px",
       widthCollapsed: "50px",
-      collapsed: true,
+      collapsed: false,
       relative: {
         type: Boolean,
         default: false,
@@ -100,7 +102,8 @@ export default {
   background-color: bisque;
   height: 100vh;
   width: 100vw;
-  display: inline-flex;
+  display: flex;
+  flex-direction: row;
 }
 .main-body {
   overflow-y: hidden;
@@ -108,9 +111,11 @@ export default {
 .body-vertical {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .folders {
   align-self: flex-start;
+  margin-top: 2rem;
 }
 .horizontal {
   display: flex;
@@ -121,6 +126,16 @@ export default {
   align-self: flex-end;
   padding: 0.5rem;
   font-size: 2rem;
+}
+.title2 {
+  font-weight: 600;
+  /* padding: 0.5rem; */
+  font-size: 1.5rem;
+  text-align: left;
+}
+.center {
+  text-align: center;
+  justify-content: center;
 }
 .margin-left-1 {
   margin-left: 1rem;
