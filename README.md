@@ -17,11 +17,12 @@ You can now access and transfer files from your different devices with ease.
 <br />
 <a name="images"></a>
 
-## Images:file_folder:
+## Images- Sneak Peaks:file_folder:
 
-![image](https://user-images.githubusercontent.com/64310471/117706042-6fbc3100-b1ea-11eb-8edd-54222ff5e244.png)
+Please note, the colours are not confirmed and are likely to change. The new design is currently in a very early development stage.
+![image](https://user-images.githubusercontent.com/64310471/118394746-25143c00-b664-11eb-8457-1572a1c30293.png)
 
-![image](https://user-images.githubusercontent.com/64310471/117706211-a3975680-b1ea-11eb-9b04-513ff068f3f6.png)
+![image](https://user-images.githubusercontent.com/64310471/118394759-407f4700-b664-11eb-9c0d-fe03c091155f.png)
 
 <br />
 <a name="setup"></a>
