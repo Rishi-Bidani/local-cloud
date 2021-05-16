@@ -1,9 +1,17 @@
 <template>
   <div class="main-container">
-    <sidebar-menu :width="width" :menu="menu" :collapsed="collapsed" />
+    <sidebar-menu :width="width" :menu="menu" :collapsed="collapsed" :relative="relative" />
     <div class="main-body">
-      <img alt="Cloud logo" src="./assets/CloudStorageIcon.svg" id="icon" />
-      <Home msg="Welcome to Your Vue.js App" />
+      <div class="body-vertical">
+        <div class="horizontal margin-left-1">
+          <img alt="Cloud logo" src="./assets/CloudStorageIcon.svg" id="icon" />
+          <span class="title">YOUR HOME CLOUD</span>
+        </div>
+
+        <div class="folders">
+          <Home msg="Welcome to Your Vue.js App" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -12,6 +20,10 @@
 import Home from "./components/Home.vue";
 import { SidebarMenu } from "vue-sidebar-menu";
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
+const icons = {
+  newFolder: require("./assets/newFolder.svg"),
+  upload: require("./assets/upload.svg"),
+};
 
 export default {
   name: "App",
@@ -24,6 +36,10 @@ export default {
       width: "290px",
       widthCollapsed: "50px",
       collapsed: true,
+      relative: {
+        type: Boolean,
+        default: false,
+      },
       menu: [
         {
           header: "Cloud Options",
@@ -35,7 +51,7 @@ export default {
           icon: {
             element: "img",
             attributes: {
-              src: "./assets/folder.svg",
+              src: icons.newFolder,
               // alt: "new Folder",
             },
           },
@@ -43,8 +59,13 @@ export default {
         {
           href: "/",
           title: "Upload",
-          icon: "fa fa-chart-area",
-          // child: [
+          icon: {
+            element: "img",
+            attributes: {
+              src: icons.upload,
+            },
+          },
+          // chil0d: [
           //   {
           //     href: "/charts/sublink",
           //     title: "Sub Link",
@@ -76,13 +97,35 @@ export default {
   background-color: bisque;
 }
 .main-container {
-  margin-left: 50px;
-  background-color: red;
+  background-color: bisque;
+  height: 100vh;
+  width: 100vw;
+  display: inline-flex;
 }
 .main-body {
-  width: fit-content;
+  overflow-y: hidden;
+}
+.body-vertical {
+  display: flex;
+  flex-direction: column;
+}
+.folders {
+  align-self: flex-start;
+}
+.horizontal {
+  display: flex;
+  flex-direction: row;
+}
+.title {
+  font-weight: 900;
+  align-self: flex-end;
+  padding: 0.5rem;
+  font-size: 2rem;
+}
+.margin-left-1 {
+  margin-left: 1rem;
 }
 #icon {
-  height: 2rem;
+  height: 4rem;
 }
 </style>

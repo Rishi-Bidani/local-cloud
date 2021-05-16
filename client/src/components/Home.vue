@@ -4,7 +4,6 @@
     <ul>
       <li v-for="(folder, index) in folders" :key="Folder - index">
         <img src="../assets/folder.svg" alt="Folder" />
-        {{ index }}
         {{ folder }}
       </li>
     </ul>
@@ -39,6 +38,7 @@ export default {
 <style scoped>
 .main-container {
   margin-left: 50px;
+  width: fit-content;
 }
 ul {
   list-style: none;
