@@ -13,7 +13,10 @@ async function FilesAndFoldersArgs(getpath) {
   });
   for (let file of files) {
     if (file.isFile()) {
-      promiseFiles.push(file.name);
+      promiseFiles.push({
+        fileName: file.name,
+        fileExtension: path.extname(file.name),
+      });
     } else if (file.isDirectory()) {
       promiseFolders.push(file.name);
     }
