@@ -8,7 +8,7 @@
           <!-- <img alt="Cloud logo" src="./assets/CloudStorageIcon.svg" id="icon" /> -->
           <span class="title center" id="main-title">YOUR HOME CLOUD</span>
         </div>
-
+        <div class="navpane"></div>
         <div class="folders">
           <Home msg="Welcome to Your Vue.js App" />
         </div>
@@ -141,7 +141,14 @@ export default {
   text-align: center;
   justify-content: center;
 }
-
+.navpane {
+  width: 90%;
+  height: 2rem;
+  background-color: floralwhite;
+  align-self: center;
+  border-radius: 1rem;
+  margin-top: 2rem;
+}
 #main-title {
   height: 100%;
 }

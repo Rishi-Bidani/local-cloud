@@ -20,9 +20,9 @@ You can now access and transfer files from your different devices with ease.
 ## Images- Sneak Peaks:file_folder:
 
 Please note, the colours are not confirmed and are likely to change. The new design is currently in a very early development stage.
-![image](https://user-images.githubusercontent.com/64310471/118394746-25143c00-b664-11eb-8457-1572a1c30293.png)
+![image](https://user-images.githubusercontent.com/64310471/118494261-996fdd80-b73f-11eb-8013-80794fad875d.png)
 
-![image](https://user-images.githubusercontent.com/64310471/118394759-407f4700-b664-11eb-9c0d-fe03c091155f.png)
+![image](https://user-images.githubusercontent.com/64310471/118494035-57469c00-b73f-11eb-9265-5118659f7495.png)
 
 <br />
 <a name="setup"></a>
