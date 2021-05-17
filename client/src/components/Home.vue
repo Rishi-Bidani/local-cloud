@@ -1,39 +1,48 @@
 <template>
-  <div class="main-container">
-    <!-- <h1>{{ folders }}</h1> -->
-    <span class="title2">Folders</span>
-    <ul>
-      <li v-for="(folder, index) in folders" :key="`Folder-${index}`">
-        <img src="../assets/folder.svg" alt="Folder" />
-        {{ folder }}
-      </li>
-    </ul>
-    <span class="title2">Files</span>
-    <ul>
-      <li v-for="(file, index) in files" :key="`File-${index}`">
-        <img v-if="file.fileExtension == '.txt'" src="../assets/fileLogos/txt.svg" />
-        <img v-else-if="file.fileExtension == '.pdf'" src="../assets/fileLogos/pdf.svg" />
+  <div class="main-container2">
+    <div class="HomeGrid">
+      <figure v-for="(folder, index) in folders" :key="`Folder-${index}`">
+        <img src="../assets/folder.svg" alt="Folder" class="folderIcon" />
+        <figcaption>{{ folder }}</figcaption>
+      </figure>
+    </div>
+
+    <div class="HomeGrid">
+      <figure v-for="(file, index) in files" :key="`File-${index}`" class="file-padding">
         <img
+          v-if="file.fileExtension == '.txt'"
+          src="../assets/fileLogos/txt.svg"
+          class="fileIcon"
+        />
+        <img
+          v-else-if="file.fileExtension == '.pdf'"
+          src="../assets/fileLogos/pdf.svg"
+          class="fileIcon"
+        />
+        <img
+          class="fileIcon"
           v-else-if="file.fileExtension == '.xlsx' || file.fileExtension == '.xls'"
           src="../assets/fileLogos/excel.svg"
         />
         <img
+          class="fileIcon"
           v-else-if="file.fileExtension == '.pptx' || file.fileExtension == '.ppt'"
           src="../assets/fileLogos/ppt.svg"
         />
         <img
-          v-else-if="['.png', '.jpeg', '.jpg', '.svg'].includes(file.fileExtension)"
+          class="fileIcon"
+          v-else-if="['.png', '.jpeg', '.jpg', '.svg', '.gif'].includes(file.fileExtension)"
           src="../assets/fileLogos/image.svg"
         />
         <img
+          class="fileIcon"
           v-else-if="['.docx', '.doc'].includes(file.fileExtension)"
           src="../assets/fileLogos/word.svg"
         />
-        <img v-else src="../assets/fileLogos/warning.svg" />
-
-        {{ file.fileName }}
-      </li>
-    </ul>
+        <img v-else src="../assets/fileLogos/warning.svg" class="fileIcon" />
+        <figcaption>{{ file.fileName }}</figcaption>
+      </figure>
+    </div>
   </div>
 </template>
 
@@ -66,21 +75,21 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.main-container {
-  margin-left: 50px;
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
+.main-container2 {
+  width: 100%;
+  height: 100%;
 }
-ul {
-  list-style: none;
+.HomeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
 }
-li {
-  text-align: left;
-  padding: 0.5rem 0;
+.folderIcon {
+  height: 7.5rem;
 }
-img {
-  height: 2rem;
-  vertical-align: bottom;
+.fileIcon {
+  height: 5rem;
+}
+.file-padding {
+  padding: 1rem;
 }
 </style>
