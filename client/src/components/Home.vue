@@ -6,7 +6,6 @@
         <figcaption>{{ folder }}</figcaption>
       </figure>
     </div>
-
     <div class="HomeGrid">
       <figure v-for="(file, index) in files" :key="`File-${index}`" class="file-padding">
         <img
@@ -82,6 +81,8 @@ export default {
 .HomeGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-gap: 2rem;
+  margin: 2rem;
 }
 .folderIcon {
   height: 7.5rem;
@@ -91,5 +92,18 @@ export default {
 }
 .file-padding {
   padding: 1rem;
+}
+figure {
+  cursor: pointer;
+  border-radius: 1rem;
+  border: none;
+  transition: all 0.5s ease-out;
+}
+figure:hover {
+  border: 2px solid whitesmoke;
+}
+
+figcaption {
+  font-weight: 700;
 }
 </style>
