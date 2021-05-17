@@ -4,9 +4,9 @@
     <div class="main-body">
       <div class="body-vertical">
         <!--  -->
-        <div class="horizontal margin-left-1">
-          <img alt="Cloud logo" src="./assets/CloudStorageIcon.svg" id="icon" />
-          <span class="title center">YOUR HOME CLOUD</span>
+        <div class="horizontal">
+          <!-- <img alt="Cloud logo" src="./assets/CloudStorageIcon.svg" id="icon" /> -->
+          <span class="title center" id="main-title">YOUR HOME CLOUD</span>
         </div>
 
         <div class="folders">
@@ -97,16 +97,18 @@ export default {
   color: #2c3e50;
   height: 100vh;
   background-color: bisque;
+  /* overflow-y: scroll; */
 }
 .main-container {
   background-color: bisque;
   height: 100vh;
-  width: 100vw;
   display: flex;
   flex-direction: row;
 }
 .main-body {
-  overflow-y: hidden;
+  height: 100vh;
+  width: 100%;
+  overflow-y: scroll;
 }
 .body-vertical {
   display: flex;
@@ -116,14 +118,16 @@ export default {
 .folders {
   align-self: flex-start;
   margin-top: 2rem;
+  width: 100%;
 }
 .horizontal {
-  display: flex;
-  flex-direction: row;
+  display: inline-block;
+  width: 100%;
+  /* flex-direction: row; */
 }
 .title {
   font-weight: 900;
-  align-self: flex-end;
+  /* align-self: flex-end; */
   padding: 0.5rem;
   font-size: 2rem;
 }
@@ -137,10 +141,13 @@ export default {
   text-align: center;
   justify-content: center;
 }
-.margin-left-1 {
-  margin-left: 1rem;
+
+#main-title {
+  height: 100%;
 }
 #icon {
   height: 4rem;
+  float: left;
+  padding: 0.5rem;
 }
 </style>
