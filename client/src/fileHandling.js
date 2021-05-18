@@ -25,6 +25,23 @@ class FileHandling {
   static newFolder(forPath) {
     return axios.post(`${url}/newFolder/${forPath}`);
   }
+
+  static SendForDownload(filePath, fileName) {
+    axios
+      .get(`${url}/downloadFile/${filePath}/${fileName}`, {
+        responseType: "arraybuffer",
+      })
+      .then((response) => {
+        var blob = new Blob([response.data]);
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = fileName;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }
 
 export default FileHandling;
