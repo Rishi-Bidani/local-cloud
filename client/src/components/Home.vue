@@ -7,7 +7,12 @@
       </figure>
     </div>
     <div class="HomeGrid">
-      <figure v-for="(file, index) in files" :key="`File-${index}`" class="file-padding">
+      <figure
+        v-for="(file, index) in files"
+        :key="`File-${index}`"
+        class="file-padding"
+        v-on:click="download(file.fileName)"
+      >
         <img
           v-if="file.fileExtension == '.txt'"
           src="../assets/fileLogos/txt.svg"
@@ -69,6 +74,12 @@ export default {
       this.error = error;
     }
   },
+  methods: {
+    download: function(item) {
+      console.log(item);
+      FileHandling.SendForDownload(".", item);
+    },
+  },
 };
 </script>
 
@@ -80,7 +91,7 @@ export default {
 }
 .HomeGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
   grid-gap: 2rem;
   margin: 2rem;
 }

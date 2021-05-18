@@ -50,6 +50,15 @@ router.post("/dir", async (req, res) => {
   res.json(await FilesAndFoldersArgs(dir));
 });
 
+router.get("/downloadFile/:file(*)", (req, res) => {
+  // let filePath = req.body.filePath;
+  // let fileName = req.body.fileName;
+  let fullPath = path.join(uploadsFolder, req.params.file);
+  // console.log(filePath, "\n", fileName, "\n");
+  console.log(fullPath);
+  res.sendFile(fullPath, (err) => console.log);
+});
+
 // Upload File
 
 //
