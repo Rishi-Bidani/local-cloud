@@ -1,6 +1,12 @@
 <template>
   <div class="main-container">
-    <sidebar-menu :width="width" :menu="menu" :collapsed="collapsed" :relative="relative" />
+    <sidebar-menu
+      :width="width"
+      :menu="menu"
+      :collapsed="collapsed"
+      :relative="relative"
+      @item-click="onItemClick"
+    />
     <div class="main-body">
       <div class="body-vertical">
         <!--  -->
@@ -10,7 +16,8 @@
         </div>
         <div class="navpane"></div>
         <div class="folders">
-          <Home msg="Welcome to Your Vue.js App" />
+          <Home msg="Welcome to Your Vue.js App" :key="`Home-${HomeKey}`" />
+          <Modal v-show="isModalVisible" @close="closeModal" v-on:submitFolderName="submitFolder" />
         </div>
         <!--  -->
       </div>
@@ -22,6 +29,9 @@
 import Home from "./components/Home.vue";
 import { SidebarMenu } from "vue-sidebar-menu";
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
+import Modal from "./components/Modal.vue";
+import FileHandling from "./fileHandling";
+
 const icons = {
   newFolder: require("./assets/newFolder.svg"),
   upload: require("./assets/upload.svg"),
@@ -32,6 +42,7 @@ export default {
   components: {
     Home,
     SidebarMenu,
+    Modal,
   },
   data() {
     return {
@@ -48,7 +59,7 @@ export default {
           hiddenOnCollapse: true,
         },
         {
-          href: "/",
+          // href: "/",
           title: "New Folder",
           icon: {
             element: "img",
@@ -79,7 +90,29 @@ export default {
           hiddenOnCollapse: true,
         },
       ],
+      isModalVisible: false,
+      folderName: "",
+      HomeKey: 0,
     };
+  },
+  methods: {
+    onItemClick(event, item) {
+      event.preventDefault();
+      if (item.title == "New Folder") {
+        console.log(item.title);
+        this.showModal();
+      }
+    },
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
+    submitFolder(fName) {
+      FileHandling.newFolder(fName, ".");
+      this.HomeKey++; //To refresh Home Component
+    },
   },
 };
 </script>
