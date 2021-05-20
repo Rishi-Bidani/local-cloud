@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
+    "vue-js-modal": "^2.0.0-rc.6",
     "vue-sidebar-menu": "^5.0.0-alpha.9"
   },
   "devDependencies": {

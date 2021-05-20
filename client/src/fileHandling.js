@@ -1,12 +1,11 @@
 import axios from "axios";
-const url = "http://localhost:5000/posts/";
+const url = "posts/";
 
 class FileHandling {
   // Get Directories
   static getDirectories(forPath) {
     return new Promise((resolve, reject) => {
       try {
-        console.log(forPath);
         const fileAndFolders = axios
           .post(`${url}/dir`, {
             dir: forPath,
@@ -14,7 +13,6 @@ class FileHandling {
           .then((response) => {
             return response;
           });
-        console.log(resolve(fileAndFolders));
         return resolve(fileAndFolders);
       } catch (error) {
         reject(error);
@@ -22,8 +20,12 @@ class FileHandling {
     });
   }
   // Make Folder
-  static newFolder(forPath) {
-    return axios.post(`${url}/newFolder/${forPath}`);
+  static newFolder(folderName, folderPath) {
+    console.log(folderName);
+    return axios.post(`${url}/newFolder`, {
+      path: folderPath,
+      folderName: folderName,
+    });
   }
 
   static SendForDownload(filePath, fileName) {
