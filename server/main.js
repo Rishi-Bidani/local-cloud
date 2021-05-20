@@ -21,8 +21,11 @@ if (!fs.existsSync(uploadsFolder)) {
 const posts = require("./routes/posts");
 app.use("/posts", posts);
 
-app.get("/", (req, res) => {
+// app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/.*/", (req, res) => {
   res.send("Hello World");
+  // res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Use default port during production, else 5000
