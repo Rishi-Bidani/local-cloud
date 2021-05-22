@@ -14,9 +14,26 @@
           <!-- <img alt="Cloud logo" src="./assets/CloudStorageIcon.svg" id="icon" /> -->
           <span class="title center" id="main-title">YOUR HOME CLOUD</span>
         </div>
-        <div class="navpane"></div>
+        <div class="navpane">
+          <div class="nav-container">
+            <span class="navlinks" v-on:click="navlinknav(0)">uploads</span>
+            <span
+              class="navlinks"
+              v-for="(nav, navInd) in navpath.split('/')"
+              :key="`nav-${navInd}`"
+              v-on:click="navlinknav(navInd)"
+            >
+              <span> {{ nav }} > </span>
+            </span>
+          </div>
+        </div>
         <div class="folders">
-          <Home msg="Welcome to Your Vue.js App" :key="`Home-${HomeKey}`" />
+          <Home
+            msg="Welcome"
+            :key="`Home-${HomeKey}`"
+            v-on:folderPath="navigation"
+            :getPropDirPath="navpath"
+          />
           <Modal v-show="isModalVisible" @close="closeModal" v-on:submitFolderName="submitFolder" />
         </div>
         <!--  -->
@@ -93,6 +110,7 @@ export default {
       isModalVisible: false,
       folderName: "",
       HomeKey: 0,
+      navpath: "",
     };
   },
   methods: {
@@ -112,6 +130,18 @@ export default {
     submitFolder(fName) {
       FileHandling.newFolder(fName, ".");
       this.HomeKey++; //To refresh Home Component
+    },
+    navigation(dirpath) {
+      this.navpath = dirpath;
+      this.HomeKey++;
+    },
+    navlinknav(navid) {
+      console.log(navid);
+      this.navpath = this.navpath
+        .split("/")
+        .slice(0, navid + 1)
+        .join("/");
+      this.HomeKey++;
     },
   },
 };
@@ -181,6 +211,17 @@ export default {
   align-self: center;
   border-radius: 1rem;
   margin-top: 2rem;
+  text-align: left;
+}
+.navlinks {
+  font-weight: bold;
+  cursor: pointer;
+}
+.navlinks:hover {
+  color: blueviolet;
+}
+.nav-container {
+  padding: 0.5rem;
 }
 #main-title {
   height: 100%;
