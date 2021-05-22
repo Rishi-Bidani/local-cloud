@@ -1,7 +1,11 @@
 <template>
-  <div class="main-container2">
+  <div class="main-container2" :key="`ref-${refreshKey}`">
     <div class="HomeGrid">
-      <figure v-for="(folder, index) in folders" :key="`Folder-${index}`">
+      <figure
+        v-for="(folder, index) in folders"
+        :key="`Folder-${index}`"
+        v-on:click="navigation(folder)"
+      >
         <img src="../assets/folder.svg" alt="Folder" class="folderIcon" />
         <figcaption>{{ folder }}</figcaption>
       </figure>
@@ -54,20 +58,23 @@
 import FileHandling from "../fileHandling";
 export default {
   name: "Home",
+  props: ["getPropDirPath"],
   data() {
     return {
       folders: [],
       files: [],
       error: "",
+      getDirPath: ".",
+      refreshKey: 0,
     };
   },
   async created() {
     try {
       // this.folders = await FileHandling.getDirectories(".");
-      this.folders = FileHandling.getDirectories(".").then((arrItems) => {
+      this.folders = FileHandling.getDirectories(this.getPropDirPath).then((arrItems) => {
         this.folders = arrItems.data.sendFolders;
       });
-      this.files = FileHandling.getDirectories(".").then((arrItems) => {
+      this.files = FileHandling.getDirectories(this.getPropDirPath).then((arrItems) => {
         this.files = arrItems.data.sendFiles;
       });
     } catch (error) {
@@ -77,7 +84,12 @@ export default {
   methods: {
     download: function(item) {
       console.log(item);
-      FileHandling.SendForDownload(".", item);
+      FileHandling.SendForDownload(this.getPropDirPath, item);
+    },
+    navigation: function(item) {
+      this.getDirPath = this.getPropDirPath + `/${item}`;
+      console.log(this.getDirPath);
+      this.$emit("folderPath", this.getDirPath);
     },
   },
 };
@@ -108,10 +120,11 @@ figure {
   cursor: pointer;
   border-radius: 1rem;
   border: none;
-  transition: all 0.5s ease-out;
+  /* transition: all 0.5s ease-out; */
 }
 figure:hover {
-  border: 2px solid whitesmoke;
+  /* border: 2px solid whitesmoke; */
+  background-color: cornsilk;
 }
 
 figcaption {
