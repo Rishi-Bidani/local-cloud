@@ -38,7 +38,7 @@
         </div>
         <!--  -->
         <div ref="dropzone"></div>
-        <DropZone :currentPath="navPath" />
+        <DropZone :currentPath="navpath" />
       </div>
     </div>
   </div>
@@ -114,6 +114,7 @@ export default {
       isModalVisible: false,
       // folderName: "",
       HomeKey: 0,
+      dzid: 0,
       navpath: "",
     };
   },
@@ -138,10 +139,12 @@ export default {
     submitFolder(fName) {
       FileHandling.newFolder(fName, this.navpath);
       this.HomeKey++; //To refresh Home Component
+      this.dzid++;
     },
     navigation(dirpath) {
       this.navpath = dirpath;
       this.HomeKey++;
+      this.dzid++;
     },
     navlinknav(navid) {
       console.log(navid);
@@ -150,6 +153,7 @@ export default {
         .slice(0, navid + 1)
         .join("/");
       this.HomeKey++;
+      this.dzid++;
     },
   },
 };
