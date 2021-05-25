@@ -11,20 +11,20 @@
       <div class="body-vertical">
         <!--  -->
         <div class="horizontal">
-          <!-- <img alt="Cloud logo" src="./assets/CloudStorageIcon.svg" id="icon" /> -->
           <span class="title center" id="main-title">YOUR HOME CLOUD</span>
         </div>
+        <!-- <span>Tip: If you can't see the scroll bar hold down shift and scroll</span> -->
         <div class="navpane">
           <div class="nav-container">
             <span class="navlinks" v-on:click="navlinknav(0)">uploads</span>
-            <span
+            <div
               class="navlinks"
               v-for="(nav, navInd) in navpath.split('/')"
               :key="`nav-${navInd}`"
               v-on:click="navlinknav(navInd)"
             >
-              <span> {{ nav }} > </span>
-            </span>
+              <span> &nbsp;{{ nav }} > </span>
+            </div>
           </div>
         </div>
         <div class="folders">
@@ -37,6 +37,8 @@
           <Modal v-show="isModalVisible" @close="closeModal" v-on:submitFolderName="submitFolder" />
         </div>
         <!--  -->
+        <div ref="dropzone"></div>
+        <DropZone />
       </div>
     </div>
   </div>
@@ -47,6 +49,7 @@ import Home from "./components/Home.vue";
 import { SidebarMenu } from "vue-sidebar-menu";
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 import Modal from "./components/Modal.vue";
+import DropZone from "./components/Dropzone.vue";
 import FileHandling from "./fileHandling";
 
 const icons = {
@@ -60,6 +63,7 @@ export default {
     Home,
     SidebarMenu,
     Modal,
+    DropZone,
   },
   data() {
     return {
@@ -87,7 +91,7 @@ export default {
           },
         },
         {
-          href: "/",
+          // href: "#dropzone",
           title: "Upload",
           icon: {
             element: "img",
@@ -108,7 +112,7 @@ export default {
         },
       ],
       isModalVisible: false,
-      folderName: "",
+      // folderName: "",
       HomeKey: 0,
       navpath: "",
     };
@@ -119,6 +123,10 @@ export default {
       if (item.title == "New Folder") {
         console.log(item.title);
         this.showModal();
+      } else if (item.title == "Upload") {
+        console.log(item.title);
+        let dz = this.$refs["dropzone"];
+        dz.scrollIntoView({ behavior: "smooth" });
       }
     },
     showModal() {
@@ -128,7 +136,7 @@ export default {
       this.isModalVisible = false;
     },
     submitFolder(fName) {
-      FileHandling.newFolder(fName, ".");
+      FileHandling.newFolder(fName, this.navpath);
       this.HomeKey++; //To refresh Home Component
     },
     navigation(dirpath) {
@@ -186,17 +194,14 @@ export default {
 .horizontal {
   display: inline-block;
   width: 100%;
-  /* flex-direction: row; */
 }
 .title {
   font-weight: 900;
-  /* align-self: flex-end; */
   padding: 0.5rem;
   font-size: 2rem;
 }
 .title2 {
   font-weight: 600;
-  /* padding: 0.5rem; */
   font-size: 1.5rem;
   text-align: left;
 }
@@ -206,22 +211,37 @@ export default {
 }
 .navpane {
   width: 90%;
-  height: 2rem;
+  height: 2.5rem;
   background-color: floralwhite;
   align-self: center;
   border-radius: 1rem;
   margin-top: 2rem;
   text-align: left;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  /* -ms-overflow-style: none;*/ /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.navpane::-webkit-scrollbar {
+  height: 5px;
+  color: seagreen;
+}
+.navpane::-webkit-scrollbar-thumb {
+  border-radius: 2.5px;
+  background: seagreen;
 }
 .navlinks {
   font-weight: bold;
   cursor: pointer;
+  display: inline-block;
 }
 .navlinks:hover {
   color: blueviolet;
 }
 .nav-container {
-  padding: 0.5rem;
+  padding: 0.3rem;
+  margin: auto;
+  white-space: nowrap;
 }
 #main-title {
   height: 100%;
