@@ -1,2 +1,8 @@
 node_modules/
 .vscode/
+
+# exclude everything
+somefolder/*
+
+# exception to the rule
+!uploads/.gitkeep 
