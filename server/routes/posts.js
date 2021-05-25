@@ -1,14 +1,26 @@
+// Copyright 2020-2021 Rishi Bidani
 const express = require("express");
 const fs = require("fs");
 const router = express.Router();
 const path = require("path");
 const uploadsFolder = path.join(__dirname, "../../uploads");
+const multer = require("multer");
+
+// Setup storage for multer middleware
+var storage = multer.diskStorage({
+  destination: path.join(__dirname, "../../uploads"),
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+var upload = multer({ storage: storage });
 
 // Function for finding folders and files in the directory
 async function FilesAndFoldersArgs(getpath) {
   const promiseFolders = [];
   const promiseFiles = [];
-  let files = await fs.promises.readdir(path.join(__dirname, "../../uploads", `${getpath}`), {
+  let files = await fs.promises.readdir(path.join(uploadsFolder, `${getpath}`), {
     withFileTypes: true,
   });
   for (let file of files) {
@@ -45,22 +57,34 @@ router.post("/newFolder", (req, res) => {
 // Get Directories
 router.post("/dir", async (req, res) => {
   let dir = req.body.dir;
-  console.log(dir);
-  console.log(await FilesAndFoldersArgs(dir));
+  // console.log(dir);
+  // console.log(await FilesAndFoldersArgs(dir));
   res.json(await FilesAndFoldersArgs(dir));
 });
 
+// Handles requests for downloading files
 router.get("/downloadFile/:file(*)", (req, res) => {
   // let filePath = req.body.filePath;
   // let fileName = req.body.fileName;
   let fullPath = path.join(uploadsFolder, req.params.file);
-  // console.log(filePath, "\n", fileName, "\n");
   console.log(fullPath);
   res.sendFile(fullPath, (err) => console.log);
 });
 
 // Upload File
+router.post("/upload", upload.any(), (req, res) => {
+  console.log(req.files);
+  console.log(req.body.path);
+  for (let i = 0; i < req.files.length; i++) {
+    let oldPath = path.join(uploadsFolder, req.files[i].originalname);
+    let newPath = path.join(uploadsFolder, req.body.path, req.files[i].originalname);
 
+    fs.rename(oldPath, newPath, (err) => {
+      if (err) console.log(err);
+    });
+  }
+  res.end("Files Reached");
+});
 //
 
 module.exports = router;
