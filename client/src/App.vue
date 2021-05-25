@@ -38,7 +38,7 @@
         </div>
         <!--  -->
         <div ref="dropzone"></div>
-        <DropZone />
+        <DropZone :currentPath="navPath" />
       </div>
     </div>
   </div>

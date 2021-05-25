@@ -11,7 +11,14 @@
 
 <template>
   <div class="dropzone-container">
-    <form :action="uploadurl" class="dropzone drop-area" id="myAwesomeDropzone"></form>
+    <form
+      :action="uploadurl"
+      class="dropzone drop-area"
+      enctype="multipart/form-data"
+      id="myAwesomeDropzone"
+    >
+      <input type="hidden" name="path" :value="currentPath" />
+    </form>
   </div>
 </template>
 
@@ -22,6 +29,7 @@ Dropzone.autoDiscover = true;
 
 export default {
   name: "DropZone",
+  props: ["currentPath"],
   data() {
     return {
       uploadurl: FileHandling.SendForUpload(),
