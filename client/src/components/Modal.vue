@@ -46,6 +46,7 @@ export default {
     },
     submit() {
       this.$emit("submitFolderName", this.newFolder);
+      this.newFolder = "";
       // return this.newFolder;
     },
   },

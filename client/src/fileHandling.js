@@ -27,7 +27,7 @@ class FileHandling {
       folderName: folderName,
     });
   }
-
+  // Requesting for download
   static SendForDownload(filePath, fileName) {
     axios
       .get(`${url}/downloadFile/${filePath}/${fileName}`, {
@@ -43,6 +43,19 @@ class FileHandling {
       .catch((err) => {
         console.log(err);
       });
+  }
+  static SendForUpload() {
+    // console.log(files);
+    // axios
+    //   .post(`${url}/upload`, files, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
+    //   .then((res) => {
+    //     return res;
+    //   });
+    return `${url}/upload`;
   }
 }
 
