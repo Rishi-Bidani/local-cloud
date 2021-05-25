@@ -74,7 +74,7 @@ router.get("/downloadFile/:file(*)", (req, res) => {
 // Upload File
 router.post("/upload", upload.any(), (req, res) => {
   console.log(req.files);
-  console.log(req.body.path);
+  console.log(req.body);
   for (let i = 0; i < req.files.length; i++) {
     let oldPath = path.join(uploadsFolder, req.files[i].originalname);
     let newPath = path.join(uploadsFolder, req.body.path, req.files[i].originalname);
