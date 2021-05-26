@@ -1,3 +1,4 @@
+// Copyright 2020-2021 Rishi-Bidani
 <template>
   <div class="main-container">
     <!-- <sidebar-menu
@@ -9,6 +10,7 @@
       :key="`SideBar-${sbid}`"
     /> -->
     <SideBar
+      :fileName="fileName"
       :fileSize="fileSize"
       :disabled="discheck"
       @item-click="onItemClick"
@@ -40,14 +42,14 @@
             :key="`Home-${HomeKey}`"
             v-on:folderPath="navigation"
             :getPropDirPath="navpath"
-            v-on:fileSize="displayDetails"
+            v-on:fileDetails="displayDetails"
             v-on:linkForDownload="makeDownloadButton"
           />
           <Modal v-show="isModalVisible" @close="closeModal" v-on:submitFolderName="submitFolder" />
         </div>
         <!--  -->
         <div ref="dropzone"></div>
-        <DropZone :currentPath="navpath" />
+        <DropZone :currentPath="navpath" v-on:finishedUpload="finishUpload" ref="myDropzone" />
       </div>
     </div>
   </div>
@@ -79,6 +81,7 @@ export default {
       fileSize: 0,
       downloadbuttondata: {},
       discheck: true,
+      dzkey: 0,
     };
   },
   methods: {
@@ -103,8 +106,8 @@ export default {
     },
     submitFolder(fName) {
       FileHandling.newFolder(fName, this.navpath);
-      this.HomeKey++; //To refresh Home Component
-      this.dzid++;
+      this.HomeKey++; // To refresh Home Component
+      this.dzid++; // Dropzone refresh
     },
     navigation(dirpath) {
       this.navpath = dirpath;
@@ -120,13 +123,21 @@ export default {
       this.HomeKey++;
       this.dzid++;
     },
-    displayDetails(size) {
-      this.fileSize = size;
+    displayDetails(file) {
+      // Getting file size and adjusting for mb
+      // Checking if download button is active or not
+      // sidebar refresh
+      this.fileSize = file.size >= 1000 ? (file.size / 1024).toFixed(3) + " mb" : file.size + " kb";
+      this.fileName = file.name;
       this.discheck = false;
       this.sbid++;
     },
     makeDownloadButton(data) {
       this.downloadbuttondata = data;
+    },
+    finishUpload() {
+      this.HomeKey++;
+      console.log("finished");
     },
   },
 };
