@@ -124,6 +124,7 @@ export default {
       this.dzid++;
     },
     displayDetails(file) {
+      // Getting file name
       // Getting file size and adjusting for mb
       // Checking if download button is active or not
       // sidebar refresh
