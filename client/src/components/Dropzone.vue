@@ -15,10 +15,13 @@
       :action="uploadurl"
       class="dropzone drop-area"
       enctype="multipart/form-data"
-      id="myAwesomeDropzone"
+      id="myDropzone"
+      ref="myDropzone"
+      :key="`dz-${dzkey}`"
     >
       <input type="hidden" name="path" :value="currentPath" />
     </form>
+    <button class="finish-button" @click="finishUpload">Finish Upload</button>
   </div>
 </template>
 
@@ -26,14 +29,20 @@
 import * as Dropzone from "dropzone/dist/min/dropzone.min.js";
 import FileHandling from "../fileHandling";
 Dropzone.autoDiscover = true;
-
 export default {
   name: "DropZone",
   props: ["currentPath"],
   data() {
     return {
       uploadurl: FileHandling.SendForUpload(),
+      dzkey: 0,
     };
+  },
+  methods: {
+    finishUpload() {
+      this.$refs.myDropzone.dropzone.removeAllFiles();
+      this.$emit("finishedUpload");
+    },
   },
 };
 </script>
@@ -62,5 +71,16 @@ export default {
   align-self: center;
   justify-content: center;
   cursor: pointer;
+}
+.finish-button {
+  height: 2rem;
+  background-color: #65a65a;
+  cursor: pointer;
+  border: none;
+  color: black;
+  font-weight: bold;
+}
+.finish-button:hover {
+  background-color: #5c9752;
 }
 </style>

@@ -23,7 +23,7 @@
         class="file-padding"
         v-on:click.ctrl.exact="autodownload(file.fileName)"
         @click.exact="
-          emitDetails(file.fileSize);
+          emitDetails({ name: file.fileName, size: file.fileSize });
           download(file.fileName);
         "
       >
@@ -56,6 +56,16 @@
           class="fileIcon"
           v-else-if="['.docx', '.doc'].includes(file.fileExtension)"
           src="../assets/fileLogos/word.svg"
+        />
+        <img
+          class="fileIcon"
+          v-else-if="['.mp4', '.mov', '.mkv', '.webm'].includes(file.fileExtension)"
+          src="../assets/fileLogos/video.svg"
+        />
+        <img
+          class="fileIcon"
+          v-else-if="['.mp3'].includes(file.fileExtension)"
+          src="../assets/fileLogos/music.svg"
         />
         <img v-else src="../assets/fileLogos/warning.svg" class="fileIcon" />
         <figcaption>{{ file.fileName }}</figcaption>
@@ -105,9 +115,9 @@ export default {
       console.log(this.getDirPath);
       this.$emit("folderPath", this.getDirPath);
     },
-    emitDetails: function(fileSize) {
+    emitDetails: function(fileDetails) {
       // console.log(fileSize);
-      this.$emit("fileSize", fileSize);
+      this.$emit("fileDetails", fileDetails);
     },
     autodownload: function(item) {
       console.log("double click");
