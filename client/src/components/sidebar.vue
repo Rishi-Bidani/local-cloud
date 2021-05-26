@@ -9,6 +9,7 @@ import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 const icons = {
   newFolder: require("../assets/newFolder.svg"),
   upload: require("../assets/upload.svg"),
+  download: require("../assets/download.svg"),
 };
 
 export default {
@@ -16,7 +17,7 @@ export default {
   components: {
     SidebarMenu,
   },
-  props: ["fileSize", "disabled"],
+  props: ["fileName", "fileSize", "disabled"],
   data() {
     return {
       width: "290px",
@@ -57,10 +58,19 @@ export default {
           hiddenOnCollapse: true,
         },
         {
+          title: `File Name: ${this.fileName}`,
+        },
+        {
           title: `File Size: ${this.fileSize == undefined ? 0 : this.fileSize}`,
         },
         {
           title: "Download",
+          icon: {
+            element: "img",
+            attributes: {
+              src: icons.download,
+            },
+          },
           disabled: this.disabled,
         },
       ],
