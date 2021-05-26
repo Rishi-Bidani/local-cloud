@@ -11,11 +11,21 @@
       </figure>
     </div>
     <div class="HomeGrid">
-      <figure
+      <!-- <figure
         v-for="(file, index) in files"
         :key="`File-${index}`"
         class="file-padding"
         v-on:click="download(file.fileName)"
+      > -->
+      <figure
+        v-for="(file, index) in files"
+        :key="`File-${index}`"
+        class="file-padding"
+        v-on:click.ctrl.exact="autodownload(file.fileName)"
+        @click.exact="
+          emitDetails(file.fileSize);
+          download(file.fileName);
+        "
       >
         <img
           v-if="file.fileExtension == '.txt'"
@@ -84,12 +94,24 @@ export default {
   methods: {
     download: function(item) {
       console.log(item);
-      FileHandling.SendForDownload(this.getPropDirPath, item);
+      // FileHandling.SendForDownload(this.getPropDirPath, item);
+      this.$emit("linkForDownload", {
+        gpdp: this.getPropDirPath,
+        fname: item,
+      });
     },
     navigation: function(item) {
       this.getDirPath = this.getPropDirPath + `/${item}`;
       console.log(this.getDirPath);
       this.$emit("folderPath", this.getDirPath);
+    },
+    emitDetails: function(fileSize) {
+      // console.log(fileSize);
+      this.$emit("fileSize", fileSize);
+    },
+    autodownload: function(item) {
+      console.log("double click");
+      FileHandling.SendForDownload(this.getPropDirPath, item);
     },
   },
 };
