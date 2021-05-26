@@ -45,16 +45,6 @@ class FileHandling {
       });
   }
   static SendForUpload() {
-    // console.log(files);
-    // axios
-    //   .post(`${url}/upload`, files, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     return res;
-    //   });
     return `${url}/upload`;
   }
 }

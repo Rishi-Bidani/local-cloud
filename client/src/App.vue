@@ -1,11 +1,18 @@
 <template>
   <div class="main-container">
-    <sidebar-menu
+    <!-- <sidebar-menu
       :width="width"
       :menu="menu"
       :collapsed="collapsed"
       :relative="relative"
       @item-click="onItemClick"
+      :key="`SideBar-${sbid}`"
+    /> -->
+    <SideBar
+      :fileSize="fileSize"
+      :disabled="discheck"
+      @item-click="onItemClick"
+      :key="`sidebar-${sbid}`"
     />
     <div class="main-body">
       <div class="body-vertical">
@@ -33,6 +40,8 @@
             :key="`Home-${HomeKey}`"
             v-on:folderPath="navigation"
             :getPropDirPath="navpath"
+            v-on:fileSize="displayDetails"
+            v-on:linkForDownload="makeDownloadButton"
           />
           <Modal v-show="isModalVisible" @close="closeModal" v-on:submitFolderName="submitFolder" />
         </div>
@@ -46,76 +55,30 @@
 
 <script>
 import Home from "./components/Home.vue";
-import { SidebarMenu } from "vue-sidebar-menu";
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 import Modal from "./components/Modal.vue";
 import DropZone from "./components/Dropzone.vue";
 import FileHandling from "./fileHandling";
-
-const icons = {
-  newFolder: require("./assets/newFolder.svg"),
-  upload: require("./assets/upload.svg"),
-};
+import SideBar from "./components/sidebar.vue";
 
 export default {
   name: "App",
   components: {
     Home,
-    SidebarMenu,
     Modal,
     DropZone,
+    SideBar,
   },
   data() {
     return {
-      width: "290px",
-      widthCollapsed: "50px",
-      collapsed: false,
-      relative: {
-        type: Boolean,
-        default: false,
-      },
-      menu: [
-        {
-          header: "Cloud Options",
-          hiddenOnCollapse: true,
-        },
-        {
-          // href: "/",
-          title: "New Folder",
-          icon: {
-            element: "img",
-            attributes: {
-              src: icons.newFolder,
-              // alt: "new Folder",
-            },
-          },
-        },
-        {
-          // href: "#dropzone",
-          title: "Upload",
-          icon: {
-            element: "img",
-            attributes: {
-              src: icons.upload,
-            },
-          },
-          // chil0d: [
-          //   {
-          //     href: "/charts/sublink",
-          //     title: "Sub Link",
-          //   },
-          // ],
-        },
-        {
-          header: "File Properties",
-          hiddenOnCollapse: true,
-        },
-      ],
       isModalVisible: false,
-      // folderName: "",
       HomeKey: 0,
       dzid: 0,
+      sbid: 0,
       navpath: "",
+      fileSize: 0,
+      downloadbuttondata: {},
+      discheck: true,
     };
   },
   methods: {
@@ -128,6 +91,8 @@ export default {
         console.log(item.title);
         let dz = this.$refs["dropzone"];
         dz.scrollIntoView({ behavior: "smooth" });
+      } else if (item.title == "Download" && !this.discheck) {
+        FileHandling.SendForDownload(this.downloadbuttondata.gpdp, this.downloadbuttondata.fname);
       }
     },
     showModal() {
@@ -154,6 +119,14 @@ export default {
         .join("/");
       this.HomeKey++;
       this.dzid++;
+    },
+    displayDetails(size) {
+      this.fileSize = size;
+      this.discheck = false;
+      this.sbid++;
+    },
+    makeDownloadButton(data) {
+      this.downloadbuttondata = data;
     },
   },
 };

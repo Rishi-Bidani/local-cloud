@@ -28,6 +28,9 @@ async function FilesAndFoldersArgs(getpath) {
       promiseFiles.push({
         fileName: file.name,
         fileExtension: path.extname(file.name),
+        fileSize: Number.parseFloat(
+          fs.statSync(path.join(uploadsFolder, getpath, file.name)).size / 1024
+        ).toFixed(3),
       });
     } else if (file.isDirectory()) {
       promiseFolders.push(file.name);
@@ -58,7 +61,7 @@ router.post("/newFolder", (req, res) => {
 router.post("/dir", async (req, res) => {
   let dir = req.body.dir;
   // console.log(dir);
-  // console.log(await FilesAndFoldersArgs(dir));
+  console.log(await FilesAndFoldersArgs(dir));
   res.json(await FilesAndFoldersArgs(dir));
 });
 
