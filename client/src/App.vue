@@ -43,7 +43,6 @@
             v-on:folderPath="navigation"
             :getPropDirPath="navpath"
             v-on:fileDetails="displayDetails"
-            v-on:linkForDownload="makeDownloadButton"
           />
           <Modal v-show="isModalVisible" @close="closeModal" v-on:submitFolderName="submitFolder" />
         </div>
@@ -80,7 +79,8 @@ export default {
       navpath: "",
       fileSize: 0,
       downloadbuttondata: {},
-      discheck: true,
+      deleteButtonData: {},
+      discheck: true, // Check if disabled - for delete and download
       dzkey: 0,
     };
   },
@@ -96,6 +96,9 @@ export default {
         dz.scrollIntoView({ behavior: "smooth" });
       } else if (item.title == "Download" && !this.discheck) {
         FileHandling.SendForDownload(this.downloadbuttondata.gpdp, this.downloadbuttondata.fname);
+      } else if (item.title == "Delete" && !this.discheck) {
+        FileHandling.SendForDelete(this.deleteButtonData.gpdp, this.deleteButtonData.fname);
+        this.HomeKey++;
       }
     },
     showModal() {
@@ -123,7 +126,7 @@ export default {
       this.HomeKey++;
       this.dzid++;
     },
-    displayDetails(file) {
+    displayDetails(file, pathAndName) {
       // Getting file name
       // Getting file size and adjusting for mb
       // Checking if download button is active or not
@@ -132,10 +135,13 @@ export default {
       this.fileName = file.name;
       this.discheck = false;
       this.sbid++;
+      this.downloadbuttondata = pathAndName;
+      this.deleteButtonData = pathAndName;
     },
-    makeDownloadButton(data) {
-      this.downloadbuttondata = data;
-    },
+    // makeDownloadButton(data) {
+    //   // this.downloadbuttondata = data;
+    //   console.log(data);
+    // },
     finishUpload() {
       this.HomeKey++;
       console.log("finished");

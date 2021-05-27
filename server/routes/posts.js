@@ -88,6 +88,12 @@ router.post("/upload", upload.any(), (req, res) => {
   }
   res.end("Files Reached");
 });
-//
+
+// Delete a file
+router.post("/deleteFile", (req, res) => {
+  let fullPath = path.join(uploadsFolder, req.body.fullPath);
+  // console.log(fullPath);
+  fs.unlinkSync(fullPath);
+});
 
 module.exports = router;
