@@ -1,4 +1,5 @@
 import axios from "axios";
+const path = require("path");
 const url = "posts/";
 
 class FileHandling {
@@ -46,6 +47,11 @@ class FileHandling {
   }
   static SendForUpload() {
     return `${url}/upload`;
+  }
+  // Deleting File
+  static SendForDelete(filePath, fileName) {
+    let fullPath = path.join(filePath, fileName);
+    axios.post(`${url}/deleteFile/`, { fullPath }).catch((err) => console.log(err));
   }
 }
 

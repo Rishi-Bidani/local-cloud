@@ -23,8 +23,7 @@
         class="file-padding"
         v-on:click.ctrl.exact="autodownload(file.fileName)"
         @click.exact="
-          emitDetails({ name: file.fileName, size: file.fileSize });
-          download(file.fileName);
+          emitDetails({ name: file.fileName, size: file.fileSize, fname: file.fileName })
         "
       >
         <img
@@ -102,14 +101,6 @@ export default {
     }
   },
   methods: {
-    download: function(item) {
-      console.log(item);
-      // FileHandling.SendForDownload(this.getPropDirPath, item);
-      this.$emit("linkForDownload", {
-        gpdp: this.getPropDirPath,
-        fname: item,
-      });
-    },
     navigation: function(item) {
       this.getDirPath = this.getPropDirPath + `/${item}`;
       console.log(this.getDirPath);
@@ -117,7 +108,11 @@ export default {
     },
     emitDetails: function(fileDetails) {
       // console.log(fileSize);
-      this.$emit("fileDetails", fileDetails);
+      let pathAndName = {
+        gpdp: this.getPropDirPath,
+        fname: fileDetails.fname,
+      };
+      this.$emit("fileDetails", fileDetails, pathAndName);
     },
     autodownload: function(item) {
       console.log("double click");
