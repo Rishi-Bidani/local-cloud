@@ -94,6 +94,7 @@ router.post("/deleteFile", (req, res) => {
   let fullPath = path.join(uploadsFolder, req.body.fullPath);
   // console.log(fullPath);
   fs.unlinkSync(fullPath);
+  res.end("Deleted Successfully");
 });
 
 module.exports = router;
