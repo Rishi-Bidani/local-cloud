@@ -12,6 +12,7 @@
     "dropzone": "^5.9.2",
     "vue": "^3.0.0",
     "vue-js-modal": "^2.0.0-rc.6",
+    "vue-router": "^3.5.1",
     "vue-sidebar-menu": "^5.0.0-alpha.9",
     "vue3-dropzone": "^0.0.7"
   },
