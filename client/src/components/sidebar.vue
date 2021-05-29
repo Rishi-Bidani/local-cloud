@@ -35,7 +35,6 @@ export default {
           hiddenOnCollapse: true,
         },
         {
-          // href: "/",
           title: "New Folder",
           icon: {
             element: "img",

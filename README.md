@@ -107,10 +107,6 @@ a better bundled package
 
 ## Icon Credits
 
-- http://icons8.com
-
-  - https://iconarchive.com/show/ios7-icons-by-icons8/Network-Cloud-Storage-icon.html
-
 - <div>Icons made by <a href="https://www.flaticon.com/authors/xnimrodx" title="xnimrodx">xnimrodx</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
 - <div>Icons made by <a href="https://www.flaticon.com/authors/dinosoftlabs" title="DinosoftLabs">DinosoftLabs</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>

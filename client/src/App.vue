@@ -78,6 +78,7 @@ export default {
       sbid: 0,
       navpath: "",
       fileSize: 0,
+      fileName: "",
       downloadbuttondata: {},
       deleteButtonData: {},
       discheck: true, // Check if disabled - for delete and download
@@ -144,7 +145,6 @@ export default {
     // },
     finishUpload() {
       this.HomeKey++;
-      console.log("finished");
     },
   },
 };
