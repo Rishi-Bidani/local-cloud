@@ -1,5 +1,11 @@
 <template>
-  <sidebar-menu :width="width" :menu="menu" :collapsed="collapsed" :relative="relative" />
+  <sidebar-menu
+    :width="width"
+    :menu="menu"
+    :collapsed="collapsed"
+    :relative="true"
+    :link-component-name="'custom-link'"
+  />
 </template>
 
 <script>
@@ -25,10 +31,10 @@ export default {
       widthCollapsed: "50px",
       collapsed: false,
 
-      relative: {
-        type: Boolean,
-        default: false,
-      },
+      // relative: {
+      //   type: Boolean,
+      //   default: false,
+      // },
       menu: [
         {
           header: "Cloud Options",
