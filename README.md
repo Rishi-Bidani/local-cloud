@@ -93,10 +93,20 @@ a better bundled package
 
 <a name="plans"></a>
 
-## Future Plans :bulb:
+## Future Plans and Timeline :bulb:
 
-- implement some security features
-- delete files
+- [x] Pilot project with vanilla html-css and js
+- [x] Implement with vuejs
+- [x] Create Folders
+- [x] Download Files
+- [x] Upload Files
+- [x] Delete files
+- [x] View File size
+- [ ] Handle Errors by sending response instead on console
+- [ ] Fix some UI issues - aligning etc
+- [ ] Download entire folder
+- [ ] Delete Folders
+- [ ] Implement some security features
 
 <br />
 
