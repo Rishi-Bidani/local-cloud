@@ -1,6 +1,6 @@
 import axios from "axios";
 const path = require("path");
-const url = "posts/";
+const url = "posts";
 
 class FileHandling {
   // Get Directories
