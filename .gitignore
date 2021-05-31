@@ -2,7 +2,7 @@ node_modules/
 .vscode/
 
 # exclude everything
-uploads/*
+# uploads/*
 
 # exception to the rule
-!uploads/.gitkeep 
+# !uploads/.gitkeep 
