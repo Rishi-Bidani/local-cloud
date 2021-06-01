@@ -72,6 +72,7 @@ ul {
 }
 li {
   padding: 0.5rem 1rem;
+  text-align: left;
 }
 li:hover {
   background-color: lightgrey;
