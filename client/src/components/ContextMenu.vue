@@ -6,7 +6,11 @@
     :key="`container-${contKey}`"
   >
     <ul v-if="show && active">
-      <li v-for="(item, itemIndex) in menu" :key="`ctx-item-${itemIndex}`">
+      <li
+        v-for="(item, itemIndex) in menu"
+        :key="`ctx-item-${itemIndex}`"
+        @click="sendClickAction(item)"
+      >
         {{ item }}
       </li>
     </ul>
@@ -44,6 +48,10 @@ export default {
       this.active = false;
       this.contKey++;
     },
+    sendClickAction: function(item) {
+      this.$emit("clickedItem", item);
+      this.removeActive();
+    },
   },
 };
 </script>
@@ -63,7 +71,7 @@ ul {
   list-style: none;
 }
 li {
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
 }
 li:hover {
   background-color: lightgrey;
