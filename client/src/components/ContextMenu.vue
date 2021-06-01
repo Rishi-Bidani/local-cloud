@@ -1,6 +1,11 @@
 <template>
-  <div class="ctx-container" :style="posStyle">
-    <ul v-if="show">
+  <div
+    class="ctx-container"
+    :style="posStyle"
+    @mouseleave="removeActive"
+    :key="`container-${contKey}`"
+  >
+    <ul v-if="show && active">
       <li v-for="(item, itemIndex) in menu" :key="`ctx-item-${itemIndex}`">
         {{ item }}
       </li>
@@ -20,12 +25,24 @@ export default {
     x: Number,
     y: Number,
   },
+  data() {
+    return {
+      active: true,
+      contKey: 0,
+    };
+  },
   computed: {
     posStyle() {
       return {
         "--top": this.y + "px",
         "--left": this.x + "px",
       };
+    },
+  },
+  methods: {
+    removeActive: function() {
+      this.active = false;
+      this.contKey++;
     },
   },
 };
