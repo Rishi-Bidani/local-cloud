@@ -5,7 +5,7 @@
         v-for="(folder, index) in folders"
         :key="`Folder-${index}`"
         v-on:click="navigation(folder)"
-        @contextmenu.prevent="ctxmenu($event)"
+        @contextmenu.prevent="ctxmenu(folder, $event)"
       >
         <img src="../assets/folder.svg" alt="Folder" class="folderIcon" />
         <figcaption>{{ folder }}</figcaption>
@@ -99,11 +99,12 @@ export default {
       error: "",
       getDirPath: ".",
       refreshKey: 0,
-      options: ["test1", "test2"],
+      options: ["Delete Folder", "test2"],
       ctxX: 0,
       ctxY: 0,
       ctxshow: false,
       ctxkey: 0,
+      ctxfolder: "",
     };
   },
   async created() {
@@ -137,14 +138,16 @@ export default {
       console.log("double click");
       FileHandling.SendForDownload(this.getPropDirPath, item);
     },
-    ctxmenu: function(e) {
+    ctxmenu: function(ctxfolder, e) {
       this.ctxX = e.clientX;
       this.ctxY = e.clientY;
       this.ctxshow = true;
+      this.ctxfolder = ctxfolder;
       this.ctxkey++;
     },
     ctxClick(item) {
       console.log(item);
+      console.log(this.getPropDirPath, this.ctxfolder);
     },
   },
 };
