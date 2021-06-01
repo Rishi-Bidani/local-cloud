@@ -60,8 +60,7 @@ router.post("/newFolder", (req, res) => {
 // Get Directories
 router.post("/dir", async (req, res) => {
   let dir = req.body.dir;
-  // console.log(dir);
-  console.log(await FilesAndFoldersArgs(dir));
+  // console.log(await FilesAndFoldersArgs(dir));
   res.json(await FilesAndFoldersArgs(dir));
 });
 
@@ -92,7 +91,6 @@ router.post("/upload", upload.any(), (req, res) => {
 // Delete a file
 router.post("/deleteFile", (req, res) => {
   let fullPath = path.join(uploadsFolder, req.body.fullPath);
-  // console.log(fullPath);
   fs.unlinkSync(fullPath);
   res.end("Deleted Successfully");
 });

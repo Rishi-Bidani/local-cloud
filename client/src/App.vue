@@ -44,11 +44,13 @@
             :getPropDirPath="navpath"
             v-on:fileDetails="displayDetails"
           />
-          <Modal v-show="isModalVisible" @close="closeModal" v-on:submitFolderName="submitFolder" />
         </div>
+        <Modal v-show="isModalVisible" @close="closeModal" v-on:submitFolderName="submitFolder" />
+
         <!--  -->
-        <div ref="dropzone"></div>
-        <DropZone :currentPath="navpath" v-on:finishedUpload="finishUpload" ref="myDropzone" />
+        <div ref="dropzone">
+          <DropZone :currentPath="navpath" v-on:finishedUpload="finishUpload" ref="myDropzone" />
+        </div>
       </div>
     </div>
   </div>
@@ -229,6 +231,7 @@ export default {
   font-weight: bold;
   cursor: pointer;
   display: inline-block;
+  vertical-align: sub;
 }
 .navlinks:hover {
   color: blueviolet;
