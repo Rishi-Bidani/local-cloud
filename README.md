@@ -83,6 +83,23 @@ a better bundled package
 
 5. You can access the website on any device at that address
 
+<a name="docker"></a>
+
+## Running inside of Docker
+
+To run local-cloud inside of Docker, run the following command in the root directory
+```
+docker build -t local-cloud .
+docker run -d -p 5000:5000 -v "uploads:/usr/src/app/uploads" local-cloud
+```
+
+### Docker Compose
+
+If you want to use Docker Compose, run the following command
+```
+docker-compose up -d
+```
+
 <a name="dependencies"></a>
 
 ## Libraries used - Links to npm/official website :computer:
