@@ -32,7 +32,7 @@
               :key="`nav-${navInd}`"
               v-on:click="navlinknav(navInd)"
             >
-              <span> &nbsp;{{ nav }} > </span>
+              <span> &nbsp;{{ nav + " > " }} </span>
             </div>
           </div>
         </div>
