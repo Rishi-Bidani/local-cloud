@@ -5,6 +5,7 @@
         v-for="(folder, index) in folders"
         :key="`Folder-${index}`"
         v-on:click="navigation(folder)"
+        @contextmenu.prevent="ctxmenu($event)"
       >
         <img src="../assets/folder.svg" alt="Folder" class="folderIcon" />
         <figcaption>{{ folder }}</figcaption>
@@ -70,13 +71,19 @@
         <figcaption>{{ file.fileName }}</figcaption>
       </figure>
     </div>
+    <ctxMenu :menu="options" :show="ctxshow" :x="ctxX" :y="ctxY" :key="`ctx-${ctxkey}`" />
   </div>
 </template>
 
 <script>
 import FileHandling from "../fileHandling";
+import ctxMenu from "./ContextMenu.vue";
+
 export default {
   name: "Home",
+  components: {
+    ctxMenu,
+  },
   props: ["getPropDirPath"],
   data() {
     return {
@@ -85,6 +92,11 @@ export default {
       error: "",
       getDirPath: ".",
       refreshKey: 0,
+      options: ["test1", "test2"],
+      ctxX: 0,
+      ctxY: 0,
+      ctxshow: false,
+      ctxkey: 0,
     };
   },
   async created() {
@@ -117,6 +129,12 @@ export default {
     autodownload: function(item) {
       console.log("double click");
       FileHandling.SendForDownload(this.getPropDirPath, item);
+    },
+    ctxmenu: function(e) {
+      this.ctxX = e.clientX;
+      this.ctxY = e.clientY;
+      this.ctxshow = true;
+      this.ctxkey++;
     },
   },
 };
