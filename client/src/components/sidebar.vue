@@ -46,7 +46,7 @@ export default {
             element: "img",
             attributes: {
               src: icons.newFolder,
-              // alt: "new Folder",
+              style: "background-color: transparent",
             },
           },
         },
@@ -56,6 +56,7 @@ export default {
             element: "img",
             attributes: {
               src: icons.upload,
+              style: "background-color: transparent",
             },
           },
         },
@@ -75,6 +76,7 @@ export default {
             element: "img",
             attributes: {
               src: icons.download,
+              style: "background-color: transparent",
             },
           },
           disabled: this.disabled,
@@ -85,6 +87,7 @@ export default {
             element: "img",
             attributes: {
               src: icons.delete,
+              style: "background-color: transparent",
             },
           },
           disabled: this.disabled,
