@@ -71,7 +71,14 @@
         <figcaption>{{ file.fileName }}</figcaption>
       </figure>
     </div>
-    <ctxMenu :menu="options" :show="ctxshow" :x="ctxX" :y="ctxY" :key="`ctx-${ctxkey}`" />
+    <ctxMenu
+      :menu="options"
+      :show="ctxshow"
+      :x="ctxX"
+      :y="ctxY"
+      v-on:clickedItem="ctxClick"
+      :key="`ctx-${ctxkey}`"
+    />
   </div>
 </template>
 
@@ -135,6 +142,9 @@ export default {
       this.ctxY = e.clientY;
       this.ctxshow = true;
       this.ctxkey++;
+    },
+    ctxClick(item) {
+      console.log(item);
     },
   },
 };
