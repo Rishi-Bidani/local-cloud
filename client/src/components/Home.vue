@@ -99,7 +99,7 @@ export default {
       error: "",
       getDirPath: ".",
       refreshKey: 0,
-      options: ["Delete Folder", "test2"],
+      options: ["Delete Folder", "Download Folder"],
       ctxX: 0,
       ctxY: 0,
       ctxshow: false,
@@ -149,8 +149,7 @@ export default {
         case "Delete Folder":
           if (
             confirm(
-              `Are you sure you want delete ${this.ctxfolder}. 
-               This will delete all its contents!`
+              `Are you sure you want delete ${this.ctxfolder}.\nThis will delete all its contents!❗❗`
             )
           ) {
             // OK
@@ -158,6 +157,11 @@ export default {
           } else {
             // Cancel
           }
+          break;
+
+        case "Download Folder":
+          console.log("download folder");
+          FileHandling.SendFolderForDownload(this.getPropDirPath, this.ctxfolder);
           break;
       }
     },

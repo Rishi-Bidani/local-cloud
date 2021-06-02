@@ -28,7 +28,7 @@ class FileHandling {
       folderName: folderName,
     });
   }
-  // Requesting for download
+  // Requesting download of file
   static SendForDownload(filePath, fileName) {
     axios
       .get(`${url}/downloadFile/${filePath}/${fileName}`, {
@@ -50,12 +50,35 @@ class FileHandling {
   }
   // Deleting File
   static SendForDelete(filePath, fileName) {
-    let fullPath = path.join(filePath, fileName);
+    const fullPath = path.join(filePath, fileName);
     axios.post(`${url}/deleteFile/`, { fullPath }).catch((err) => console.log(err));
   }
+  // Delete Folder
   static SendFolderForDelete(folderPath, folderName) {
     const fullPath = path.join(folderPath, folderName);
     axios.post(`${url}/deleteFolder/`, { fullPath }).catch((err) => console.log(err));
+  }
+  // Requesting Download Folder
+  static SendFolderForDownload(folderPath, folderName) {
+    const fullPath = path.join(folderPath, folderName);
+    axios
+      .post(
+        `${url}/downloadFolder/`,
+        { fullPath, folderName },
+        {
+          responseType: "arraybuffer",
+        }
+      )
+      .then((response) => {
+        var blob = new Blob([response.data], { type: "application/zip" });
+        var link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = folderName;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 
