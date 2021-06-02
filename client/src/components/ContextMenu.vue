@@ -1,3 +1,4 @@
+// Copyright 2020-2021 Rishi Bidani
 <template>
   <div
     class="ctx-container"
@@ -68,6 +69,7 @@ export default {
   cursor: pointer;
 }
 ul {
+  padding: 0.5rem 1rem;
   list-style: none;
 }
 li {
@@ -76,5 +78,6 @@ li {
 }
 li:hover {
   background-color: lightgrey;
+  border-radius: 0.2rem;
 }
 </style>

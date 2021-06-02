@@ -1,3 +1,4 @@
+// Copyright 2020-2021 Rishi Bidani
 import axios from "axios";
 const path = require("path");
 const url = "posts"; // earlier => posts/

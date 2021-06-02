@@ -1,17 +1,21 @@
 # local-cloud
 
-This project is still under development:bangbang:
+## Version 2.3 coming soon with several new features!!
+
+This project is still under development (**Not** in early stages anymore), It has several features already implemented :bangbang:
 
 This program can turn your desktop into a local cloud server. This is a website which will run locally over your wifi(without port forwarding) and will be accessible to all your devices.
 
 You can now access and transfer files from your different devices with ease.
 The new version (version 2) has been implemented using vuejs.
+Version 1 was a pilot project and is not recommended for use(it is not supported by me any longer).
 
 ## Table Of Contents
 
 - [Images](#images):file_folder:
 - [Setup Requirements](#setup) :rocket:
 - [Access the Website](#access):key:
+- [Docker Setup](#docker):whale:
 - [Libraries Used](#dependencies):computer:
 - [Future Plans](#plans):bulb:
 
@@ -53,10 +57,12 @@ a better bundled package
 
    ```bash
    TERMINAL 1
+   yarn install
    yarn start
 
    TERMINAL 2
    cd client
+   yarn install
    yarn serve
    ```
 
@@ -83,13 +89,15 @@ a better bundled package
 
 5. You can access the website on any device at that address
 
+<br />
+
 <a name="docker"></a>
 
-## Running inside of Docker
+## Running inside of Docker :whale:
 
 To run local-cloud inside of Docker, run the following command in the root directory
 
-```
+```bash
 docker build -t local-cloud .
 docker run -d -p 5000:5000 -v "uploads:/usr/src/app/uploads" local-cloud
 ```
@@ -98,17 +106,22 @@ docker run -d -p 5000:5000 -v "uploads:/usr/src/app/uploads" local-cloud
 
 If you want to use Docker Compose, run the following command
 
-```
+```bash
 docker-compose up -d
 ```
 
+<br />
+
 <a name="dependencies"></a>
 
-## Libraries used - Links to npm/official website :computer:
+## Libraries used - Links to some main ones npm/official website :computer:
 
-- <a href = "https://www.npmjs.com/package/express">expressjs</a>
+- <a href = "https://www.npmjs.com/package/express">expressjs</a> with axios, cors, multer, fs
 - <a href="https://www.npmjs.com/package/dropzone">dropzone.js</a>
 - <a href="https://vuejs.org/">vuejs</a>
+- <a href="https://www.npmjs.com/package/vue-sidebar-menu">vue-sidebar-menu</a>
+- <a href="https://www.npmjs.com/package/vue-js-modal">vue-js-modal</a>
+- <a href="https://github.com/Mostafa-Samir/zip-local">zip-local</a>
 
 <a name="plans"></a>
 
@@ -116,15 +129,15 @@ docker-compose up -d
 
 - [x] Pilot project with vanilla html-css and js
 - [x] Implement with vuejs
+- [x] Fix some UI issues - aligning etc
 - [x] Create Folders
 - [x] Download Files
 - [x] Upload Files
 - [x] Delete files
 - [x] View File size
+- [x] Delete Folders
+- [x] Download entire folder(as a zip)
 - [ ] Handle Errors by sending response instead on console
-- [ ] Fix some UI issues - aligning etc
-- [ ] Download entire folder
-- [ ] Delete Folders
 - [ ] Implement some security features
 
 <br />

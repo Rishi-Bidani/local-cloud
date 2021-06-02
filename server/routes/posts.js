@@ -76,9 +76,13 @@ router.get("/downloadFile/:file(*)", (req, res) => {
 router.post("/downloadFolder", (req, res) => {
   const fullPath = path.join(uploadsFolder, req.body.fullPath);
   const saveLocation = path.join(fullPath, `${req.body.folderName}.zip`);
+  // Delete zipped file if it exists
+  if (fs.existsSync(saveLocation)) {
+    fs.unlinkSync(saveLocation);
+  } else {
+  }
   zipper.sync.zip(fullPath).compress().save(saveLocation);
-  const zippedFolder = path.join(fullPath, `${req.body.folderName}.zip`);
-  res.sendFile(zippedFolder, (err) => console.log(err));
+  res.sendFile(saveLocation, (err) => console.log(err));
 });
 
 // Upload File
@@ -106,8 +110,11 @@ router.post("/deleteFile", (req, res) => {
 // Delete folder
 router.post("/deleteFolder", (req, res) => {
   const fullPath = path.join(uploadsFolder, req.body.fullPath);
-  fs.rmdirSync(fullPath, { recursive: true });
-  res.end;
+  if (fs.existsSync(fullPath)) {
+    fs.rmdirSync(fullPath, { recursive: true });
+  } else {
+  }
+  res.end();
 });
 
 module.exports = router;
