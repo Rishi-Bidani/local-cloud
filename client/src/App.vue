@@ -141,10 +141,6 @@ export default {
       this.downloadbuttondata = pathAndName;
       this.deleteButtonData = pathAndName;
     },
-    // makeDownloadButton(data) {
-    //   // this.downloadbuttondata = data;
-    //   console.log(data);
-    // },
     finishUpload() {
       this.HomeKey++;
     },
