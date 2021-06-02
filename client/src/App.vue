@@ -43,13 +43,14 @@
             v-on:folderPath="navigation"
             :getPropDirPath="navpath"
             v-on:fileDetails="displayDetails"
+            v-on:FolderDeleted="updateHome"
           />
         </div>
         <Modal v-show="isModalVisible" @close="closeModal" v-on:submitFolderName="submitFolder" />
 
         <!--  -->
         <div ref="dropzone">
-          <DropZone :currentPath="navpath" v-on:finishedUpload="finishUpload" ref="myDropzone" />
+          <DropZone :currentPath="navpath" v-on:finishedUpload="updateHome" ref="myDropzone" />
         </div>
       </div>
     </div>
@@ -141,7 +142,7 @@ export default {
       this.downloadbuttondata = pathAndName;
       this.deleteButtonData = pathAndName;
     },
-    finishUpload() {
+    updateHome() {
       this.HomeKey++;
     },
   },
