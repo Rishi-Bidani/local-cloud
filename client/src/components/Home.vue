@@ -127,7 +127,6 @@ export default {
       this.$emit("folderPath", this.getDirPath);
     },
     emitDetails: function(fileDetails) {
-      // console.log(fileSize);
       let pathAndName = {
         gpdp: this.getPropDirPath,
         fname: fileDetails.fname,
@@ -135,7 +134,6 @@ export default {
       this.$emit("fileDetails", fileDetails, pathAndName);
     },
     autodownload: function(item) {
-      console.log("double click");
       FileHandling.SendForDownload(this.getPropDirPath, item);
     },
     ctxmenu: function(ctxfolder, e) {
@@ -146,8 +144,22 @@ export default {
       this.ctxkey++;
     },
     ctxClick(item) {
-      console.log(item);
-      console.log(this.getPropDirPath, this.ctxfolder);
+      // item == context menu clicked item
+      switch (item) {
+        case "Delete Folder":
+          if (
+            confirm(
+              `Are you sure you want delete ${this.ctxfolder}. 
+               This will delete all its contents!`
+            )
+          ) {
+            // OK
+            FileHandling.SendFolderForDelete(this.getPropDirPath, this.ctxfolder);
+          } else {
+            // Cancel
+          }
+          break;
+      }
     },
   },
 };

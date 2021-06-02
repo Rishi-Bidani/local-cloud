@@ -66,8 +66,6 @@ router.post("/dir", async (req, res) => {
 
 // Handles requests for downloading files
 router.get("/downloadFile/:file(*)", (req, res) => {
-  // let filePath = req.body.filePath;
-  // let fileName = req.body.fileName;
   let fullPath = path.join(uploadsFolder, req.params.file);
   console.log(fullPath);
   res.sendFile(fullPath, (err) => console.log);
@@ -93,6 +91,13 @@ router.post("/deleteFile", (req, res) => {
   let fullPath = path.join(uploadsFolder, req.body.fullPath);
   fs.unlinkSync(fullPath);
   res.end("Deleted Successfully");
+});
+
+// Delete folder
+router.post("/deleteFolder", (req, res) => {
+  const fullPath = path.join(uploadsFolder, req.body.fullPath);
+  fs.rmdirSync(fullPath, { recursive: true });
+  res.end;
 });
 
 module.exports = router;

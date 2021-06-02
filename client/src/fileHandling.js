@@ -53,6 +53,10 @@ class FileHandling {
     let fullPath = path.join(filePath, fileName);
     axios.post(`${url}/deleteFile/`, { fullPath }).catch((err) => console.log(err));
   }
+  static SendFolderForDelete(folderPath, folderName) {
+    const fullPath = path.join(folderPath, folderName);
+    axios.post(`${url}/deleteFolder/`, { fullPath }).catch((err) => console.log(err));
+  }
 }
 
 export default FileHandling;
