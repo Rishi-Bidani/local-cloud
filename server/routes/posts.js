@@ -3,13 +3,17 @@ const express = require("express");
 const fs = require("fs");
 const router = express.Router();
 const path = require("path");
-const uploadsFolder = path.join(__dirname, "../../uploads");
+// const uploadsFolder = path.join(__dirname, "../../uploads");
 const multer = require("multer");
 const zipper = require("zip-local");
 
+const os = require("os");
+const uploadsFolder = path.join(os.homedir(), "HomeCloud");
+
 // Setup storage for multer middleware
 var storage = multer.diskStorage({
-  destination: path.join(__dirname, "../../uploads"),
+  // destination: path.join(__dirname, "../../uploads"),
+  destination: path.join(uploadsFolder),
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },

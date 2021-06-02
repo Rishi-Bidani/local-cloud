@@ -1,7 +1,5 @@
 # local-cloud
 
-## Version 2.3 coming soon with several new features!!
-
 This project is still under development (**Not** in early stages anymore), It has several features already implemented :bangbang:
 
 This program can turn your desktop into a local cloud server. This is a website which will run locally over your wifi(without port forwarding) and will be accessible to all your devices.
@@ -9,6 +7,19 @@ This program can turn your desktop into a local cloud server. This is a website 
 You can now access and transfer files from your different devices with ease.
 The new version (version 2) has been implemented using vuejs.
 Version 1 was a pilot project and is not recommended for use(it is not supported by me any longer).
+
+## Version 2.3 coming soon with several new features !!
+
+### What's new
+
+- Delete Files
+- Download from releases, the app is finally PACKAGED as an executable!! You don't need to download nodejs or anything else anymore
+- delete folder (in context menu- right click)
+- download entire folder (in context menu- right click)
+- Upload folder has shifted to home directory
+  - For windows => Users > username > HomeCloud
+- You don't need to look for your ipv4 address anymore, it displays it for you
+  <br />
 
 ## Table Of Contents
 
@@ -66,7 +77,7 @@ a better bundled package
    yarn serve
    ```
 
-3. THe website can be found on ipv4:8080, check version 1 procedure to see how you can find your ipv4 address.
+3. The website can be found on ipv4:8080, check version 1 procedure to see how you can find your ipv4 address.
 
 <b>For version 1</b>
 <br />
@@ -122,6 +133,7 @@ docker-compose up -d
 - <a href="https://www.npmjs.com/package/vue-sidebar-menu">vue-sidebar-menu</a>
 - <a href="https://www.npmjs.com/package/vue-js-modal">vue-js-modal</a>
 - <a href="https://github.com/Mostafa-Samir/zip-local">zip-local</a>
+- <a href="https://www.npmjs.com/package/local-ipv4-address">local-ipv4-address</a>
 
 <a name="plans"></a>
 
