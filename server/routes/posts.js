@@ -5,6 +5,7 @@ const router = express.Router();
 const path = require("path");
 const uploadsFolder = path.join(__dirname, "../../uploads");
 const multer = require("multer");
+const zipper = require("zip-local");
 
 // Setup storage for multer middleware
 var storage = multer.diskStorage({
@@ -59,16 +60,25 @@ router.post("/newFolder", (req, res) => {
 
 // Get Directories
 router.post("/dir", async (req, res) => {
-  let dir = req.body.dir;
+  const dir = req.body.dir;
   // console.log(await FilesAndFoldersArgs(dir));
   res.json(await FilesAndFoldersArgs(dir));
 });
 
 // Handles requests for downloading files
 router.get("/downloadFile/:file(*)", (req, res) => {
-  let fullPath = path.join(uploadsFolder, req.params.file);
+  const fullPath = path.join(uploadsFolder, req.params.file);
   console.log(fullPath);
   res.sendFile(fullPath, (err) => console.log);
+});
+
+// Download folder
+router.post("/downloadFolder", (req, res) => {
+  const fullPath = path.join(uploadsFolder, req.body.fullPath);
+  const saveLocation = path.join(fullPath, `${req.body.folderName}.zip`);
+  zipper.sync.zip(fullPath).compress().save(saveLocation);
+  const zippedFolder = path.join(fullPath, `${req.body.folderName}.zip`);
+  res.sendFile(zippedFolder, (err) => console.log(err));
 });
 
 // Upload File

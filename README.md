@@ -23,7 +23,7 @@ The new version (version 2) has been implemented using vuejs.
 These images might be from older versions of the same app and might appear different from the one you setup. Please open an issue for requesting icons or suggesting any colour improvements.
 ![image](https://user-images.githubusercontent.com/64310471/118494261-996fdd80-b73f-11eb-8013-80794fad875d.png)
 
-![image](https://user-images.githubusercontent.com/64310471/118494035-57469c00-b73f-11eb-9265-5118659f7495.png)
+![image](https://user-images.githubusercontent.com/64310471/120432554-b7704b80-c397-11eb-9f53-7ca4c9a59f23.png)
 
 <br />
 <a name="setup"></a>
@@ -88,6 +88,7 @@ a better bundled package
 ## Running inside of Docker
 
 To run local-cloud inside of Docker, run the following command in the root directory
+
 ```
 docker build -t local-cloud .
 docker run -d -p 5000:5000 -v "uploads:/usr/src/app/uploads" local-cloud
@@ -96,6 +97,7 @@ docker run -d -p 5000:5000 -v "uploads:/usr/src/app/uploads" local-cloud
 ### Docker Compose
 
 If you want to use Docker Compose, run the following command
+
 ```
 docker-compose up -d
 ```
