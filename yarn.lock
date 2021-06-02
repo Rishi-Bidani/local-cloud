@@ -729,6 +729,13 @@ latest-version@^5.0.0:
   dependencies:
     package-json "^6.3.0"
 
+local-ipv4-address@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/local-ipv4-address/-/local-ipv4-address-0.0.2.tgz#0d6507101083b37205bf7297b92b34aa660291b7"
+  integrity sha1-DWUHEBCDs3IFv3KXuSs0qmYCkbc=
+  dependencies:
+    q "1.5.0"
+
 lowercase-keys@^1.0.0, lowercase-keys@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-1.0.1.tgz#6f9e30b47084d971a7c820ff15a6c5167b74c26f"
@@ -960,6 +967,11 @@ pupa@^2.0.1:
   integrity sha512-l1jNAspIBSFqbT+y+5FosojNpVpF94nlI+wDUpqP9enwOTfHx9f0gh5nB96vl+6yTpsJsypeNrwfzPrKuHB41A==
   dependencies:
     escape-goat "^2.0.0"
+
+q@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/q/-/q-1.5.0.tgz#dd01bac9d06d30e6f219aecb8253ee9ebdc308f1"
+  integrity sha1-3QG6ydBtMObyGa7LglPunr3DCPE=
 
 q@^1.4.1:
   version "1.5.1"
