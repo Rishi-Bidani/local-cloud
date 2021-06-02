@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container2" :key="`ref-${refreshKey}`">
+  <div class="main-container2">
     <div class="HomeGrid">
       <figure
         v-for="(folder, index) in folders"
@@ -98,7 +98,6 @@ export default {
       files: [],
       error: "",
       getDirPath: ".",
-      refreshKey: 0,
       options: ["Delete Folder", "Download Folder"],
       ctxX: 0,
       ctxY: 0,
@@ -154,6 +153,7 @@ export default {
           ) {
             // OK
             FileHandling.SendFolderForDelete(this.getPropDirPath, this.ctxfolder);
+            this.$emit("FolderDeleted");
           } else {
             // Cancel
           }
