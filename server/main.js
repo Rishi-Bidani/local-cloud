@@ -9,6 +9,7 @@ const localIpV4Address = require("local-ipv4-address");
 const os = require("os");
 const dirname = process.cwd();
 const uploadsFolder = path.join(os.homedir(), "HomeCloud");
+const chalk = require("chalk");
 // const uploadsFolder = path.join(__dirname, "../uploads");
 
 // MiddleWare
@@ -42,9 +43,9 @@ const port = process.env.PORT || 5000;
 http.listen(port, "0.0.0.0", () => {
   localIpV4Address().then(function (ipAddress) {
     const websiteLink = `http://${ipAddress}:${port}`;
-    console.log(`Website live on: ${websiteLink}`);
-    const start =
-      process.platform == "darwin" ? "open" : process.platform == "win32" ? "start" : "xdg-open";
-    require("child_process").exec(start + " " + websiteLink);
+    console.log(`Website live on: ${chalk.cyan(websiteLink)}`);
+    // const start =
+    //   process.platform == "darwin" ? "open" : process.platform == "win32" ? "start" : "xdg-open";
+    // require("child_process").exec(start + " " + websiteLink);
   });
 });

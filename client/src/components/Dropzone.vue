@@ -26,8 +26,11 @@
 </template>
 
 <script>
-import * as Dropzone from "dropzone/dist/min/dropzone.min.js";
+// import * as Dropzone from "dropzone/dist/min/dropzone.min.js";
 import FileHandling from "../fileHandling";
+const Dropzone = require("dropzone/dist/dropzone.js");
+// Updated default maxFilesize in dropzone.js directly - line 7089
+// New default maxFileSize = 15000 mib
 Dropzone.autoDiscover = true;
 export default {
   name: "DropZone",
