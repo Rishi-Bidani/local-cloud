@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "chalk": "^4.1.1",
     "cors": "^2.8.5",
     "dropzone": "^5.9.2",
     "express": "^4.17.1",

@@ -149,6 +149,7 @@ docker-compose up -d
 - [x] View File size
 - [x] Delete Folders
 - [x] Download entire folder(as a zip)
+- [ ] Coloured logging of events (for server console)
 - [ ] Handle Errors by sending response instead on console
 - [ ] Implement some security features
 
