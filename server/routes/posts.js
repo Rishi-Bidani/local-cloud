@@ -100,7 +100,7 @@ router.post("/dir", async (req, res) => {
 
 // Handles requests for downloading files _checkPath
 router.get("/downloadFile/:file(*)", (req, res) => {
-  const fullPath = path.resolve(uploadsFolder, req.params.file);
+  const fullPath = path.join(uploadsFolder, req.params.file);
   if (!checkPath(req.params.file)) {
     // Deny Access to any documents outside HomeCloud
     console.log(red.bold(`Access Denied to: ${dir}`));
