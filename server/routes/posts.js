@@ -9,11 +9,13 @@ const zipper = require("zip-local");
 const chalk = require("chalk");
 // const uploadsFolder = path.join(__dirname, "../../uploads");
 const uploadsFolder = path.join(os.homedir(), "HomeCloud");
+const homeDir = path.join(os.homedir());
 
 // Setup storage for multer middleware
 const storage = multer.diskStorage({
   // destination: path.join(__dirname, "../../uploads"),
-  destination: path.join(uploadsFolder),
+  // destination: path.join(uploadsFolder),
+  destination: homeDir,
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },
@@ -146,7 +148,7 @@ router.post("/upload", upload.any(), (req, res) => {
   // console.log(req.files);
   // console.log(req.body);
   for (let i = 0; i < req.files.length; i++) {
-    let oldPath = path.join(uploadsFolder, req.files[i].originalname);
+    let oldPath = path.join(homeDir, req.files[i].originalname);
     let newPath = path.join(uploadsFolder, req.body.path, req.files[i].originalname);
 
     fs.rename(oldPath, newPath, (err) => {
