@@ -8,7 +8,22 @@ You can now access and transfer files from your different devices with ease.
 The new version (version 2) has been implemented using vuejs.
 Version 1 was a pilot project and is not recommended for use(it is not supported by me any longer).
 
-## Version 2.3 coming soon with several new features !!
+## Version 2.4 coming soon !!
+
+### What's new
+
+- Log the contents on the server console (The logging is colour coded)
+
+  - Red = Error/Delete
+  - Green = Upload/Create new folder
+  - Blue = Download
+
+- Fixed bug - earlier if you uploaded a file that exists in root, into some subfolder, the root file would get deleted.
+- Several minor bugs fixed.
+- File Upload size increased to 60,000 MB from 256MB
+- Executables have been made available (since version 2.3)
+
+## Version 2.3 is Here !!
 
 ### What's new
 
@@ -77,7 +92,8 @@ a better bundled package
    yarn serve
    ```
 
-3. The website can be found on ipv4:8080, check version 1 procedure to see how you can find your ipv4 address.
+3. The website can be found on ipv4:8080, ~~check version 1 procedure to see how you can find your ipv4 address~~.
+   From version 2.4 onwards the ip address is displayed for you, visit that on any device on the same network.
 
 <b>For version 1</b>
 <br />
@@ -149,9 +165,8 @@ docker-compose up -d
 - [x] View File size
 - [x] Delete Folders
 - [x] Download entire folder(as a zip)
-- [ ] Coloured logging of events (for server console)
-- [ ] Handle Errors by sending response instead on console
-- [ ] Implement some security features
+- [x] Coloured logging of events (for server console)
+- [x] Implement some security features - Restricted access to other files on the system by blocking requests outside the home directory - This has been done for navigation(getting directory content), for downloading files and folders and for deleting files or folders
 
 <br />
 
@@ -159,6 +174,7 @@ docker-compose up -d
 
 - Check file size
 - ctrl + click on file to download directly
+- Right click folder for context menu
 
 ## Icon Credits
 

@@ -41,10 +41,18 @@ export default {
       dzkey: 0,
     };
   },
+  mounted() {
+    this.dropconfig();
+  },
   methods: {
     finishUpload() {
       this.$refs.myDropzone.dropzone.removeAllFiles();
       this.$emit("finishedUpload");
+    },
+    dropconfig() {
+      Dropzone.Dropzone.options.myDropzone = {
+        maxFilesize: 60000, //MB = 60GB
+      };
     },
   },
 };
