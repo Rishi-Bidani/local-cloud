@@ -88,14 +88,18 @@ export default {
       dzkey: 0,
     };
   },
+  mounted() {
+    console.log("%cWARNING !!", "color:red; font-size: 25px");
+    console.log("%cDO NOT TYPE ANYTHING HERE !!", "color:blue; font-size: 25px");
+  },
   methods: {
     onItemClick(event, item) {
       event.preventDefault();
       if (item.title == "New Folder") {
-        console.log(item.title);
+        // console.log(item.title);
         this.showModal();
       } else if (item.title == "Upload") {
-        console.log(item.title);
+        // console.log(item.title);
         let dz = this.$refs["dropzone"];
         dz.scrollIntoView({ behavior: "smooth" });
       } else if (item.title == "Download" && !this.discheck) {
@@ -122,7 +126,7 @@ export default {
       this.dzid++;
     },
     navlinknav(navid) {
-      console.log(navid);
+      // console.log(navid);
       this.navpath = this.navpath
         .split("/")
         .slice(0, navid + 1)

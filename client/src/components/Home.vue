@@ -160,7 +160,7 @@ export default {
           break;
 
         case "Download Folder":
-          console.log("download folder");
+          // console.log("download folder");
           FileHandling.SendFolderForDownload(this.getPropDirPath, this.ctxfolder);
           break;
       }
