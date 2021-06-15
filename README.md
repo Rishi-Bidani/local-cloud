@@ -8,7 +8,7 @@ You can now access and transfer files from your different devices with ease.
 The new version (version 2) has been implemented using vuejs.
 Version 1 was a pilot project and is not recommended for use(it is not supported by me any longer).
 
-## Version 2.4 coming soon !!
+## Version 2.4 is Here !!
 
 ### What's new
 
