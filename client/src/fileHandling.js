@@ -5,21 +5,13 @@ const url = "posts"; // earlier => posts/
 
 class FileHandling {
   // Get Directories
-  static getDirectories(forPath) {
-    return new Promise((resolve, reject) => {
-      try {
-        const fileAndFolders = axios
-          .post(`${url}/dir`, {
-            dir: forPath,
-          })
-          .then((response) => {
-            return response;
-          });
-        return resolve(fileAndFolders);
-      } catch (error) {
-        reject(error);
-      }
-    });
+  static async getDirectories(forPath) {
+    try {
+      return await axios.post(`${url}/dir`, { dir: forPath });
+
+    } catch (error) {
+      console.log(error);
+    }
   }
   // Make Folder
   static newFolder(folderName, folderPath) {
