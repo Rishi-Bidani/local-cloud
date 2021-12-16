@@ -24,3 +24,14 @@ export const checkPath = (req, res, next) => {
         res.status(403)
     }
 }
+
+export const checkBodyPath = (req, res, next) => {
+    if (req.body.relPath === null) res.status(403).send("ERROR");
+    const relativePath = req.body.relPath;
+    const absolutePath = path.join(UPLOAD_FOLDER, relativePath)
+    if (absolutePath.includes(UPLOAD_FOLDER)) {
+        next()
+    } else {
+        res.status(403)
+    }
+}

@@ -2,10 +2,9 @@
 import express from "express";
 
 const router = express.Router();
-import * as path from "path";
+import path from "path";
 import {UPLOAD_FOLDER, checkPath, green, red} from "../js/globalvariables.js";
 import {fshandle as fsh} from "../js/fshandle.js";
-
 
 // Get directories
 router.get("/files-and-folders", checkPath, async (req, res) => {

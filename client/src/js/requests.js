@@ -9,9 +9,6 @@ export default class Request {
             return await axios.get("gets/files-and-folders", {
                 params: {
                     relPath: forPath
-                },
-                body: {
-                    relPath: forPath
                 }
             });
         } catch (err) {
@@ -33,6 +30,17 @@ export default class Request {
             link.href = window.URL.createObjectURL(blob);
             link.download = fileName;
             link.click();
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    static async createFolder(forPath, folderName) {
+        try {
+            return await axios.post("posts/create/folder", {
+                relPath: forPath,
+                folderName
+            })
         } catch (err) {
             console.log(err)
         }

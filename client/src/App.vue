@@ -20,6 +20,7 @@
                 v-on:download-file="downloadFile"
                 v-on:file-clicked="fileClicked"
             />
+            <Modal v-if="showModal" @cancel="showModal=false" @ok="newFolder"/>
         </main>
     </div>
 </template>
@@ -27,17 +28,19 @@
 <script>
 import SideBar from './components/sidebar.vue'
 import FilesAndFolders from "./components/filesandfolders.vue"
+import BreadCrumb from "@/components/breadcrumb.vue";
+import Modal from "@/components/modal.vue"
 
 // JS
 import Request from "./js/requests.js"
-import BreadCrumb from "@/components/breadcrumb";
 
 export default {
     name: 'App',
     components: {
         BreadCrumb,
         SideBar,
-        FilesAndFolders
+        FilesAndFolders,
+        Modal
     },
     data() {
         return {
@@ -48,6 +51,7 @@ export default {
             files: [],
             folders: [],
             relativePath: ["."],
+            showModal: false
         }
     },
     async created() {
@@ -82,11 +86,20 @@ export default {
             this.sidebarDownloadDisabled = false;
             console.log(this.sidebarFileName)
         },
-        clickedItem(item) {
+
+        async newFolder(folderName) {
+            const relativePathString = this.relativePath.join("/");
+            await Request.createFolder(relativePathString, folderName);
+            this.showModal = false;
+            await this.getFilesAndFolders(relativePathString);
+        },
+
+        async clickedItem(item) {
             switch (item.title) {
-                case "New Folder":
-                    console.log("newfolder");
+                case "New Folder": {
+                    this.showModal = true;
                     break;
+                }
                 case "Upload":
                     console.log("upload")
                     break;

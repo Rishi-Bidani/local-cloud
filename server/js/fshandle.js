@@ -27,9 +27,13 @@ export class fshandle {
     }
 
     // Make folder
-    static async makeFolder(getPath) {
+    static async makeFolder(forPath) {
+        // Additional options Specifying mode
+        const options = {
+            mode: 0o2775,
+        };
         try {
-            return await fse.ensureDir(getPath);
+            return await fse.ensureDir(forPath, options);
         } catch (err) {
             console.log(red("Folder not created: " + err))
         }

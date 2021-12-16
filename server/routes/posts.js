@@ -2,10 +2,10 @@
 import express from "express";
 import * as multer from "multer"
 import * as zipper from "zip-local"
-import * as FileHandle from "../js/fshandle.js";
+import {fshandle as FileHandle} from "../js/fshandle.js";
 import * as fs from "fs/promises"
 import * as path from "path";
-import {HOME_DIR, UPLOAD_FOLDER, checkPath} from "../js/globalvariables.js";
+import {HOME_DIR, UPLOAD_FOLDER, checkBodyPath} from "../js/globalvariables.js";
 
 
 const router = express.Router();
@@ -19,11 +19,13 @@ const storage = multer.diskStorage({
 });
 
 // Create new folder
-router.post("/create/folder", checkPath, async (req, res) => {
-    const relativePath = req.body.relpath;
+router.post("/create/folder", checkBodyPath, async (req, res) => {
+    const relativePath = req.body.relPath;
+    const folderName = req.body.folderName;
     const absolutePath = path.join(UPLOAD_FOLDER, relativePath);
-    const folderName = req.body.newFolderName;
     const fullPath = path.join(absolutePath, folderName)
+    console.log(fullPath)
+
     try {
         await FileHandle.makeFolder(fullPath);
         res.status(200).send("create folder")
