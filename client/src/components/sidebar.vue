@@ -29,7 +29,12 @@ export default {
     props: ["fileName", "fileSize", "disabled"],
     watch: {
         fileName: function () {
-            const item = this.menu.filter(items => items.id === "FileName")[0]
+            const item = this.menu.filter(items => items.id === "FileName")[0];
+            const itemSize = this.menu.filter(items => items.id === "FileSize")[0];
+            const filesize = this.fileSize === null ? "Not Selected" :
+                this.fileSize > 1000 ? (this.fileSize / 1000).toFixed(2) + "mb" :
+                    this.fileSize + "kb";
+            itemSize.title = `File Size: ${filesize}`
             item.title = `File Name: ${this.fileName === null ? "Not Selected" : this.fileName}`;
             item.attributes.title = `${this.fileName === null ? "Not Selected" : this.fileName}`;
         },
@@ -86,6 +91,7 @@ export default {
                     }
                 },
                 {
+                    id: "FileSize",
                     title: `File Size: ${this.fileSize === null ? 0 : this.fileSize}`,
                 },
                 {

@@ -9,7 +9,8 @@ export const blue = chalk.blue;
 export const cyan = chalk.cyan;
 
 // Important folder
-export const UPLOAD_FOLDER = path.join(os.homedir(), "HomeCloud");
+export const UPLOAD_FOLDER = path.join(os.homedir(), "HomeCloud", "DATA");
+export const UPLOAD_TEMP = path.join(os.homedir(), "HomeCloud", "temp");
 export const HOME_DIR = path.join(os.homedir());
 
 

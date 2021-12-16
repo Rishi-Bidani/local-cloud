@@ -8,6 +8,7 @@
             v-on:clicked-item="clickedItem"
         />
         <main class="container flex flex--column">
+
             <span class="title center">YOUR HOME CLOUD</span>
             <BreadCrumb
                 :navigationPath="relativePath"
@@ -19,9 +20,28 @@
                 v-on:clicked-folder="navigateFolder"
                 v-on:download-file="downloadFile"
                 v-on:file-clicked="fileClicked"
+                v-on:context-menu-invoked="ctxmenu"
             />
+
             <Modal v-if="showModal" @cancel="showModal=false" @ok="newFolder"/>
+            <div ref="dropzone" class="container">
+                <Dropzone
+                    :currentPath="relativePath.join('/')"
+                    v-on:finishedUpload="finishedUpload"
+                    ref="myDropzone"
+                />
+            </div>
+            <ContextMenu
+                :menu="options"
+                :show="ctxshow"
+                :x="ctxX"
+                :y="ctxY"
+                v-on:clickedItem="ctxClick"
+                :key="`ctx-${contextMenuKey}`"
+            />
+
         </main>
+
     </div>
 </template>
 
@@ -29,7 +49,9 @@
 import SideBar from './components/sidebar.vue'
 import FilesAndFolders from "./components/filesandfolders.vue"
 import BreadCrumb from "@/components/breadcrumb.vue";
-import Modal from "@/components/modal.vue"
+import Modal from "@/components/modal.vue";
+import Dropzone from "@/components/dropzone";
+import ContextMenu from '@/components/contextmenu.vue'
 
 // JS
 import Request from "./js/requests.js"
@@ -40,18 +62,35 @@ export default {
         BreadCrumb,
         SideBar,
         FilesAndFolders,
-        Modal
+        Modal,
+        Dropzone,
+        ContextMenu
     },
     data() {
         return {
+            // Globally useful
+            relativePath: ["."],
+
+            // Sidebar stuff
             sidebarFileName: null,
             sidebarFileSize: null,
             sidebarDownloadDisabled: true,
             sideBarId: 0,
+
+            // FilesAndFolder stuff
             files: [],
             folders: [],
-            relativePath: ["."],
-            showModal: false
+
+            // Modal stuff
+            showModal: false,
+
+            // Contextmenu stuff
+            options: ["Delete Folder", "Download Folder"],
+            ctxX: 0,
+            ctxY: 0,
+            ctxshow: false,
+            ctxMenuFolder: "",
+            contextMenuKey: 0
         }
     },
     async created() {
@@ -64,6 +103,10 @@ export default {
             const res = await Request.FilesAndFolders(forPath);
             this.files = res.data.files;
             this.folders = res.data.folders;
+            this.sidebarFileName = null;
+            this.sidebarFileSize = null;
+            this.sidebarDownloadDisabled = true;
+
         },
         navigateFolder(folderName) {
             this.relativePath.push(folderName);
@@ -100,18 +143,61 @@ export default {
                     this.showModal = true;
                     break;
                 }
-                case "Upload":
-                    console.log("upload")
+                case "Upload": {
+                    let dz = this.$refs["dropzone"];
+                    dz.scrollIntoView({behavior: "smooth"});
                     break;
-                case"Download":
-                    console.log("download");
+                }
+                case"Download": {
+                    const relativePathString = this.relativePath.join("/");
+                    await Request.downloadFile(relativePathString, this.sidebarFileName)
                     break;
-                case"Delete":
-                    console.log("delete");
+                }
+                case"Delete": {
+                    const relativePathString = this.relativePath.join("/");
+                    const fileName = this.sidebarFileName;
+                    await Request.deleteFile(relativePathString, fileName);
+                    this.getFilesAndFolders(relativePathString)
                     break;
+                }
 
             }
-        }
+        },
+        finishedUpload() {
+            this.getFilesAndFolders(this.relativePath.join("/"))
+        },
+
+        //    Context menu
+        ctxmenu(folder, event) {
+            this.ctxX = event.clientX;
+            this.ctxY = event.clientY;
+            this.ctxshow = true;
+            this.ctxMenuFolder = folder;
+            this.contextMenuKey++;
+        },
+        async ctxClick(item) {
+            // item == context menu clicked item
+            switch (item) {
+                case "Delete Folder": {
+                    if (confirm(`Are you sure you want delete ${this.ctxMenuFolder}.
+                        \nThis will delete all its contents!❗❗`)) {
+                        // OK
+                        await Request.deleteFolder(this.relativePath.join("/"), this.ctxMenuFolder);
+                        await this.getFilesAndFolders(this.relativePath.join("/"))
+                    } else {
+                        // Cancel
+                    }
+                    break;
+                }
+
+                case "Download Folder": {
+                    // console.log("download folder");
+                    console.log();
+                    // Request.deleteFolder(this.getPropDirPath, this.ctxfolder);
+                    break;
+                }
+            }
+        },
     }
 }
 </script>
@@ -164,6 +250,11 @@ export default {
 }
 
 main {
-    overflow-y: auto;
+    overflow-y: scroll;
+}
+
+footer {
+    display: flex;
+    width: 100%;
 }
 </style>

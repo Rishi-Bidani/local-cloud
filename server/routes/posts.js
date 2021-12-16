@@ -1,23 +1,23 @@
 // Copyright 2020-2021 Rishi Bidani
 import express from "express";
-import * as multer from "multer"
+import multer from "multer"
 import * as zipper from "zip-local"
 import {fshandle as FileHandle} from "../js/fshandle.js";
 import * as fs from "fs/promises"
 import * as path from "path";
-import {HOME_DIR, UPLOAD_FOLDER, checkBodyPath} from "../js/globalvariables.js";
+import {UPLOAD_TEMP, UPLOAD_FOLDER, checkBodyPath, red} from "../js/globalvariables.js";
 
 
 const router = express.Router();
 
 // Setup storage for multer middleware
 const storage = multer.diskStorage({
-    destination: HOME_DIR,
+    destination: UPLOAD_TEMP,
     filename: function (req, file, cb) {
         cb(null, file.originalname);
     },
 });
-
+const upload = multer({storage: storage}).any();
 // Create new folder
 router.post("/create/folder", checkBodyPath, async (req, res) => {
     const relativePath = req.body.relPath;
@@ -36,5 +36,25 @@ router.post("/create/folder", checkBodyPath, async (req, res) => {
 
 
 // Upload file
+router.post("/upload", (req, res) => {
+    upload(req, res, async (err) => {
+        if (err) {
+            console.log(red(err));
+            res.status(500).send("ERROR");
+        }
+        if (!req.files) {
+            res.status(500).send("Possible error: no files found");
+        } else {
+            // All req content is valid here => Perform all file based logic here
+            console.log(req.files, req.body);
+            const initialPath = req.files[0].path;
+            const finalPath = path.join(UPLOAD_FOLDER, req.body.relPath, req.files[0].originalname);
+            console.log(finalPath)
+            if (!finalPath.includes(UPLOAD_FOLDER)) res.status(403).send("RESTRICTED FOLDER")
+            await FileHandle.move(initialPath, finalPath);
+            res.json("Received File");
+        }
+    })
+})
 
 export {router}

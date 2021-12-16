@@ -39,6 +39,57 @@ export class fshandle {
         }
     }
 
-    // save files
+    // Move files
+    static async move(file, destination) {
+        try {
+            if (file !== destination) {
+                await fse.move(file, destination, {overwrite: true});
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // delete folder
+    static async deleteFolder(forPath) {
+        try {
+            await fse.remove(forPath)
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    // delete file
+    static async deleteFile(forPath) {
+        try {
+            await fse.remove(forPath);
+        } catch (err) {
+            console.log(red("ERROR: ", red))
+        }
+    }
+
+    // check if path is a directory
+    static async isDir(forPath) {
+        try {
+            const stat = await fsp.lstat(forPath);
+            const statIsDir = stat.isDirectory();
+            const exists = fs.existsSync(forPath);
+            return statIsDir && exists;
+        } catch (err) {
+            console.log(red("ERROR: " + err))
+        }
+    }
+
+    // check is path is a file
+    static async isFile(forPath) {
+        try {
+            const stat = await fsp.lstat(forPath);
+            const statIsFile = stat.isFile();
+            const exists = fs.existsSync(forPath);
+            return statIsFile && exists
+        } catch (err) {
+            console.log(red("ERROR: ", err))
+        }
+    }
 
 }

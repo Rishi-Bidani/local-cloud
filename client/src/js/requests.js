@@ -45,4 +45,36 @@ export default class Request {
             console.log(err)
         }
     }
+
+    static uploadURL() {
+        return "posts/upload"
+    }
+
+    static async deleteFolder(forPath, folderName) {
+        console.log(forPath, folderName)
+        try {
+            return await axios.delete("deletes/folder", {
+                params: {
+                    relPath: forPath,
+                    folderName
+                }
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    static async deleteFile(forPath, fileName) {
+        console.log(forPath, fileName);
+        try {
+            return await axios.delete("deletes/file", {
+                params: {
+                    relPath: forPath,
+                    fileName
+                }
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
 }

@@ -1,16 +1,17 @@
 <template>
-    <div class="container">
-        <div class="grid">
+    <div class="container--files-folders">
+        <article class="grid">
             <figure
                 v-for="(folder, index) in folders"
                 :key="`Folder-${index}`"
                 @click="navigateFolder(folder)"
+                @contextmenu.prevent="this.$emit('context-menu-invoked', folder, $event)"
             >
                 <img src="../assets/folder.svg" alt="Folder" class="icon icon--folder"/>
                 <figcaption>{{ folder }}</figcaption>
             </figure>
-        </div>
-        <div class="grid">
+        </article>
+        <article class="grid">
             <figure
                 v-for="(file, index) in files"
                 :key="`File-${index}`"
@@ -70,7 +71,7 @@
                 <img v-else src="../assets/fileLogos/warning.svg" class="icon--file"/>
                 <figcaption>{{ file.fileName }}</figcaption>
             </figure>
-        </div>
+        </article>
     </div>
 </template>
 
@@ -81,18 +82,27 @@ export default {
         files: Array,
         folders: Array
     },
+    data() {
+        return {}
+    },
     methods: {
         navigateFolder(folderName) {
             this.$emit("clicked-folder", folderName)
         },
         fileClicked(itemNumber, fileName, fileSize) {
             this.$emit('file-clicked', fileName, fileSize)
-        }
+        },
     }
 }
 </script>
 
 <style scoped>
+.container--files-folders {
+    display: flex;
+    flex-flow: column;
+    height: fit-content;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
