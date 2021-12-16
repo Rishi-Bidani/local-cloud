@@ -5,14 +5,20 @@
             :fileName="sidebarFileName"
             :fileSize="sidebarFileSize"
             :disabled="sidebarDownloadDisabled"
+            v-on:clicked-item="clickedItem"
         />
         <main class="container flex flex--column">
             <span class="title center">YOUR HOME CLOUD</span>
+            <BreadCrumb
+                :navigationPath="relativePath"
+                v-on:navigation-link-clicked="updateNavigation"
+            />
             <FilesAndFolders
                 :files="files"
                 :folders="folders"
                 v-on:clicked-folder="navigateFolder"
                 v-on:download-file="downloadFile"
+                v-on:file-clicked="fileClicked"
             />
         </main>
     </div>
@@ -24,22 +30,24 @@ import FilesAndFolders from "./components/filesandfolders.vue"
 
 // JS
 import Request from "./js/requests.js"
+import BreadCrumb from "@/components/breadcrumb";
 
 export default {
     name: 'App',
     components: {
+        BreadCrumb,
         SideBar,
         FilesAndFolders
     },
     data() {
         return {
-            sidebarFileName: "",
-            sidebarFileSize: "",
-            sidebarDownloadDisabled: "",
+            sidebarFileName: null,
+            sidebarFileSize: null,
+            sidebarDownloadDisabled: true,
             sideBarId: 0,
             files: [],
             folders: [],
-            relativePath: ["."]
+            relativePath: ["."],
         }
     },
     async created() {
@@ -61,6 +69,35 @@ export default {
         async downloadFile(fileName) {
             const relativePathString = this.relativePath.join("/");
             await Request.downloadFile(relativePathString, fileName);
+        },
+
+        async updateNavigation(name, index) {
+            if (this.relativePath[index] === name) this.relativePath.splice(index + 1);
+            const relativePathString = this.relativePath.join("/");
+            await this.getFilesAndFolders(relativePathString);
+        },
+        fileClicked(fileName, fileSize) {
+            this.sidebarFileName = fileName;
+            this.sidebarFileSize = fileSize;
+            this.sidebarDownloadDisabled = false;
+            console.log(this.sidebarFileName)
+        },
+        clickedItem(item) {
+            switch (item.title) {
+                case "New Folder":
+                    console.log("newfolder");
+                    break;
+                case "Upload":
+                    console.log("upload")
+                    break;
+                case"Download":
+                    console.log("download");
+                    break;
+                case"Delete":
+                    console.log("delete");
+                    break;
+
+            }
         }
     }
 }

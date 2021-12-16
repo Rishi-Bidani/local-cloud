@@ -5,6 +5,7 @@
         :collapsed="collapsed"
         :relative="true"
         :link-component-name="'custom-link'"
+        @item-click="clicked"
     />
 </template>
 
@@ -26,6 +27,23 @@ export default {
         SidebarMenu,
     },
     props: ["fileName", "fileSize", "disabled"],
+    watch: {
+        fileName: function () {
+            const item = this.menu.filter(items => items.id === "FileName")[0]
+            item.title = `File Name: ${this.fileName === null ? "Not Selected" : this.fileName}`;
+            item.attributes.title = `${this.fileName === null ? "Not Selected" : this.fileName}`;
+        },
+        disabled: function () {
+            const items = this.menu.filter(items => items.id === "Download" || items.id === "Delete");
+            items.forEach(item => item.disabled = this.disabled);
+        }
+    },
+    methods: {
+        clicked(event, item) {
+            event.preventDefault();
+            this.$emit("clicked-item", item)
+        }
+    },
     data() {
         return {
             width: "290px",
@@ -61,12 +79,17 @@ export default {
                     hiddenOnCollapse: true,
                 },
                 {
-                    title: `File Name: ${this.fileName === undefined ? "Not Selected" : this.fileName}`,
+                    id: "FileName",
+                    title: `File Name: ${this.fileName === null ? "Not Selected" : this.fileName}`,
+                    attributes: {
+                        title: `${this.fileName === null ? "Not Selected" : this.fileName}`
+                    }
                 },
                 {
-                    title: `File Size: ${this.fileSize === undefined ? 0 : this.fileSize}`,
+                    title: `File Size: ${this.fileSize === null ? 0 : this.fileSize}`,
                 },
                 {
+                    id: "Download",
                     title: "Download",
                     icon: {
                         element: "img",
@@ -78,6 +101,7 @@ export default {
                     disabled: this.disabled,
                 },
                 {
+                    id: "Delete",
                     title: "Delete",
                     icon: {
                         element: "img",

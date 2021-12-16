@@ -14,26 +14,28 @@
             <figure
                 v-for="(file, index) in files"
                 :key="`File-${index}`"
+                :ref="`File-${index}`"
                 class="file-padding"
                 v-on:click.ctrl.exact="this.$emit('download-file', file.fileName)"
-                @click.exact="
-                    emitDetails({ name: file.fileName, size: file.fileSize, fname: file.fileName })
-                "
+                @click.exact="fileClicked(index, file.fileName, file.fileSize)"
             >
                 <img
                     v-if="file.fileExtension === '.txt'"
                     src="../assets/fileLogos/txt.svg"
                     class="icon--file"
+                    alt="txt file"
                 />
                 <img
                     v-else-if="file.fileExtension === '.pdf'"
                     src="../assets/fileLogos/pdf.svg"
                     class="icon--file"
+                    alt="pdf file"
                 />
                 <img
                     class="icon--file"
                     v-else-if="file.fileExtension === '.xlsx' || file.fileExtension === '.xls'"
                     src="../assets/fileLogos/excel.svg"
+                    alt="excel file"
                 />
                 <img
                     class="icon--file"
@@ -46,6 +48,7 @@
                         ['.png', '.jpeg', '.jpg', '.svg', '.gif'].includes(file.fileExtension)
                     "
                     src="../assets/fileLogos/image.svg"
+                    alt="image file"
                 />
                 <img
                     class="icon--file"
@@ -56,11 +59,13 @@
                     class="icon--file"
                     v-else-if="['.mp4', '.mov', '.mkv', '.webm'].includes(file.fileExtension)"
                     src="../assets/fileLogos/video.svg"
+                    alt="video file"
                 />
                 <img
                     class="icon--file"
                     v-else-if="['.mp3'].includes(file.fileExtension)"
                     src="../assets/fileLogos/music.svg"
+                    alt="music file"
                 />
                 <img v-else src="../assets/fileLogos/warning.svg" class="icon--file"/>
                 <figcaption>{{ file.fileName }}</figcaption>
@@ -79,6 +84,9 @@ export default {
     methods: {
         navigateFolder(folderName) {
             this.$emit("clicked-folder", folderName)
+        },
+        fileClicked(itemNumber, fileName, fileSize) {
+            this.$emit('file-clicked', fileName, fileSize)
         }
     }
 }
@@ -123,4 +131,8 @@ figcaption {
     font-weight: 700;
     word-break: break-all;
 }
+
+/*.active {*/
+/*    background-color: var(--figure-hover))*/
+/*}*/
 </style>
