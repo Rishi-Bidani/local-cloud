@@ -35,6 +35,25 @@ export default class Request {
         }
     }
 
+    static async downloadFolder(forPath, folderName) {
+        try {
+            const res = await axios.get("gets/download-folder", {
+                responseType: "arraybuffer",
+                params: {
+                    relPath: forPath,
+                    folderName
+                }
+            })
+            const blob = new Blob([res.data]);
+            const link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.download = folderName + ".zip";
+            link.click();
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     static async createFolder(forPath, folderName) {
         try {
             return await axios.post("posts/create/folder", {

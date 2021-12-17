@@ -2,7 +2,7 @@
     <section class="container margin-center">
         <span
             class="nav-item"
-            v-for="(nav,index) in navigationPath"
+            v-for="(nav, index) in navigationPath"
             @click="this.$emit('navigation-link-clicked', nav, index)"
             :key="`nav-${index}`"
         >
@@ -15,7 +15,7 @@
 export default {
     name: "BreadCrumb",
     props: ["navigationPath"],
-}
+};
 </script>
 
 <style scoped>
