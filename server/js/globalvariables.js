@@ -22,6 +22,7 @@ export const checkPath = (req, res, next) => {
     if (absolutePath.includes(UPLOAD_FOLDER)) {
         next()
     } else {
+        console.log(red("\n Tried accessing: ", absolutePath, "\n"));
         res.status(403)
     }
 }
@@ -33,6 +34,7 @@ export const checkBodyPath = (req, res, next) => {
     if (absolutePath.includes(UPLOAD_FOLDER)) {
         next()
     } else {
+        console.log(red("\n Tried accessing: ", absolutePath, "\n"));
         res.status(403)
     }
 }

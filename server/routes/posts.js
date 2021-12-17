@@ -1,11 +1,10 @@
 // Copyright 2020-2021 Rishi Bidani
 import express from "express";
 import multer from "multer"
-import * as zipper from "zip-local"
-import {fshandle as FileHandle} from "../js/fshandle.js";
+import { fshandle as FileHandle } from "../js/fshandle.js";
 import * as fs from "fs/promises"
 import * as path from "path";
-import {UPLOAD_TEMP, UPLOAD_FOLDER, checkBodyPath, red} from "../js/globalvariables.js";
+import { UPLOAD_TEMP, UPLOAD_FOLDER, checkBodyPath, red, blue } from "../js/globalvariables.js";
 
 
 const router = express.Router();
@@ -17,7 +16,8 @@ const storage = multer.diskStorage({
         cb(null, file.originalname);
     },
 });
-const upload = multer({storage: storage}).any();
+const upload = multer({ storage: storage }).any();
+
 // Create new folder
 router.post("/create/folder", checkBodyPath, async (req, res) => {
     const relativePath = req.body.relPath;
@@ -28,14 +28,14 @@ router.post("/create/folder", checkBodyPath, async (req, res) => {
 
     try {
         await FileHandle.makeFolder(fullPath);
+        console.log(blue("Created folder: ", fullPath))
         res.status(200).send("create folder")
     } catch (err) {
         res.status(500).send(err)
     }
 })
 
-
-// Upload file
+// Upload files
 router.post("/upload", (req, res) => {
     upload(req, res, async (err) => {
         if (err) {
@@ -46,10 +46,9 @@ router.post("/upload", (req, res) => {
             res.status(500).send("Possible error: no files found");
         } else {
             // All req content is valid here => Perform all file based logic here
-            console.log(req.files, req.body);
             const initialPath = req.files[0].path;
             const finalPath = path.join(UPLOAD_FOLDER, req.body.relPath, req.files[0].originalname);
-            console.log(finalPath)
+            console.log(blue("Uploading: ", finalPath))
             if (!finalPath.includes(UPLOAD_FOLDER)) res.status(403).send("RESTRICTED FOLDER")
             await FileHandle.move(initialPath, finalPath);
             res.json("Received File");
@@ -57,4 +56,4 @@ router.post("/upload", (req, res) => {
     })
 })
 
-export {router}
+export { router }

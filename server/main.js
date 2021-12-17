@@ -9,7 +9,7 @@ import * as fs from "fs"
 const app = express();
 const http = h.Server(app)
 
-import {UPLOAD_FOLDER, HOME_DIR, cyan} from "./js/globalvariables.js";
+import { UPLOAD_FOLDER, HOME_DIR, cyan } from "./js/globalvariables.js";
 
 const dirname = process.cwd();
 // MiddleWare
@@ -32,10 +32,11 @@ app.use("/gets", gets.router);
 app.use("/deletes", deletes.router);
 
 // app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(dirname, "server", "public")));
+app.use(express.static(path.join(dirname, "public")));
 
 app.get("/.*/", (req, res) => {
-    res.sendFile(path.join(dirname, "server", "public", "index.html"));
+    // res.send("Hello world!")
+    res.sendFile(path.join(dirname, "public", "index.html"));
 });
 // Use default port during production, else 5000
 // Running on 0.0.0.0 instead of localhost so that its accessible to other devices

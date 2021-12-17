@@ -4,7 +4,7 @@ import * as fse from "fs-extra";
 import * as path from "path";
 
 // Colours for console
-import {red, blue, green} from "./globalvariables.js"
+import { red, blue, green } from "./globalvariables.js"
 
 
 export class fshandle {
@@ -12,18 +12,18 @@ export class fshandle {
     static async getFilesAndFolders(getPath) {
         const files = [];
         const folders = [];
-        const allRead = await fsp.readdir(getPath, {withFileTypes: true});
+        const allRead = await fsp.readdir(getPath, { withFileTypes: true });
         for (let read of allRead) {
             if (read.isFile()) {
                 const fileName = read.name;
                 const fileExtension = path.extname(read.name);
                 const fileSize = parseFloat(fs.statSync(path.join(getPath, fileName)).size / 1024).toFixed(3);
-                files.push({fileName, fileExtension, fileSize});
+                files.push({ fileName, fileExtension, fileSize });
             } else if (read.isDirectory()) {
                 folders.push(read.name);
             }
         }
-        return {files, folders}
+        return { files, folders }
     }
 
     // Make folder
@@ -43,7 +43,7 @@ export class fshandle {
     static async move(file, destination) {
         try {
             if (file !== destination) {
-                await fse.move(file, destination, {overwrite: true});
+                await fse.move(file, destination, { overwrite: true });
             }
         } catch (error) {
             console.error(error);
@@ -66,6 +66,11 @@ export class fshandle {
         } catch (err) {
             console.log(red("ERROR: ", red))
         }
+    }
+
+    // Exist
+    static existsSync(forPath) {
+        return fs.existsSync(forPath)
     }
 
     // check if path is a directory

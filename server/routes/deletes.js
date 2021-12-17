@@ -3,8 +3,8 @@ import express from "express";
 
 const router = express.Router();
 import path from "path";
-import {UPLOAD_TEMP, UPLOAD_FOLDER, checkPath, red} from "../js/globalvariables.js";
-import {fshandle as fsh} from "../js/fshandle.js";
+import { UPLOAD_FOLDER, checkPath, red } from "../js/globalvariables.js";
+import { fshandle as fsh } from "../js/fshandle.js";
 
 
 // Delete file
@@ -36,4 +36,4 @@ router.delete("/folder", checkPath, async (req, res) => {
     }
 })
 
-export {router}
+export { router }
