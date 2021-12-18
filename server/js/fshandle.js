@@ -1,13 +1,20 @@
 import * as fs from 'fs'
 import * as fsp from 'fs/promises';
-import * as fse from "fs-extra";
 import * as path from "path";
 
 // Colours for console
 import { red, blue, green } from "./globalvariables.js"
 
 
-export class fshandle {
+// =========================== PKG- cjs ===========================
+// const fs = require("fs");
+// const fsp = require("fs/promises");
+// // const fse = require("fs-extra");
+// const path = require("path");
+// const { red, blue, green } = require("./globalvariables.js");
+// ================================================================
+
+class fshandle {
     // return files and folders
     static async getFilesAndFolders(getPath) {
         const files = [];
@@ -33,7 +40,8 @@ export class fshandle {
             mode: 0o2775,
         };
         try {
-            return await fse.ensureDir(forPath, options);
+            // return await fse.ensureDir(forPath, options);
+            return await fsp.mkdir(forPath)
         } catch (err) {
             console.log(red("Folder not created: " + err))
         }
@@ -43,7 +51,8 @@ export class fshandle {
     static async move(file, destination) {
         try {
             if (file !== destination) {
-                await fse.move(file, destination, { overwrite: true });
+                // await fse.move(file, destination, { overwrite: true });
+                return await fsp.rename(file, destination);
             }
         } catch (error) {
             console.error(error);
@@ -53,7 +62,8 @@ export class fshandle {
     // delete folder
     static async deleteFolder(forPath) {
         try {
-            await fse.remove(forPath)
+            // await fse.remove(forPath)
+            return await fsp.rmdir(forPath)
         } catch (err) {
             console.error(err)
         }
@@ -62,7 +72,8 @@ export class fshandle {
     // delete file
     static async deleteFile(forPath) {
         try {
-            await fse.remove(forPath);
+            // await fse.remove(forPath);
+            return await fsp.unlink(forPath);
         } catch (err) {
             console.log(red("ERROR: ", red))
         }
@@ -98,3 +109,7 @@ export class fshandle {
     }
 
 }
+
+
+export { fshandle };
+// module.exports = fshandle;

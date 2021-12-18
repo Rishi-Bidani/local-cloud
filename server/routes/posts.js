@@ -1,11 +1,19 @@
 // Copyright 2020-2021 Rishi Bidani
+
 import express from "express";
 import multer from "multer"
-import { fshandle as FileHandle } from "../js/fshandle.js";
-import * as fs from "fs/promises"
+import { fshandle as fsh } from "../js/fshandle.js";
 import * as path from "path";
 import { UPLOAD_TEMP, UPLOAD_FOLDER, checkBodyPath, red, blue } from "../js/globalvariables.js";
 
+// =========================== PKG- cjs ===========================
+// const express = require("express");
+// const multer = require("multer");
+// const fsh = require("../js/fshandle.js");
+// const fs = require("fs/promises");
+// const path = require("path");
+// const { UPLOAD_TEMP, UPLOAD_FOLDER, checkBodyPath, red, blue } = require("../js/globalvariables.js");
+// =================================================================
 
 const router = express.Router();
 
@@ -27,7 +35,7 @@ router.post("/create/folder", checkBodyPath, async (req, res) => {
     console.log(fullPath)
 
     try {
-        await FileHandle.makeFolder(fullPath);
+        await fsh.makeFolder(fullPath);
         console.log(blue("Created folder: ", fullPath))
         res.status(200).send("create folder")
     } catch (err) {
@@ -50,10 +58,11 @@ router.post("/upload", (req, res) => {
             const finalPath = path.join(UPLOAD_FOLDER, req.body.relPath, req.files[0].originalname);
             console.log(blue("Uploading: ", finalPath))
             if (!finalPath.includes(UPLOAD_FOLDER)) res.status(403).send("RESTRICTED FOLDER")
-            await FileHandle.move(initialPath, finalPath);
+            await fsh.move(initialPath, finalPath);
             res.json("Received File");
         }
     })
 })
 
 export { router }
+// module.exports = { router };

@@ -8,6 +8,15 @@ import { zip, COMPRESSION_LEVEL } from 'zip-a-folder';
 import { UPLOAD_FOLDER, checkPath, green, red, blue } from "../js/globalvariables.js";
 import { fshandle as fsh } from "../js/fshandle.js";
 
+// =========================== PKG- cjs ===========================
+// const express = require("express");
+// const router = express.Router();
+// const path = require("path");
+// const { zip, COMPRESSION_LEVEL } = require('zip-a-folder');
+// const { UPLOAD_FOLDER, checkPath, green, red, blue } = require("../js/globalvariables.js");
+// const fsh = require("../js/fshandle.js");
+// =================================================================
+
 // Get directories
 router.get("/files-and-folders", checkPath, async (req, res) => {
     try {
@@ -54,3 +63,4 @@ router.get("/download-folder", checkPath, async (req, res) => {
 })
 
 export { router }
+// module.exports = { router }

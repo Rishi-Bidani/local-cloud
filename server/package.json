@@ -1,23 +1,43 @@
 {
     "name": "localcloud",
+    "bin": "main.js",
     "version": "1.0.0",
-    "main": "main.js",
+    "main": "./main.js",
     "author": "Rishi",
     "license": "MIT",
+    "//": [
+        "============================ COMMENTS HERE ============================",
+        "Remove `type: module` in package.json before building",
+        "Convert esm to require before building using pkg",
+        "============================ COMMENTS END HERE ============================"
+    ],
     "scripts": {
-        "start": "nodemon main.js"
+        "start": "nodemon main.js",
+        "rollup": "./node_modules/.bin/rollup -c",
+        "babel": "./node_modules/.bin/babel main.js --out-dir ../dist",
+        "build": "pkg ."
     },
     "dependencies": {
-        "chalk": "^5.0.0",
+        "chalk": "^4.1.1",
         "cors": "^2.8.5",
         "express": "^4.17.1",
-        "fs-extra": "^10.0.0",
         "local-ipv4-address": "^0.0.2",
         "multer": "^1.4.4",
-        "zip-a-folder": "^1.1.0",
-        "zip-local": "^0.3.4"
+        "zip-a-folder": "^1.1.0"
     },
     "type": "module",
+    "pkg": {
+        "assets": [
+            "public/**/*"
+        ],
+        "outputPath": "../dist",
+        "targets": [
+            "node16-win-x64"
+        ],
+        "options": [
+            "experimental-modules"
+        ]
+    },
     "devDependencies": {
         "nodemon": "^2.0.15"
     }

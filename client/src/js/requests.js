@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as path from "path"
 
+// Remove for production ------------------------------
 axios.defaults.baseURL = 'http://localhost:5000';
 
 export default class Request {

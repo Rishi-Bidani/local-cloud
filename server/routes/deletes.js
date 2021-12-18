@@ -6,6 +6,13 @@ import path from "path";
 import { UPLOAD_FOLDER, checkPath, red } from "../js/globalvariables.js";
 import { fshandle as fsh } from "../js/fshandle.js";
 
+// =========================== PKG- cjs ===========================
+// const express = require("express");
+// const router = express.Router();
+// const path = require("path");
+// const { UPLOAD_FOLDER, checkPath, red } = require("../js/globalvariables.js");
+// const fsh = require("../js/fshandle.js");
+// =================================================================
 
 // Delete file
 router.delete("/file", checkPath, async (req, res) => {
@@ -37,3 +44,4 @@ router.delete("/folder", checkPath, async (req, res) => {
 })
 
 export { router }
+// module.exports = { router };
