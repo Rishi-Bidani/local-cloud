@@ -35,12 +35,16 @@ const dirname = process.cwd();
 app.use(express.json());
 app.use(cors());
 
-// Create an Uploads Folder if it doesn't exist
-if (!fs.existsSync(UPLOAD_FOLDER)) {
-    fs.mkdirSync(path.join(HOME_DIR, "HomeCloud", "DATA"));
-    fs.mkdirSync(path.join(HOME_DIR, "HomeCloud", "temp"));
-} else {
+try {
+    // Create an Uploads Folder if it doesn't exist
+    if (!fs.existsSync(UPLOAD_FOLDER)) {
+        fs.mkdirSync(path.join(HOME_DIR, "HomeCloud", "DATA"), { recursive: true });
+        fs.mkdirSync(path.join(HOME_DIR, "HomeCloud", "temp"), { recursive: true });
+    }
+} catch (err) {
+    console.log(err)
 }
+
 
 // Any posts requests will be handled by the following file
 app.use("/posts", posts.router);

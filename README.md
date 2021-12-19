@@ -152,7 +152,7 @@ docker-compose up -d
 - <a href="https://vuejs.org/">vuejs</a>
 - <a href="https://www.npmjs.com/package/vue-sidebar-menu">vue-sidebar-menu</a>
 - <a href="https://www.npmjs.com/package/vue-js-modal">vue-js-modal</a>
-- <a href="https://github.com/Mostafa-Samir/zip-local">zip-local</a>
+- <a href="https://www.npmjs.com/package/zip-a-folder">zip-a-folder</a>
 - <a href="https://www.npmjs.com/package/local-ipv4-address">local-ipv4-address</a>
 
 <a id="plans"></a>
@@ -176,6 +176,7 @@ docker-compose up -d
 - [ ] Password protect files (for downloading on other devices)
 - [ ] Non downloadable files
 - [ ] Move files into different directories
+- [ ] Updated docker support -> *Currently not working*
 
 ## Development oriented plans :bulb
 

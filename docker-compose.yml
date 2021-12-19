@@ -1,0 +1,21 @@
+version: "3"
+services:
+    api:
+        image: localcloud
+        build: .
+        networks:
+            - backend
+        ports:
+            - "5000:5000"
+        volumes:
+            - ./:/usr/src/app
+
+    web-cli:
+        image: localcloud
+        networks:
+            - backend
+        command: sh
+
+networks:
+    backend:
+        driver: bridge
