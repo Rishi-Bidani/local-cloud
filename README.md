@@ -1,7 +1,6 @@
 # local-cloud
 
-This project is still under development (**Not** in early stages anymore), It has several features already implemented :
-bangbang:
+Looking for contributors. PLease check the uture plans if you wish to contribute and make a pull request.
 
 This program can turn your desktop into a local cloud server. This is a website which will run locally over your wifi(
 without port forwarding) and will be accessible to all your devices.
@@ -51,7 +50,7 @@ longer).
 <br />
 <a name="images"></a>
 
-## Images:file_folder
+## Images :file_folder:
 
 These images might be from older versions of the same app and might appear different from the one you setup. Please open
 an issue for requesting icons or suggesting any colour improvements.
@@ -62,7 +61,7 @@ an issue for requesting icons or suggesting any colour improvements.
 <br />
 <a id="setup"></a>
 
-## Setup Requirements :rocket
+## Setup Requirements :rocket:
 
 - A computer :smiley:
 - <a href="https://nodejs.org/en/"> node.js </a>
@@ -74,7 +73,7 @@ an issue for requesting icons or suggesting any colour improvements.
 
 <a id="access"></a>
 
-## How to access the website/Setup Procedure :key
+## How to access the website/Setup Procedure :key:
 
 <b>Version 2(vuejs implementation)</b>
 <br />
@@ -124,7 +123,7 @@ If your wish to set it up for development follow these steps, else check the rel
 
 <a id="docker"></a>
 
-## Running inside of Docker :whale
+## Running inside of Docker :whale:
 
 To run local-cloud inside of Docker, run the following command in the root directory
 
@@ -145,7 +144,7 @@ docker-compose up -d
 
 <a id="dependencies"></a>
 
-## Libraries used - Links to some main ones npm/official website :computer
+## Libraries used - Links to some main ones npm/official website :computer:
 
 - <a href = "https://www.npmjs.com/package/express">expressjs</a> with axios, cors, multer, fs
 - <a href="https://www.npmjs.com/package/dropzone">dropzone.js</a>
@@ -157,7 +156,7 @@ docker-compose up -d
 
 <a id="plans"></a>
 
-## Future Plans and Timeline :bulb
+## Future Plans and Timeline :bulb:
 
 - [x] Pilot project with vanilla html-css and js
 - [x] Implement with vuejs
@@ -178,7 +177,7 @@ docker-compose up -d
 - [ ] Move files into different directories
 - [ ] Updated docker support -> *Currently not working*
 
-## Development oriented plans :bulb
+## Development oriented plans :bulb:
 
 - Clean unnecessary code
 - Make API RESTFUL
