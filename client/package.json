@@ -11,6 +11,7 @@
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "dropzone": "^5.9.2",
+    "streamsaver": "^2.0.6",
     "vue": "^3.0.0",
     "vue-router": "^3.5.3",
     "vue-sidebar-menu": "^5.0.0-alpha.9"
