@@ -7,6 +7,7 @@ import { zip, COMPRESSION_LEVEL } from 'zip-a-folder';
 
 import { UPLOAD_FOLDER, checkPath, green, red, blue } from "../js/globalvariables.js";
 import { fshandle as fsh } from "../js/fshandle.js";
+import fs from "fs";
 
 // =========================== PKG- cjs ===========================
 // const express = require("express");
@@ -15,6 +16,7 @@ import { fshandle as fsh } from "../js/fshandle.js";
 // const { zip, COMPRESSION_LEVEL } = require('zip-a-folder');
 // const { UPLOAD_FOLDER, checkPath, green, red, blue } = require("../js/globalvariables.js");
 // const fsh = require("../js/fshandle.js");
+// const fs = require("fs");
 // =================================================================
 
 // Get directories
@@ -37,9 +39,11 @@ router.get("/download-file", checkPath, async (req, res) => {
         const relativePath = req.query.relPath;
         const fullPath = path.join(UPLOAD_FOLDER, relativePath);
         console.log(green("Downloading: ", fullPath))
-        res.sendFile(fullPath, (err) => {
-            if (err) console.log(red(err))
-        })
+        // res.sendFile(fullPath, (err) => {
+        //     if (err) console.log(red(err))
+        // })
+        res.setHeader('Content-Type', 'application/octet-stream');
+        fs.createReadStream(fullPath).pipe(res);
     } catch (err) {
         console.log(red(err))
     }

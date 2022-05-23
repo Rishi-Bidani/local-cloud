@@ -7,7 +7,7 @@
                 @click="navigateFolder(folder)"
                 @contextmenu.prevent="this.$emit('context-menu-invoked', folder, $event)"
             >
-                <img src="../assets/folder.svg" alt="Folder" class="icon icon--folder"/>
+                <img src="../assets/folder.svg" alt="Folder" class="icon icon--folder" />
                 <figcaption>{{ folder }}</figcaption>
             </figure>
         </article>
@@ -68,7 +68,7 @@
                     src="../assets/fileLogos/music.svg"
                     alt="music file"
                 />
-                <img v-else src="../assets/fileLogos/warning.svg" class="icon--file"/>
+                <img v-else src="../assets/fileLogos/warning.svg" class="icon--file" />
                 <figcaption>{{ file.fileName }}</figcaption>
             </figure>
         </article>
@@ -80,23 +80,28 @@ export default {
     name: "FilesAndFolders",
     props: {
         files: Array,
-        folders: Array
+        folders: Array,
     },
     data() {
-        return {}
+        return {};
     },
     methods: {
         navigateFolder(folderName) {
-            this.$emit("clicked-folder", folderName)
+            this.$emit("clicked-folder", folderName);
         },
         fileClicked(itemNumber, fileName, fileSize) {
-            this.$emit('file-clicked', fileName, fileSize)
+            this.$emit("file-clicked", fileName, fileSize);
         },
-    }
-}
+    },
+};
 </script>
 
 <style scoped>
+.container--files-folders {
+    --icon-file-height: 5rem;
+    --icon-folder-height: 7.5rem;
+}
+
 .container--files-folders {
     display: flex;
     flex-flow: column;
@@ -112,11 +117,11 @@ export default {
 }
 
 .icon--folder {
-    height: 7.5rem;
+    height: var(--icon-folder-height);
 }
 
 .icon--file {
-    height: 5rem;
+    height: var(--icon-file-height);
 }
 
 .file-padding {
@@ -140,6 +145,37 @@ figcaption {
     width: 8rem;
     font-weight: 700;
     word-break: break-all;
+}
+
+@media screen and (max-width: 1000px) {
+    .container--files-folders {
+        --icon-file-height: 3rem;
+        --icon-folder-height: 4.5rem;
+    }
+
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .container--files-folders {
+        --icon-file-height: 2rem;
+        --icon-folder-height: 3.5rem;
+        font-size: 14px;
+    }
+
+    .grid {
+        gap: 0;
+    }
+
+    figure {
+        display: flex;
+        place-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        width: 100%;
+    }
 }
 
 /*.active {*/
