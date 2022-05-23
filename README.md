@@ -1,6 +1,6 @@
 # local-cloud
 
-Looking for contributors. PLease check the uture plans if you wish to contribute and make a pull request.
+Looking for contributors. Please check the future plans if you wish to contribute and make a pull request.
 
 This program can turn your desktop into a local cloud server. This is a website which will run locally over your wifi(
 without port forwarding) and will be accessible to all your devices.
@@ -153,6 +153,8 @@ docker-compose up -d
 - <a href="https://www.npmjs.com/package/vue-js-modal">vue-js-modal</a>
 - <a href="https://www.npmjs.com/package/zip-a-folder">zip-a-folder</a>
 - <a href="https://www.npmjs.com/package/local-ipv4-address">local-ipv4-address</a>
+- <a href="https://www.npmjs.com/package/streamsaver">streamSaver</a>
+
 
 <a id="plans"></a>
 
@@ -172,6 +174,8 @@ docker-compose up -d
 - [x] Implement some security features - Restricted access to other files on the system by blocking requests outside the
   home directory - This has been done for navigation(getting directory content), for downloading files and folders and
   for deleting files or folders
+  - [ ] File Chunking/Streaming for smoother downloads of larger files *currently working on this*
+- [ ] Improve UI
 - [ ] Password protect files (for downloading on other devices)
 - [ ] Non downloadable files
 - [ ] Move files into different directories
