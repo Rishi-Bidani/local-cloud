@@ -39,11 +39,12 @@ router.get("/download-file", checkPath, async (req, res) => {
         const relativePath = req.query.relPath;
         const fullPath = path.join(UPLOAD_FOLDER, relativePath);
         console.log(green("Downloading: ", fullPath))
-        // res.sendFile(fullPath, (err) => {
-        //     if (err) console.log(red(err))
-        // })
-        res.setHeader('Content-Type', 'application/octet-stream');
-        fs.createReadStream(fullPath).pipe(res);
+        res.sendFile(fullPath, (err) => {
+            if (err) console.log(red(err))
+        })
+        // res.setHeader('Content-Type', 'application/octet-stream');
+        // fs.createReadStream(fullPath).pipe(res);
+
     } catch (err) {
         console.log(red(err))
     }

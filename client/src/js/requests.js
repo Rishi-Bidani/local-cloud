@@ -1,10 +1,14 @@
 import axios from "axios";
 import * as path from "path"
-import streamSaver from 'streamsaver'
+// import streamSaver from 'streamsaver'
 
 
+// console.log(window.location.hostname)
+
+// Use for production
+axios.defaults.baseURL = window.location.origin;
 // Remove for production ------------------------------
-axios.defaults.baseURL = 'http://localhost:5000';
+// axios.defaults.baseURL = 'http://localhost:5000';
 
 export default class Request {
     static async FilesAndFolders(forPath) {
@@ -22,6 +26,15 @@ export default class Request {
     static async downloadFile(forPath, fileName) {
         console.log(forPath, fileName)
         try {
+
+            const file = Object.assign(document.createElement('a'), {
+                href: `${axios.defaults.baseURL}/gets/download-file?relPath=${path.join(forPath, fileName)}`,
+            })
+            file.download = fileName;
+            file.click();
+
+            //  =================================================
+
             // const res = axios.get("gets/download-file", {
             //     responseType: "arraybuffer",
             //     params: {
@@ -37,24 +50,26 @@ export default class Request {
             // link.download = fileName;
             // link.click();
             // console.timeEnd("download");
-            const fileStream = streamSaver.createWriteStream(fileName);
-            const res = await fetch("gets/download-file?" + new URLSearchParams({
-                relPath: path.join(forPath, fileName)
-            }))
-            const readableStream = res.body
-            if (window.WritableStream && readableStream.pipeTo) {
-                return readableStream.pipeTo(fileStream)
-                    .then(() => console.log('done writing'))
-            }
-            window.writer = fileStream.getWriter()
 
-            const reader = res.body.getReader()
-            const pump = () => reader.read()
-                .then(res => res.done
-                    ? window.writer.close()
-                    : window.writer.write(res.value).then(pump))
+            // ======================================= Testing streamsaver =======================================
+            // const fileStream = streamSaver.createWriteStream(fileName);
+            // const res = await fetch("gets/download-file?" + new URLSearchParams({
+            //     relPath: path.join(forPath, fileName)
+            // }))
+            // const readableStream = res.body
+            // if (window.WritableStream && readableStream.pipeTo) {
+            //     return readableStream.pipeTo(fileStream)
+            //         .then(() => console.log('done writing'))
+            // }
+            // window.writer = fileStream.getWriter()
 
-            pump()
+            // const reader = res.body.getReader()
+            // const pump = () => reader.read()
+            //     .then(res => res.done
+            //         ? window.writer.close()
+            //         : window.writer.write(res.value).then(pump))
+
+            // pump()
 
 
         } catch (err) {
