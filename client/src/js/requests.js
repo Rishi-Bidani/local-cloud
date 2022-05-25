@@ -1,9 +1,6 @@
 import axios from "axios";
 import * as path from "path"
-// import streamSaver from 'streamsaver'
 
-
-// console.log(window.location.hostname)
 
 // Use for production
 axios.defaults.baseURL = window.location.origin;
