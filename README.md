@@ -150,7 +150,6 @@ docker-compose up -d
 - <a href="https://www.npmjs.com/package/dropzone">dropzone.js</a>
 - <a href="https://vuejs.org/">vuejs</a>
 - <a href="https://www.npmjs.com/package/vue-sidebar-menu">vue-sidebar-menu</a>
-- <a href="https://www.npmjs.com/package/vue-js-modal">vue-js-modal</a>
 - <a href="https://www.npmjs.com/package/zip-a-folder">zip-a-folder</a>
 - <a href="https://www.npmjs.com/package/local-ipv4-address">local-ipv4-address</a>
 

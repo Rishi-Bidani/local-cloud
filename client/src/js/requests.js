@@ -5,7 +5,7 @@ import * as path from "path"
 // Use for production
 axios.defaults.baseURL = window.location.origin;
 // Remove for production ------------------------------
-// axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = 'http://localhost:5000';
 
 export default class Request {
     static async FilesAndFolders(forPath) {
