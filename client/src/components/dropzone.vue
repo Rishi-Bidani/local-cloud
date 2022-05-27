@@ -8,7 +8,7 @@
             ref="myDropzone"
             :key="`dz-${dropzoneKey}`"
         >
-            <input type="hidden" name="relPath" :value="currentPath"/>
+            <input type="hidden" name="relPath" :value="currentPath" />
         </form>
         <button class="finish-button" @click="finishUpload">Finish Upload</button>
     </section>
@@ -18,7 +18,7 @@
 const Dropzone = require("dropzone/dist/dropzone.js");
 import Request from "@/js/requests";
 
-console.log(Dropzone)
+console.log(Dropzone);
 Dropzone.autoDiscover = true;
 export default {
     name: "Dropzone",
@@ -50,13 +50,12 @@ export default {
 @import "../assets/css/dropzone.min.css";
 
 .dropzone-container {
-    height: 80vh;
-    width: 90%;
     /*border: dotted black;*/
+    height: 80vh;
     align-self: center;
     display: flex;
     flex-direction: column;
-    margin-bottom: 2rem;
+    margin: 2rem 1rem;
 }
 
 .drop-area {

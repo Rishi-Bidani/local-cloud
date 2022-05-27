@@ -1,6 +1,6 @@
 <template>
-    <div class="container--files-folders">
-        <article class="grid">
+    <section class="container--files-folders">
+        <article class="grid grid--folders">
             <figure
                 v-for="(folder, index) in folders"
                 :key="`Folder-${index}`"
@@ -11,7 +11,7 @@
                 <figcaption>{{ folder }}</figcaption>
             </figure>
         </article>
-        <article class="grid">
+        <article class="grid grid--files">
             <figure
                 v-for="(file, index) in files"
                 :key="`File-${index}`"
@@ -72,7 +72,7 @@
                 <figcaption>{{ file.fileName }}</figcaption>
             </figure>
         </article>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -106,14 +106,14 @@ export default {
     display: flex;
     flex-flow: column;
     height: fit-content;
+    padding: 1rem;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     grid-gap: 2rem;
-    margin: 2rem;
-    place-items: center;
+    place-items: start;
 }
 
 .icon--folder {
@@ -129,15 +129,18 @@ export default {
 }
 
 figure {
+    display: flex;
+    flex-flow: column;
     cursor: pointer;
     border-radius: 1rem;
     border: none;
     padding: 1rem;
-    /* transition: all 0.5s ease-out; */
+    place-items: center;
+    text-align: center;
+    gap: 0.5rem;
 }
 
 figure:hover {
-    /* border: 2px solid whitesmoke; */
     background-color: var(--figure-hover);
 }
 
@@ -161,7 +164,7 @@ figcaption {
 @media screen and (max-width: 700px) {
     .container--files-folders {
         --icon-file-height: 2rem;
-        --icon-folder-height: 3.5rem;
+        --icon-folder-height: 2rem;
         font-size: 14px;
     }
 
@@ -170,11 +173,11 @@ figcaption {
     }
 
     figure {
-        display: flex;
+        flex-flow: row;
         place-items: center;
         gap: 0.5rem;
         padding: 0.5rem;
-        width: 100%;
+        width: max-content;
     }
 }
 
