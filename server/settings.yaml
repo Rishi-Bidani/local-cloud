@@ -1,0 +1,16 @@
+production: false
+
+basefolder:
+
+accounts:
+    guest:
+        password: helloworld
+        hide:
+            # relative path from base folder
+            - private
+            - private2
+
+    account2:
+        password: helloworld2
+        hide:
+            - private
