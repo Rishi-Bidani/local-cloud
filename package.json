@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "jsonwebtoken": "^9.0.0",
     "yaml": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.1"
   }
 }

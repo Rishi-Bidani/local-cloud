@@ -2,6 +2,8 @@ production: false
 
 basefolder:
 
+secretkey: th!s!s@very$ecret#ey
+
 accounts:
     guest:
         password: helloworld

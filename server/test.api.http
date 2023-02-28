@@ -1,1 +1,16 @@
 GET http://localhost:5000/
+
+
+###
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "username": "guest",
+    "password": "helloworld"
+}
+
+
+###
+GET http://localhost:5000/testauth
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.Z3Vlc3Q.YEeLF3Xr-qFI76PRvUDQ4jsd_FPBShivl1YDs9kpEPY

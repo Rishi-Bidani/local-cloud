@@ -2,7 +2,11 @@ import express from "express";
 // import * as path from "path";
 import cors from "cors";
 // import * as localIpV4Address from "local-ipv4-address";
-import * as fs from "fs/promises";
+
+import auth from "./middleware/authenticator";
+
+// importing middlewares
+import { authenticationRouter } from "./routes/authentication";
 
 // create require
 const { Server } = require("http");
@@ -12,10 +16,18 @@ const http = Server(app);
 // middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/auth", authenticationRouter);
 
 // routes
 app.get("/", (req, res) => {
     res.send("Hello World!");
+});
+
+// route purely for testing authorisation
+app.get("/testauth", auth, (req, res) => {
+    console.log((req as any).user);
+    res.send("Authorisation is working");
 });
 
 const PORT = process.env.PORT || 5000;
