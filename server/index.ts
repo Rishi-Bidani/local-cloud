@@ -5,6 +5,13 @@ import cors from "cors";
 
 import auth from "./middleware/authenticator";
 
+import createStorageFolders from "./functions/createstoragefolders";
+
+// setup the folders - data, temp
+(async function () {
+    await createStorageFolders();
+})();
+
 // importing middlewares
 import { authenticationRouter } from "./routes/authentication";
 

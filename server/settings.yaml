@@ -5,6 +5,9 @@ basefolder:
 secretkey: th!s!s@very$ecret#ey
 
 accounts:
+    admin:
+        password: secretadmin
+
     guest:
         password: helloworld
         hide:
