@@ -1,0 +1,33 @@
+:root {
+    --bg-color: hsl(235, 9%, 23%);
+    --secondary-color: hsl(233, 15%, 12%);
+    --hover-color: #181c24;
+    --title-color: #eeeeee;
+    --text-color: #8caab7;
+    --accent-color: #2b6fc3;
+    --accent-color-2: #ff0061;
+    --white: #f3f3f3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: var(--text-color);
+    height: 100vh;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    background-color: var(--bg-color);
+}
+
+/* utility */
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
