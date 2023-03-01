@@ -1,5 +1,5 @@
 <template>
-    <section class="flex-column">
+    <section class="pc">
         <header>
             <h1>Local Cloud</h1>
         </header>
@@ -13,14 +13,44 @@
             <div class="footer-item">login</div>
         </footer>
     </section>
+    <section class="mobile">
+        <div class="footer-item">settings</div>
+        <div class="footer-item">login</div>
+    </section>
 </template>
 <script setup lang="ts"></script>
 <style scoped>
-section {
+section.pc,
+section.mobile {
     background-color: var(--secondary-color);
-    width: 300px;
-    height: 100%;
-    padding: 1em 2em;
+}
+section.pc {
+    display: none;
+}
+
+section.mobile {
+    --height: 50px;
+    width: 100%;
+    height: var(--height);
+    position: absolute;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+}
+
+@media screen and (min-width: 768px) {
+    section.mobile {
+        display: none;
+    }
+
+    section.pc {
+        width: 300px;
+        height: 100%;
+        padding: 1em 2em;
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 header {
@@ -32,6 +62,7 @@ header {
     text-transform: capitalize;
     padding-block: 1rem;
     font-weight: 700;
+    cursor: pointer;
 }
 
 footer {

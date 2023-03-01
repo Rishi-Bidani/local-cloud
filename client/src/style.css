@@ -18,7 +18,8 @@
 body {
     color: var(--text-color);
     height: 100vh;
-    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    /* font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; */
+    font-family: Arial, Helvetica, sans-serif;
     background-color: var(--bg-color);
 }
 
