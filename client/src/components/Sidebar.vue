@@ -32,6 +32,7 @@ header {
     text-transform: capitalize;
     padding-block: 1rem;
     font-weight: 700;
+    cursor: pointer;
 }
 
 footer {
