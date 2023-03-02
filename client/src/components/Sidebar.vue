@@ -14,8 +14,8 @@
         </footer>
     </section>
     <section class="mobile">
-        <div class="footer-item">settings</div>
-        <div class="footer-item">login</div>
+        <div class="mobile-item">settings</div>
+        <div class="mobile-item">login</div>
     </section>
 </template>
 <script setup lang="ts"></script>
@@ -37,6 +37,19 @@ section.mobile {
     display: grid;
     grid-template-columns: 1fr 1fr;
     place-items: center;
+}
+.mobile-item {
+    border-left: 1px solid var(--accent-color);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mobile-item:first-child {
+    border-left: none;
 }
 
 @media screen and (min-width: 768px) {
