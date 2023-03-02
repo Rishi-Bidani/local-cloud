@@ -1,5 +1,4 @@
 import express from "express";
-// import * as path from "path";
 import cors from "cors";
 // import * as localIpV4Address from "local-ipv4-address";
 
@@ -27,6 +26,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/auth", authenticationRouter);
 
 // routes
+import { router as navigationRouter } from "./routes/navigation";
+app.use("/navigate", navigationRouter);
+
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });

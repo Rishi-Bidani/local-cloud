@@ -14,3 +14,10 @@ Content-Type: application/json
 ###
 GET http://localhost:5000/testauth
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.Z3Vlc3Q.YEeLF3Xr-qFI76PRvUDQ4jsd_FPBShivl1YDs9kpEPY
+
+
+###
+GET http://localhost:5000/navigate/
+
+###
+GET http://localhost:5000/navigate/first

@@ -1,13 +1,13 @@
 // imports
 import path from "path";
-import _settings from "../functions/settings.js";
+import _settings from "./settings";
 
 const settings = _settings();
 
 async function isPathValid(pathname: string): Promise<boolean> {
-    const baseFolder = (await settings).baseFolder;
-    const fullPath = path.join(baseFolder, pathname);
-    const isPathValid = fullPath.startsWith(baseFolder);
+    const baseFolder = (await settings).basefolder;
+    // const fullPath = path.join(baseFolder, pathname);
+    const isPathValid = pathname.startsWith(baseFolder);
     return isPathValid;
 }
 

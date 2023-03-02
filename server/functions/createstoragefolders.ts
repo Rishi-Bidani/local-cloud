@@ -22,10 +22,10 @@ async function createStorageFolders() {
         .catch(() => false);
 
     if (!dataFolderExists) {
-        await fs.mkdir(dataFolder);
+        await fs.mkdir(dataFolder, { recursive: true });
     }
     if (!tempFolderExists) {
-        await fs.mkdir(tempFolder);
+        await fs.mkdir(tempFolder, { recursive: true });
     }
 }
 

@@ -11,7 +11,6 @@ async function settings() {
     parsedSettings.basefolder = join(parsedSettings.basefolder ?? homedir(), "localcloud");
     parsedSettings.uploadfolder = join(parsedSettings.basefolder, "data");
     parsedSettings.tempfolder = join(parsedSettings.basefolder, "temp");
-    console.log(parsedSettings);
     return parsedSettings;
 }
 

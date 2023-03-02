@@ -1,6 +1,6 @@
 import path from "path";
 import { homedir } from "os";
-import isPathValid from "./pathvalidator.js";
+import isPathValid from "./pathvalidator";
 import * as fs from "fs/promises";
 
 interface File {
@@ -15,7 +15,6 @@ async function getFiles(pathname: string) {
     if (!(await isPathValid(pathname))) {
         return null;
     }
-
     // get files
     const readpath = await fs.readdir(pathname, { withFileTypes: true });
     const _files: Promise<File>[] = readpath
