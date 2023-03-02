@@ -1,29 +1,52 @@
 <template>
     <Sidebar />
-    <main></main>
+    <main>
+        <section class="main">
+            <header>
+                <BreadCrumb :navigationPath="navigationPath" />
+            </header>
+            <FilesAndFolders :files="files" :folders="folders" />
+        </section>
+    </main>
 </template>
 
 <script setup lang="ts">
 import Sidebar from "./components/Sidebar.vue";
+import BreadCrumb from "./components/breadcrumb/BreadCrumb.vue";
 
 import { onMounted, ref, Ref, watch } from "vue";
 import Navigate from "./requests/navigation";
+import FilesAndFolders from "./components/FilesAndFolders.vue";
 
 const navigationPath: Ref<string> = ref<string>(window.location.pathname);
 
+const files = ref<Array<{ name: string; size: number }>>([]);
+const folders = ref<Array<{ name: string }>>([]);
+
 onMounted(async () => {
     // add event listener to window
+    console.log("mounted");
     console.log(navigationPath.value);
     const response = await Navigate.toPath(navigationPath.value);
     console.log(response);
-});
-// watch naviggationPath for changes
-watch(navigationPath, (newPath: string) => {
-    console.log(newPath);
+    files.value = response.files;
+    folders.value = response.folders;
 });
 </script>
 <style>
 #app {
     height: 100%;
+    display: flex;
+    overflow: hidden;
+}
+
+main {
+    overflow: auto;
+    width: 100%;
+}
+
+.main {
+    height: 200vh;
+    padding: 1rem 2rem;
 }
 </style>
