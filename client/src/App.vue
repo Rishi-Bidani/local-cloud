@@ -25,10 +25,8 @@ const folders = ref<Array<{ name: string }>>([]);
 
 onMounted(async () => {
     // add event listener to window
-    console.log("mounted");
-    console.log(navigationPath.value);
     const response = await Navigate.toPath(navigationPath.value);
-    console.log(response);
+    console.log("Response:", response);
     files.value = response.files;
     folders.value = response.folders;
 });

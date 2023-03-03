@@ -29,7 +29,6 @@ const props = defineProps<{
 }>();
 
 const navigationItems = props.navigationPath.split("/").filter((item) => item !== "");
-console.log("navigation items: ", navigationItems);
 
 function navigateTo(event: MouseEvent, index: number) {
     window.location.pathname = navigationItems.slice(0, index + 1).join("/");
@@ -53,15 +52,15 @@ ol.container li {
     height: var(--nav-height);
 }
 
-li:first-child {
+/* li:first-child {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-}
-
+} */
+/* 
 li:not(:first-child) {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-}
+} */
 
 li {
     display: flex;
@@ -69,7 +68,26 @@ li {
     gap: 0.5rem;
     background-color: var(--accent-color);
     padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+li:first-child {
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+li:last-child {
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+li:first-child ~ li:not(:last-child) {
+    border-left: 1px solid var(--hover-color);
+    border-right: 1px solid var(--hover-color);
+}
+
+li:first-child {
+    border-right: 1px solid var(--hover-color);
 }
 
 li:hover {
