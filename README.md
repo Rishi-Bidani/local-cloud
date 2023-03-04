@@ -1,5 +1,13 @@
 # local-cloud
 
+## Look forward to version 3! coming soon!!
+Written in typescript with a fresh new UI and fun features like password protection with just a simple configuration yaml file. 
+Check out the recoding-typescript branch to see the latest updates.
+
+:warning: Please do note that the new version does not support all the features from version 2 at the moment, however it will soon catch up.
+
+<hr />
+
 Looking for contributors. Please check the future plans if you wish to contribute and make a pull request.
 
 This program can turn your desktop into a local cloud server. This is a website which will run locally over your wifi(
