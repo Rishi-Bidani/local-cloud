@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <article class="folders">
             <figure
                 v-for="folder in folders"
@@ -11,7 +11,25 @@
             </figure>
         </article>
         <article class="files">
-            <div class="file" v-for="file in files">{{ file.name }}</div>
+            <figure class="file" v-for="file in files" :key="file.name">
+                <img
+                    v-if="file.name.split('.').at(-1) === 'txt'"
+                    src="~@/assets/filelogos/txt.svg"
+                    alt="text file image"
+                />
+                <img
+                    v-else-if="file.name.split('.').at(-1) === 'xlsx'"
+                    src="~@/assets/filelogos/excel.svg"
+                    alt="javascript file image"
+                />
+                <img
+                    v-else-if="['jpg', 'jpeg', 'png'].includes(file.name.split('.').at(-1) as string)"
+                    src="~@/assets/filelogos/ts.svg"
+                    alt="typescript file image"
+                />
+                <img v-else src="~@/assets/filelogos/warning.svg" alt="" />
+                <figcaption>{{ file.name }}</figcaption>
+            </figure>
         </article>
     </div>
 </template>
@@ -28,10 +46,63 @@ function navigateTo(event: MouseEvent, folderName: string) {
 }
 </script>
 <style scoped>
+.container {
+    display: flex;
+    flex-flow: column;
+    gap: 2rem;
+    margin-block: 2rem;
+}
+
+/* article.files,
 article.folders {
-    --folder-size: 100px;
+    --size: 100px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--folder-size), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(var(--size), 1fr));
+    gap: 1rem;
+}
+
+article figure img {
+    width: var(--size);
+} */
+
+article.files figure,
+article.folders figure {
+    --size: 3rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+article.files figure img,
+article.folders figure img {
+    width: var(--size);
+    height: var(--size);
+}
+
+@media screen and (min-width: 768px) {
+    .container {
+        margin-block: 4rem;
+    }
+
+    article.files,
+    article.folders {
+        --size: 100px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(var(--size), 1fr));
+        gap: 1rem;
+    }
+
+    article.files figure,
+    article.folders figure {
+        --size: 100px;
+        display: block;
+    }
+
+    article.files figure img,
+    article.folders figure img {
+        width: var(--size);
+        height: var(--size);
+    }
 }
 
 /* article.folders figure {

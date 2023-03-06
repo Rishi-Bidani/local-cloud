@@ -43,8 +43,22 @@ main {
     width: 100%;
 }
 
+header {
+    margin-block: 1rem;
+}
+
 .main {
     height: 200vh;
     padding: 1rem 2rem;
+}
+
+@media screen and (max-width: 768px) {
+    .main {
+        padding: 0.5rem;
+    }
+
+    header {
+        margin-block: 0.5rem;
+    }
 }
 </style>

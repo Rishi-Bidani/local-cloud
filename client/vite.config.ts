@@ -9,4 +9,9 @@ export default defineConfig({
             "@": "/src",
         },
     },
+    server: {
+        proxy: {
+            "/navigate": "http://localhost:5000",
+        },
+    },
 });
