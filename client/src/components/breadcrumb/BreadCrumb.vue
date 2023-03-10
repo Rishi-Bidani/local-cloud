@@ -21,7 +21,6 @@
 </template>
 <script setup lang="ts">
 import BreadCrumbLink from "./BreadCrumbLink.vue";
-import { defineProps, watch } from "vue";
 import homeIcon from "@/assets/icons/home.svg";
 
 const props = defineProps<{

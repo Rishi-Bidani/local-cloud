@@ -5,7 +5,11 @@
             <header>
                 <BreadCrumb :navigationPath="navigationPath" />
             </header>
-            <FilesAndFolders :files="files" :folders="folders" />
+            <!-- drag exit leave-->
+            <div class="display-container">
+                <FilesAndFolders :files="files" :folders="folders" />
+                <Dropzone class="drop" />
+            </div>
         </section>
     </main>
 </template>
@@ -13,6 +17,7 @@
 <script setup lang="ts">
 import Sidebar from "./components/Sidebar.vue";
 import BreadCrumb from "./components/breadcrumb/BreadCrumb.vue";
+import Dropzone from "./components/Dropzone.vue";
 
 import { onMounted, ref, Ref, watch } from "vue";
 import Navigate from "./requests/navigation";
@@ -43,6 +48,11 @@ main {
     width: 100%;
 }
 
+.display-container {
+    height: 100%;
+    position: relative;
+}
+
 header {
     margin-block: 1rem;
 }
@@ -52,6 +62,10 @@ header {
     padding: 1rem 2rem;
 }
 
+.drop {
+    height: 500px;
+}
+
 @media screen and (max-width: 768px) {
     .main {
         padding: 0.5rem;
@@ -59,6 +73,10 @@ header {
 
     header {
         margin-block: 0.5rem;
+    }
+
+    .drop {
+        height: 100px;
     }
 }
 </style>

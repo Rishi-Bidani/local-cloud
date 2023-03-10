@@ -7,8 +7,6 @@
     </a>
 </template>
 <script setup lang="ts">
-import { defineProps, onMounted, ref } from "vue";
-
 const props = defineProps<{
     image: any;
     text: string;

@@ -2,6 +2,8 @@
 
 export default class Navigate {
     static async toPath(path: string) {
+        // remove double slashes
+        path = path.replace(/\/\//g, "/");
         const response = await fetch(`/navigate/${path}`);
         const data = await response.json();
         return data;

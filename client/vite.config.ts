@@ -11,7 +11,10 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            "/navigate": "http://localhost:5000",
+            "/navigate": {
+                // target: "http://localhost:5000",
+                target: "http://127.0.0.1:5000",
+            },
         },
     },
 });
