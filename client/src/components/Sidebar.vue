@@ -3,10 +3,10 @@
         <header>
             <h1>Local Cloud</h1>
         </header>
-        <div class="sidebar-item">pictures</div>
-        <div class="sidebar-item">videos</div>
-        <div class="sidebar-item">music</div>
-        <div class="sidebar-item">documents</div>
+        <a href="/pictures" class="sidebar-item">pictures</a>
+        <a href="/videos" class="sidebar-item">videos</a>
+        <a href="/music" class="sidebar-item">music</a>
+        <a href="/documents" class="sidebar-item">documents</a>
 
         <footer>
             <div class="footer-item">settings</div>
@@ -69,6 +69,11 @@ section.mobile {
 header {
     padding-block: 1rem;
     font-weight: 900;
+}
+
+a.sidebar-item {
+    text-decoration: none;
+    color: var(--primary-color);
 }
 
 .sidebar-item {

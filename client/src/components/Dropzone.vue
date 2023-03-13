@@ -16,11 +16,6 @@ import { Dropzone } from "dropzone";
 
 // Dropzone.autoDiscover = true;
 const dropzone = ref<HTMLFormElement | null>(null);
-
-onMounted(() => {
-    const _dropzone = new Dropzone(dropzone.value, dropzoneOptions);
-});
-
 const dropzoneOptions = {
     url: "/upload",
     chunking: true,
@@ -29,6 +24,19 @@ const dropzoneOptions = {
     //     console.log("Added file:", file);
     // },
 };
+onMounted(() => {
+    const _dropzone = new Dropzone(dropzone.value, dropzoneOptions);
+    const currentPath = window.location.pathname;
+
+    _dropzone.on("sending", (file: any, xhr: any, formData: any) => {
+        console.log("Dropzone sending at path::: ", JSON.stringify(decodeURI(currentPath)));
+        formData.append("pathname", currentPath);
+        // print form data
+        for (var key of formData.entries()) {
+            console.log(key[0] + ", " + key[1]);
+        }
+    });
+});
 </script>
 
 <style>

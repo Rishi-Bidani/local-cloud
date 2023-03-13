@@ -24,8 +24,8 @@
                 />
                 <img
                     v-else-if="['jpg', 'jpeg', 'png'].includes(file.name.split('.').at(-1) as string)"
-                    src="~@/assets/filelogos/ts.svg"
-                    alt="typescript file image"
+                    src="~@/assets/filelogos/image.svg"
+                    alt="image"
                 />
                 <img v-else src="~@/assets/filelogos/warning.svg" alt="" />
                 <figcaption>{{ file.name }}</figcaption>
@@ -42,7 +42,10 @@ const props = defineProps<{
 }>();
 
 function navigateTo(event: MouseEvent, folderName: string) {
-    window.location.pathname = window.location.pathname + folderName;
+    const currentPath = window.location.pathname;
+    const nextPath = currentPath + "/" + folderName;
+    // remove double slashes
+    window.location.pathname = nextPath.replace(/\/{2,}/g, "/");
 }
 </script>
 <style scoped>

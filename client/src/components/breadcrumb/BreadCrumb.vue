@@ -30,7 +30,10 @@ const props = defineProps<{
 const navigationItems = props.navigationPath.split("/").filter((item) => item !== "");
 
 function navigateTo(event: MouseEvent, index: number) {
+    event.preventDefault();
+    event.stopPropagation();
     window.location.pathname = navigationItems.slice(0, index + 1).join("/");
+    console.log(navigationItems);
 }
 </script>
 
