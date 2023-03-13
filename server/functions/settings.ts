@@ -10,7 +10,7 @@ async function settings() {
     const parsedSettings = await yamlparse(settings);
     parsedSettings.basefolder = join(parsedSettings.basefolder ?? homedir(), "localcloud");
     parsedSettings.uploadfolder = join(parsedSettings.basefolder, "data");
-    parsedSettings.tempfolder = join(parsedSettings.basefolder, "temp");
+    // parsedSettings.tempfolder = join(parsedSettings.basefolder, "temp");
     return parsedSettings;
 }
 

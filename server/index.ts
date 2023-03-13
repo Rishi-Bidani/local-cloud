@@ -25,9 +25,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/auth", authenticationRouter);
 
-// routes
+// routes =============================================================
 import { router as navigationRouter } from "./routes/navigation";
 app.use("/navigate", navigationRouter);
+
+import { router as uploadRouter } from "./routes/upload";
+app.use("/upload", uploadRouter);
+// ====================================================================
 
 app.get("/", (req, res) => {
     res.send("Hello World!");

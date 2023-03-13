@@ -6,6 +6,8 @@ import * as fs from "fs/promises";
 
 import * as path from "path";
 
+const categoryFolders = ["pictures", "videos", "documents", "music"];
+
 async function createStorageFolders() {
     const baseFolder = (await settings).basefolder;
     const dataFolder = path.join(baseFolder, "data");
@@ -26,6 +28,18 @@ async function createStorageFolders() {
     }
     if (!tempFolderExists) {
         await fs.mkdir(tempFolder, { recursive: true });
+    }
+
+    // create the category folders
+    for (const category of categoryFolders) {
+        const categoryFolder = path.join(dataFolder, category);
+        const categoryFolderExists = await fs
+            .access(categoryFolder)
+            .then(() => true)
+            .catch(() => false);
+        if (!categoryFolderExists) {
+            await fs.mkdir(categoryFolder, { recursive: true });
+        }
     }
 }
 

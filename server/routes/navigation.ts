@@ -8,7 +8,7 @@ import { getFiles, getFolders } from "../functions/filesfolders";
 import _settings from "../functions/settings";
 const settings = _settings();
 
-router.get("/:pathname?", async (req, res) => {
+router.get(":pathname(/*)?", async (req, res) => {
     const pathname = join((await settings).uploadfolder, req.params.pathname ?? "");
     console.log("pathname: " + pathname);
     // if path doesn't exist, return 404
