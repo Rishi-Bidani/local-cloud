@@ -82,6 +82,10 @@ article.folders figure img {
     height: var(--size);
 }
 
+figcaption {
+    word-break: break-all;
+}
+
 @media screen and (min-width: 768px) {
     .container {
         margin-block: 4rem;

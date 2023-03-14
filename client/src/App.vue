@@ -2,7 +2,7 @@
     <Sidebar />
     <main>
         <section class="main">
-            <header>
+            <header ref="breadcrumbContainer" @wheel="horizontalScroll">
                 <BreadCrumb :navigationPath="navigationPath" />
             </header>
             <!-- drag exit leave-->
@@ -24,9 +24,18 @@ import Navigate from "./requests/navigation";
 import FilesAndFolders from "./components/FilesAndFolders.vue";
 
 const navigationPath: Ref<string> = ref<string>(window.location.pathname);
+const breadcrumbContainer = ref<HTMLDivElement | null>(null);
 
 const files = ref<Array<{ name: string; size: number }>>([]);
 const folders = ref<Array<{ name: string }>>([]);
+
+function horizontalScroll(event: WheelEvent) {
+    event.preventDefault();
+    // scroll horizontally
+    // console.log(event.target.parentElement);
+    // event.target.scrollLeft += event.deltaY;
+    breadcrumbContainer.value!.scrollLeft += event.deltaY;
+}
 
 onMounted(async () => {
     // add event listener to window
@@ -60,6 +69,23 @@ header {
 .main {
     height: 200vh;
     padding: 1rem 2rem;
+}
+
+.main header {
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.main header::-webkit-scrollbar {
+    height: 5px;
+}
+
+.main header::-webkit-scrollbar-track {
+    background: var(--white);
+}
+
+.main header::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
 }
 
 .drop {
