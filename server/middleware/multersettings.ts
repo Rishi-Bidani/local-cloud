@@ -6,6 +6,8 @@ import isPathValid from "../functions/pathvalidator";
 import { FileFilterCallback } from "multer";
 const settings = _settings();
 
+import * as fs from "fs/promises";
+
 export default class MulterOptions {
     // Set the destination to the path specified in the request
     static async destination(
@@ -26,7 +28,37 @@ export default class MulterOptions {
         file: Express.Multer.File,
         callback: (error: Error | null, destination: string) => void
     ) {
-        callback(null, file.originalname);
+        const pathname = decodeURI(req.body?.pathname);
+        const baseFolder = (await settings).uploadfolder;
+        const fullPath = path.join(baseFolder, pathname, file.originalname);
+
+        // check if the file already exists
+        const fileExists = await fs
+            .access(fullPath)
+            .then(() => true)
+            .catch(() => false);
+        if (fileExists) {
+            // add timestamp to original filename
+            // timstamp format: DDMMYYYYHHMMSS
+            let timestamp = new Date().toLocaleString("en-GB", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+            });
+            // remove all non-alphanumeric characters replacing them with _
+            timestamp = timestamp.replace(/[^a-zA-Z0-9]/g, "_");
+            console.log("timestamp: ", timestamp);
+            const filename = file.originalname.split(".")[0];
+            const extension = file.originalname.split(".")[1];
+            const newFilename = `${filename}_${timestamp}.${extension}`;
+            return callback(null, newFilename);
+        } else {
+            // file does not exist
+            callback(null, file.originalname);
+        }
     }
 
     static async fileFilter(req: Request, file: Express.Multer.File, callback: FileFilterCallback) {

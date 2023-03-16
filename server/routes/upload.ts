@@ -38,14 +38,12 @@ const router = express.Router();
 const upload = multer({ storage: storage }).any();
 
 router.post("/", authenticator, async (req: express.Request, res: express.Response) => {
-    const pathname = req.body.pathname;
+    console.log("uploading file...");
     upload(req, res, async (err) => {
         if (err) {
             console.log("error: ", err);
             res.status(500).send("Error uploading file.");
         } else {
-            // console.log("reached here");
-            // everything went fine
             res.status(200).send("File uploaded successfully.");
         }
     });
