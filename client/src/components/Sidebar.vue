@@ -8,6 +8,18 @@
         <a href="/music" class="sidebar-item">music</a>
         <a href="/documents" class="sidebar-item">documents</a>
 
+        <article class="file-information">
+            <header>
+                <h2>File Info</h2>
+            </header>
+            <div class="information-container flex-column gap-1" v-if="props.fileInformation">
+                <p>Name: {{ props.fileInformation.name }}</p>
+                <p>Size: {{ props.fileInformation.size }}</p>
+                <button class="download">open</button>
+                <button class="download">download</button>
+            </div>
+        </article>
+
         <footer>
             <div class="footer-item">settings</div>
             <div class="footer-item">login</div>
@@ -18,7 +30,11 @@
         <div class="mobile-item">login</div>
     </section>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps<{
+    fileInformation: { name: string; size: number } | null;
+}>();
+</script>
 <style scoped>
 section.pc,
 section.mobile {
@@ -26,6 +42,12 @@ section.mobile {
 }
 section.pc {
     display: none;
+    overflow-y: auto;
+}
+
+button.download {
+    padding-block: 10px;
+    cursor: pointer;
 }
 
 section.mobile {

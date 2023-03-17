@@ -11,7 +11,14 @@
             </figure>
         </article>
         <article class="files">
-            <figure class="file" v-for="file in files" :key="file.name" @click="toggleInformation">
+            <figure
+                class="file"
+                v-for="file in files"
+                :key="file.name"
+                @click="toggleInformation"
+                :data-filename="file.name"
+                :data-filesize="file.size"
+            >
                 <img
                     v-if="file.name.split('.').at(-1) === 'txt'"
                     src="~@/assets/filelogos/txt.svg"
@@ -39,10 +46,18 @@
     </div>
 </template>
 <script setup lang="ts">
-import { defineProps, onMounted, ref } from "vue";
+import { defineProps, onMounted, ref, watch } from "vue";
 
 const viewportWidth = ref(window.innerWidth);
 const isSidebarVisible = ref(viewportWidth.value > 768);
+
+const fileInformation = ref<{ name: string; size: number } | null>(null);
+const emit = defineEmits(["selectedFile"]);
+
+// watch changes for fileInformation
+watch(fileInformation, (newValue) => {
+    emit("selectedFile", newValue);
+});
 
 onMounted(() => {
     window.addEventListener("resize", () => {
@@ -76,6 +91,7 @@ function toggleInformation(event: MouseEvent): void {
     if (figure?.classList.contains("active-file")) {
         // deselect any active file
         deselectActiveFile();
+        fileInformation.value = null;
         return;
     } else {
         deselectActiveFile();
@@ -84,15 +100,17 @@ function toggleInformation(event: MouseEvent): void {
         if (!isSidebarVisible.value) {
             figure?.querySelector("footer")?.classList.remove("hidden");
         }
-    }
 
-    // if (figure) {
-    //     figure.classList.toggle("active-file");
-    //     const footer = figure.querySelector("footer");
-    //     if (footer && !isSidebarVisible.value) {
-    //         footer.classList.toggle("hidden");
-    //     }
-    // }
+        // get file information
+        const fileName = figure?.dataset.filename;
+        const fileSize = figure?.dataset.filesize;
+        if (fileName && fileSize) {
+            fileInformation.value = {
+                name: fileName,
+                size: Number(fileSize),
+            };
+        }
+    }
 }
 
 function downloadFile(event: MouseEvent) {

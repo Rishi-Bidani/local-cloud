@@ -1,5 +1,5 @@
 <template>
-    <Sidebar />
+    <Sidebar :fileInformation="fileInformation" />
     <main>
         <section class="main">
             <header ref="breadcrumbContainer" @wheel="horizontalScroll">
@@ -7,7 +7,7 @@
             </header>
             <!-- drag exit leave-->
             <div class="display-container">
-                <FilesAndFolders :files="files" :folders="folders" />
+                <FilesAndFolders :files="files" :folders="folders" @selectedFile="selectedFile" />
                 <Dropzone class="drop" />
             </div>
         </section>
@@ -25,6 +25,7 @@ import FilesAndFolders from "./components/FilesAndFolders.vue";
 
 const navigationPath: Ref<string> = ref<string>(window.location.pathname);
 const breadcrumbContainer = ref<HTMLDivElement | null>(null);
+const fileInformation = ref<{ name: string; size: number } | null>(null);
 
 const files = ref<Array<{ name: string; size: number }>>([]);
 const folders = ref<Array<{ name: string }>>([]);
@@ -35,6 +36,11 @@ function horizontalScroll(event: WheelEvent) {
     // console.log(event.target.parentElement);
     // event.target.scrollLeft += event.deltaY;
     breadcrumbContainer.value!.scrollLeft += event.deltaY;
+}
+
+function selectedFile(file: { name: string; size: number } | null) {
+    console.log("Selected file:", file);
+    fileInformation.value = file;
 }
 
 onMounted(async () => {
