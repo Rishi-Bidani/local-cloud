@@ -15,8 +15,23 @@
             <div class="information-container flex-column gap-1" v-if="props.fileInformation">
                 <p>Name: {{ props.fileInformation.name }}</p>
                 <p>Size: {{ props.fileInformation.size }}</p>
-                <button class="download">open</button>
-                <button class="download">download</button>
+                <a
+                    :href="'/download?pathname=' + currentPath + '/' + props.fileInformation.name"
+                    class="download"
+                >
+                    open
+                </a>
+                <a
+                    :href="
+                        '/download/direct?pathname=' +
+                        currentPath +
+                        '/' +
+                        props.fileInformation.name
+                    "
+                    class="download"
+                >
+                    download
+                </a>
             </div>
         </article>
 
@@ -31,9 +46,13 @@
     </section>
 </template>
 <script setup lang="ts">
+import { ref, watch } from "vue";
+
 const props = defineProps<{
     fileInformation: { name: string; size: number } | null;
 }>();
+
+const currentPath = window.location.pathname;
 </script>
 <style scoped>
 section.pc,
@@ -42,12 +61,20 @@ section.mobile {
 }
 section.pc {
     display: none;
+    overflow: hidden;
     overflow-y: auto;
 }
 
-button.download {
-    padding-block: 10px;
-    cursor: pointer;
+.download {
+    text-decoration: none;
+    background-color: var(--accent-color);
+    color: var(--white);
+    padding: 0.5em 1em;
+    border-radius: 5px;
+}
+
+.download:hover {
+    background-color: var(--accent-color-hover);
 }
 
 section.mobile {
