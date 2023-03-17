@@ -67,8 +67,8 @@ header {
 }
 
 .main {
-    height: 200vh;
     padding: 1rem 2rem;
+    margin-bottom: 5rem;
 }
 
 .main header {

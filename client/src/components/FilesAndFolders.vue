@@ -11,7 +11,7 @@
             </figure>
         </article>
         <article class="files">
-            <figure class="file" v-for="file in files" :key="file.name">
+            <figure class="file" v-for="file in files" :key="file.name" @click="toggleInformation">
                 <img
                     v-if="file.name.split('.').at(-1) === 'txt'"
                     src="~@/assets/filelogos/txt.svg"
@@ -23,18 +23,38 @@
                     alt="javascript file image"
                 />
                 <img
-                    v-else-if="['jpg', 'jpeg', 'png'].includes(file.name.split('.').at(-1) as string)"
+                    v-else-if="['jpg', 'jpeg', 'png', 'svg'].includes(file.name.split('.').at(-1) as string)"
                     src="~@/assets/filelogos/image.svg"
                     alt="image"
                 />
                 <img v-else src="~@/assets/filelogos/warning.svg" alt="" />
-                <figcaption>{{ file.name }}</figcaption>
+                <figcaption :data-filename="file.name">{{ file.name }}</figcaption>
+
+                <footer class="hidden">
+                    <span>File size: {{ (file.size / Math.pow(10, 6)).toFixed(2) }} MB</span>
+                    <button class="download" @click="downloadFile">download</button>
+                </footer>
             </figure>
         </article>
     </div>
 </template>
 <script setup lang="ts">
-import { defineProps } from "vue";
+import { defineProps, onMounted, ref } from "vue";
+
+const viewportWidth = ref(window.innerWidth);
+const isSidebarVisible = ref(viewportWidth.value > 768);
+
+onMounted(() => {
+    window.addEventListener("resize", () => {
+        viewportWidth.value = window.innerWidth;
+        isSidebarVisible.value = viewportWidth.value > 768;
+
+        // deselct any active file
+        deselectActiveFile();
+    });
+
+    isSidebarVisible.value = viewportWidth.value > 768;
+});
 
 const props = defineProps<{
     files: Array<{ name: string; size: number }>;
@@ -47,6 +67,58 @@ function navigateTo(event: MouseEvent, folderName: string) {
     // remove double slashes
     window.location.pathname = nextPath.replace(/\/{2,}/g, "/");
 }
+
+function toggleInformation(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const figure = target.closest("figure");
+
+    // check if current file is already active
+    if (figure?.classList.contains("active-file")) {
+        // deselect any active file
+        deselectActiveFile();
+        return;
+    } else {
+        deselectActiveFile();
+        // make figure active
+        figure?.classList.add("active-file");
+        if (!isSidebarVisible.value) {
+            figure?.querySelector("footer")?.classList.remove("hidden");
+        }
+    }
+
+    // if (figure) {
+    //     figure.classList.toggle("active-file");
+    //     const footer = figure.querySelector("footer");
+    //     if (footer && !isSidebarVisible.value) {
+    //         footer.classList.toggle("hidden");
+    //     }
+    // }
+}
+
+function downloadFile(event: MouseEvent) {
+    event.stopPropagation();
+    const target = event.target as HTMLElement;
+    const figure = target.closest("figure");
+    if (figure) {
+        const fileName = figure.querySelector("figcaption")?.dataset.filename;
+        const fullpath = window.location.pathname + fileName;
+        if (fileName) {
+            window.location.href = `/download?pathname=${fullpath}`;
+        }
+    }
+}
+
+function deselectActiveFile() {
+    const activeFile = document.querySelector(".active-file");
+    if (activeFile) {
+        activeFile.classList.remove("active-file");
+        // hide footer
+        const footer = activeFile.querySelector("footer");
+        if (footer) {
+            footer.classList.add("hidden");
+        }
+    }
+}
 </script>
 <style scoped>
 .container {
@@ -54,6 +126,29 @@ function navigateTo(event: MouseEvent, folderName: string) {
     flex-flow: column;
     gap: 2rem;
     margin-block: 2rem;
+}
+
+.active-file {
+    background-color: var(--secondary-color);
+    /* padding: 10px; */
+    flex-wrap: wrap;
+    width: fit-content;
+    border-radius: 5px;
+}
+
+.file footer:not(.hidden) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    padding-inline: 5px;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.file footer button {
+    padding: 5px 10px;
+    cursor: pointer;
 }
 
 /* article.files,
@@ -70,10 +165,11 @@ article figure img {
 
 article.files figure,
 article.folders figure {
-    --size: 3rem;
+    --size: 5rem;
     display: flex;
     gap: 1rem;
     align-items: center;
+    padding: 10px;
 }
 
 article.files figure img,
@@ -111,12 +207,4 @@ figcaption {
         height: var(--size);
     }
 }
-
-/* article.folders figure {
-    padding: 1em;
-} */
-
-/* figure {
-    height: 3rem;
-} */
 </style>

@@ -18,7 +18,6 @@ import { Dropzone } from "dropzone";
 const dropzone = ref<HTMLFormElement | null>(null);
 const dropzoneOptions = {
     url: "/upload",
-    chunking: true,
     // addedfile: function (file: { previewElement: any }) {
     //     // Now attach this new element some where in your page
     //     console.log("Added file:", file);
@@ -46,12 +45,6 @@ onMounted(() => {
 </style>
 
 <style scoped>
-.dropzone-container {
-    /* position: absolute;
-    inset: 0; */
-    /* z-index: -1; */
-    /* visibility: hidden; */
-}
 .dropzone-container form {
     height: 100%;
 }
