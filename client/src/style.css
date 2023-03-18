@@ -6,7 +6,8 @@
     --text-color: #8caab7;
     --accent-color: hsl(213, 64%, 47%);
     --accent-color-hover: hsl(213, 64%, 37%);
-    --accent-color-2: #ff0061;
+    --accent-color-2: hsl(0, 100%, 60%);
+    --accent-color-2-hover: hsl(0, 100%, 50%);
     --white: #f3f3f3;
 }
 

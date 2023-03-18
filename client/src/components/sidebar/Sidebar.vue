@@ -3,55 +3,33 @@
         <header>
             <h1>Local Cloud</h1>
         </header>
+        <button class="button">create folder</button>
         <a href="/pictures" class="sidebar-item">pictures</a>
         <a href="/videos" class="sidebar-item">videos</a>
         <a href="/music" class="sidebar-item">music</a>
         <a href="/documents" class="sidebar-item">documents</a>
-
-        <article class="file-information">
-            <header>
-                <h2>File Info</h2>
-            </header>
-            <div class="information-container flex-column gap-1" v-if="props.fileInformation">
-                <p>Name: {{ props.fileInformation.name }}</p>
-                <p>Size: {{ props.fileInformation.size }}</p>
-                <a
-                    :href="'/download?pathname=' + currentPath + '/' + props.fileInformation.name"
-                    class="download"
-                >
-                    open
-                </a>
-                <a
-                    :href="
-                        '/download/direct?pathname=' +
-                        currentPath +
-                        '/' +
-                        props.fileInformation.name
-                    "
-                    class="download"
-                >
-                    download
-                </a>
-            </div>
-        </article>
-
-        <footer>
-            <div class="footer-item">settings</div>
-            <div class="footer-item">login</div>
-        </footer>
+        <FileInformation :file-information="fileInformation" :current-path="currentPath" />
+        <SidebarFooter @click-login="loginModal" />
     </section>
     <section class="mobile">
         <div class="mobile-item">settings</div>
         <div class="mobile-item">login</div>
     </section>
+    <Login />
 </template>
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import FileInformation from "./pc/FileInformation.vue";
+import SidebarFooter from "./pc/SidebarFooter.vue";
+import Login from "../modals/Login.vue";
+
+function loginModal() {
+    const loginModal = document.querySelector("dialog") as HTMLDialogElement;
+    loginModal.showModal();
+}
 
 const props = defineProps<{
     fileInformation: { name: string; size: number } | null;
 }>();
-
 const currentPath = window.location.pathname;
 </script>
 <style scoped>
@@ -65,18 +43,6 @@ section.pc {
     overflow-y: auto;
 }
 
-.download {
-    text-decoration: none;
-    background-color: var(--accent-color);
-    color: var(--white);
-    padding: 0.5em 1em;
-    border-radius: 5px;
-}
-
-.download:hover {
-    background-color: var(--accent-color-hover);
-}
-
 section.mobile {
     --height: 50px;
     width: 100%;
@@ -86,6 +52,7 @@ section.mobile {
     display: grid;
     grid-template-columns: 1fr 1fr;
     place-items: center;
+    z-index: 1;
 }
 .mobile-item {
     border-left: 1px solid var(--accent-color);
@@ -130,9 +97,5 @@ a.sidebar-item {
     padding-block: 1rem;
     font-weight: 700;
     cursor: pointer;
-}
-
-footer {
-    margin-top: auto;
 }
 </style>

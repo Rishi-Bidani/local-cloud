@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import Sidebar from "./components/Sidebar.vue";
+import Sidebar from "./components/sidebar/Sidebar.vue";
 import BreadCrumb from "./components/breadcrumb/BreadCrumb.vue";
 import Dropzone from "./components/Dropzone.vue";
 
