@@ -12,7 +12,7 @@ footer {
     margin-top: auto;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
+    height: 40px;
 }
 
 footer > * {

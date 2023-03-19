@@ -3,7 +3,7 @@
         <header>
             <h1>Local Cloud</h1>
         </header>
-        <button class="button">create folder</button>
+        <button class="button" @click="createFolderModal">create folder</button>
         <a href="/pictures" class="sidebar-item">pictures</a>
         <a href="/videos" class="sidebar-item">videos</a>
         <a href="/music" class="sidebar-item">music</a>
@@ -21,11 +21,14 @@
 import FileInformation from "./pc/FileInformation.vue";
 import SidebarFooter from "./pc/SidebarFooter.vue";
 import Login from "../modals/Login.vue";
+import { ref } from "vue";
 
 function loginModal() {
-    const loginModal = document.querySelector("dialog") as HTMLDialogElement;
+    const loginModal = document.querySelector("dialog[data-modal='login']") as HTMLDialogElement;
     loginModal.showModal();
 }
+
+function createFolderModal() {}
 
 const props = defineProps<{
     fileInformation: { name: string; size: number } | null;
