@@ -3,7 +3,7 @@
         <header>
             <h1>Local Cloud</h1>
         </header>
-        <button class="button" @click="createFolderModal">create folder</button>
+        <button class="button create-folder" @click="createFolderModal">create folder</button>
         <a href="/pictures" class="sidebar-item">pictures</a>
         <a href="/videos" class="sidebar-item">videos</a>
         <a href="/music" class="sidebar-item">music</a>
@@ -16,11 +16,16 @@
         <div class="mobile-item">login</div>
     </section>
     <Login />
+    <CreateFolder />
 </template>
 <script setup lang="ts">
 import FileInformation from "./pc/FileInformation.vue";
 import SidebarFooter from "./pc/SidebarFooter.vue";
+
+// modals
 import Login from "../modals/Login.vue";
+import CreateFolder from "../modals/CreateFolder.vue";
+
 import { ref } from "vue";
 
 function loginModal() {
@@ -28,7 +33,12 @@ function loginModal() {
     loginModal.showModal();
 }
 
-function createFolderModal() {}
+function createFolderModal() {
+    const createFolderModal = document.querySelector(
+        "dialog[data-modal='create-folder']"
+    ) as HTMLDialogElement;
+    createFolderModal.showModal();
+}
 
 const props = defineProps<{
     fileInformation: { name: string; size: number } | null;
@@ -69,6 +79,21 @@ section.mobile {
 
 .mobile-item:first-child {
     border-left: none;
+}
+
+.create-folder {
+    background-color: var(--accent-color);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.create-folder:hover {
+    background-color: var(--accent-color-hover);
 }
 
 @media screen and (min-width: 768px) {

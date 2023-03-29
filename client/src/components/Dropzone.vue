@@ -18,6 +18,9 @@ import { Dropzone } from "dropzone";
 const dropzone = ref<HTMLFormElement | null>(null);
 const dropzoneOptions = {
     url: "/upload",
+    headers: {
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+    },
     // addedfile: function (file: { previewElement: any }) {
     //     // Now attach this new element some where in your page
     //     console.log("Added file:", file);

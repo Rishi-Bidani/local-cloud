@@ -1,6 +1,6 @@
 <template>
     <dialog :data-modal="modalName">
-        <form @submit="(event: Event) => $emit('submit', event)">
+        <form @submit="emitSubmit">
             <header class="flex">
                 <h2>{{ heading }}</h2>
                 <div class="close" @click="closeModal">X</div>
@@ -10,6 +10,10 @@
     </dialog>
 </template>
 <script setup lang="ts">
+import { defineEmits } from "vue";
+
+const emits = defineEmits(["submit"]);
+
 const props = defineProps<{
     modalName: string;
     heading: string;
@@ -20,6 +24,11 @@ function closeModal() {
         `dialog[data-modal="${props.modalName}"]`
     ) as HTMLDialogElement;
     dialog.close();
+}
+
+function emitSubmit(event: Event) {
+    event.preventDefault();
+    emits("submit", event);
 }
 </script>
 <style scoped>
@@ -56,5 +65,12 @@ form header {
 
 .close:hover {
     background-color: var(--accent-color-2-hover);
+}
+
+@media screen and (max-width: 600px) {
+    dialog {
+        width: 100%;
+        padding: 0.5rem;
+    }
 }
 </style>
