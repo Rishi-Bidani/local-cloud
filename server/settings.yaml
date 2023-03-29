@@ -11,9 +11,11 @@ accounts:
     guest:
         password: helloworld
         permissions:
-            - createFolder
-            - upload
-            - download
+            createFolder: true
+            upload: true
+            download: true
+            delete: true
+            navigate: true
         hide:
             # relative path from base folder
             - private

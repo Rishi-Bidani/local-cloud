@@ -8,8 +8,7 @@ interface IPermissions {
     canCreateFolder: boolean;
     canUpload: boolean;
 
-    canDownloadFile: boolean;
-    canDownloadFolder: boolean;
+    canDownload: boolean;
 
     canNavigate: boolean;
 
@@ -49,8 +48,7 @@ async function jwtauthenticator(
             const permissions: IPermissions = {
                 canCreateFolder: userAccount.permissions.createFolder ?? false,
                 canUpload: userAccount.permissions.upload ?? false,
-                canDownloadFile: userAccount.permissions.download ?? false,
-                canDownloadFolder: userAccount.permissions.download ?? false,
+                canDownload: userAccount.permissions.download ?? false,
                 canNavigate: userAccount.permissions.navigate ?? false,
                 canDeleteFile: userAccount.permissions.delete ?? false,
                 canDeleteFolder: userAccount.permissions.delete ?? false,

@@ -2,10 +2,9 @@ import express from "express";
 import multer from "multer";
 import MulterOptions from "../middleware/multersettings";
 import _settings from "../functions/settings";
-import * as path from "path";
 import authenticator from "../middleware/authenticator";
-import * as fs from "fs/promises";
-import isPathValid from "../functions/pathvalidator";
+
+import Logging, { ApiType } from "../functions/logging";
 
 const settings = _settings();
 // const storage = multer.diskStorage({
@@ -38,14 +37,18 @@ const router = express.Router();
 const upload = multer({ storage: storage }).any();
 
 router.post("/", authenticator, async (req: express.Request, res: express.Response) => {
-    console.log("uploading file...");
-
-    const canUpload = res.locals.canUpload;
+    const canUpload = res.locals.permissions.canUpload;
     if (!canUpload) return res.status(403).send("Not enough permissions");
 
     upload(req, res, async (err) => {
+        // log the file that are being uploaded
+        const files = req.files as Express.Multer.File[];
+        files.forEach((file) => {
+            Logging.upload(ApiType.POST, file.originalname);
+        });
+
         if (err) {
-            console.log("error: ", err);
+            Logging.upload(ApiType.POST, "[ERROR] Error uploading file");
             res.status(500).send("Error uploading file.");
         } else {
             res.status(200).send("File uploaded successfully.");

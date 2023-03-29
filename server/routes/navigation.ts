@@ -11,6 +11,9 @@ import { Dirent } from "fs";
 const settings = _settings();
 
 type FileOrFolder = Dirent[] | Files | null;
+
+import Logging, { ApiType } from "../functions/logging";
+
 interface File {
     name: string;
     size: number;
@@ -20,7 +23,8 @@ type Files = File[];
 router.get(":pathname(/*)?", authenticator, async (req, res) => {
     const uploadFolder = (await settings).uploadfolder;
     const pathname = join(uploadFolder, req.params.pathname ?? "");
-    console.log("pathname: " + pathname);
+    Logging.navigate(ApiType.GET, pathname);
+
     // if path doesn't exist, return 404
     const pathnameExists = await access(pathname)
         .then(() => true)
