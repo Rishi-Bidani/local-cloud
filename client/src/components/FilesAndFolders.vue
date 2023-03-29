@@ -19,20 +19,35 @@
                 :data-filename="file.name"
                 :data-filesize="file.size"
             >
+                <!-- text file -->
                 <img
                     v-if="file.name.split('.').at(-1) === 'txt'"
                     src="~@/assets/filelogos/txt.svg"
                     alt="text file image"
                 />
+                <!-- excel -->
                 <img
                     v-else-if="file.name.split('.').at(-1) === 'xlsx'"
                     src="~@/assets/filelogos/excel.svg"
                     alt="javascript file image"
                 />
+                <!-- image -->
                 <img
                     v-else-if="['jpg', 'jpeg', 'png', 'svg'].includes(file.name.split('.').at(-1) as string)"
                     src="~@/assets/filelogos/image.svg"
                     alt="image"
+                />
+                <!-- video -->
+                <img
+                    v-else-if="['mp4', 'webm', 'ogg'].includes(file.name.split('.').at(-1) as string)"
+                    src="~@/assets/filelogos/video.svg"
+                    alt="video"
+                />
+                <!-- pdf -->
+                <img
+                    v-else-if="file.name.split('.').at(-1) === 'pdf'"
+                    src="~@/assets/filelogos/pdf.svg"
+                    alt="pdf"
                 />
                 <img v-else src="~@/assets/filelogos/warning.svg" alt="" />
                 <figcaption :data-filename="file.name">{{ file.name }}</figcaption>

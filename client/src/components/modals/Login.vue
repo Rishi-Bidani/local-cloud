@@ -10,6 +10,7 @@
                 <input type="password" name="password" id="password" />
             </div>
         </div>
+        <p class="error">{{ errorMessage }}</p>
         <button type="submit">Login</button>
     </BaseModal>
 </template>
@@ -21,6 +22,7 @@ import BaseModal from "./BaseModal.vue";
 import authorisation from "../../requests/authentication";
 
 const dialog = ref<HTMLDialogElement | null>(null);
+const errorMessage = ref("");
 
 onMounted(() => {
     dialog.value = document.querySelector("dialog") as HTMLDialogElement;
@@ -41,11 +43,17 @@ async function loginSubmit(event: Event) {
     if (response.status === 200) {
         const { accessToken } = await response.json();
         console.log(accessToken);
+        errorMessage.value = "";
         // set token in local storage
         localStorage.setItem("token", accessToken);
+        // clear and close dialog
+        form.reset();
+        dialog.value?.close();
     } else if (response.status === 401) {
+        errorMessage.value = "Invalid credentials";
         console.log("Invalid credentials");
     } else {
+        errorMessage.value = "Something went wrong";
         console.log("Something went wrong");
     }
 }
@@ -74,6 +82,10 @@ button[type="submit"] {
 }
 button[type="submit"]:hover {
     background-color: var(--accent-color-hover);
+}
+
+.error {
+    color: red;
 }
 
 @media screen and (max-width: 600px) {

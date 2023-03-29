@@ -19,7 +19,7 @@ const dropzone = ref<HTMLFormElement | null>(null);
 const dropzoneOptions = {
     url: "/upload",
     headers: {
-        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        Authorization: "Bearer " + localStorage.getItem("token"),
     },
     // addedfile: function (file: { previewElement: any }) {
     //     // Now attach this new element some where in your page

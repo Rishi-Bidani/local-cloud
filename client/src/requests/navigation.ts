@@ -6,7 +6,17 @@ export default class Navigate {
         path = path.replace(/\/{2,}/g, "/");
         // remove trailing and leading slash
         path = path.replace(/^\/|\/$/g, "");
-        const response = await fetch(`/navigate/${path}`);
+        const token = localStorage.getItem("token") ?? null;
+        let response;
+        if (token == null) {
+            response = await fetch(`/navigate/${path}`);
+        } else {
+            response = await fetch(`/navigate/${path}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        }
         const data = await response.json();
         return data;
     }

@@ -8,16 +8,22 @@
             <p>Size: {{ fileInformation.size }}</p>
             <a
                 :href="'/download?pathname=' + currentPath + '/' + fileInformation.name"
-                class="download"
+                class="download button"
             >
+                <img src="~@/assets/icons/open.svg" alt="open" />
                 open
             </a>
             <a
                 :href="'/download/direct?pathname=' + currentPath + '/' + fileInformation.name"
-                class="download"
+                class="download button"
             >
+                <img src="~@/assets/icons/download.svg" alt="download" />
                 download
             </a>
+            <button class="button red delete">
+                <img src="~@/assets/icons/delete.svg" alt="delete" />
+                delete
+            </button>
         </div>
     </article>
 </template>
@@ -29,12 +35,40 @@ const props = defineProps<{
 }>();
 </script>
 <style scoped>
-.download {
+.file-information {
+    margin-bottom: 1rem;
+}
+.button {
     text-decoration: none;
-    background-color: var(--accent-color);
-    color: var(--white);
     padding: 0.5em 1em;
+    border: none;
     border-radius: 5px;
+    display: flex;
+    place-items: center;
+    color: var(--white);
+    font-size: 1rem;
+    gap: 0.5rem;
+    height: 2.5rem;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.red {
+    background-color: var(--accent-color-2);
+}
+
+.red:hover {
+    background-color: var(--accent-color-2-hover);
+}
+
+.download {
+    background-color: var(--accent-color);
+}
+
+.button img {
+    height: 100%;
 }
 
 .download:hover {
