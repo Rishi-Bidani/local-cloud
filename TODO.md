@@ -10,3 +10,4 @@
 - [ ] Delete Folder
 - [ ] Download Folder
 - [ ] Show file size in proper format in sidebar
+- [ ] Add logs on the console for the various events
