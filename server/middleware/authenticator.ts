@@ -4,13 +4,27 @@ import * as jwt from "jsonwebtoken";
 import _settings from "../functions/settings";
 const settings = _settings();
 
+interface IPermissions {
+    canCreateFolder: boolean;
+    canUpload: boolean;
+
+    canDownloadFile: boolean;
+    canDownloadFolder: boolean;
+
+    canNavigate: boolean;
+
+    canDeleteFile: boolean;
+    canDeleteFolder: boolean;
+}
+
 async function jwtauthenticator(
     req: express.Request,
     res: express.Response,
     next: express.NextFunction
 ) {
+    const accountsExist = (await settings).accounts;
     // check if the settings include accounts
-    if (!(await settings).accounts) {
+    if (!accountsExist) {
         // if there are no accounts, continue
         next();
     } else {
@@ -22,11 +36,28 @@ async function jwtauthenticator(
 
         // verify the token
         const secretKey = (await settings).secretkey;
-        jwt.verify(token, secretKey, (err: any, user: any) => {
+        jwt.verify(token, secretKey, async (err: any, user: any) => {
+            console.log(err);
             // if there is an error, return 403
             if (err) return res.sendStatus(403);
             // if the token is verified, continue
             (req as any).user = user;
+
+            const userAccount = (await settings).accounts[user];
+
+            // set permissions to res.locals
+            const permissions: IPermissions = {
+                canCreateFolder: userAccount.permissions.createFolder ?? false,
+                canUpload: userAccount.permissions.upload ?? false,
+                canDownloadFile: userAccount.permissions.download ?? false,
+                canDownloadFolder: userAccount.permissions.download ?? false,
+                canNavigate: userAccount.permissions.navigate ?? false,
+                canDeleteFile: userAccount.permissions.delete ?? false,
+                canDeleteFolder: userAccount.permissions.delete ?? false,
+            };
+            res.locals.permissions = permissions;
+            res.locals.account = userAccount;
+
             next();
         });
     }

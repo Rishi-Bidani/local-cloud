@@ -11,9 +11,6 @@ import createStorageFolders from "./functions/createstoragefolders";
     await createStorageFolders();
 })();
 
-// importing middlewares
-import { authenticationRouter } from "./routes/authentication";
-
 // create require
 const { Server } = require("http");
 const app: express.Application = express();
@@ -23,14 +20,22 @@ const http = Server(app);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/auth", authenticationRouter);
 
 // routes =============================================================
+import { authenticationRouter } from "./routes/authentication";
+app.use("/auth", authenticationRouter);
+
 import { router as navigationRouter } from "./routes/navigation";
 app.use("/navigate", navigationRouter);
 
 import { router as uploadRouter } from "./routes/upload";
 app.use("/upload", uploadRouter);
+
+import { router as downloadRouter } from "./routes/download";
+app.use("/download", downloadRouter);
+
+import { router as CreateRouter } from "./routes/create";
+app.use("/create", CreateRouter);
 // ====================================================================
 
 app.get("/", (req, res) => {

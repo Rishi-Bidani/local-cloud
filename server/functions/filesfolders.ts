@@ -2,7 +2,10 @@ import path from "path";
 import { homedir } from "os";
 import isPathValid from "./pathvalidator";
 import * as fs from "fs/promises";
+import { Dirent } from "fs";
 
+import _settings from "./settings";
+const settings = _settings();
 interface File {
     name: string;
     size: number;
@@ -47,5 +50,7 @@ async function getFolders(pathname: string) {
 // getFiles(path.join(homedir(), "Downloads")).then((files) => {
 //     console.log(files);
 // });
+
+type FileOrFolder = Dirent[] | Files | null;
 
 export { getFiles, getFolders };

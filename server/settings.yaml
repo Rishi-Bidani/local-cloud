@@ -10,12 +10,19 @@ accounts:
 
     guest:
         password: helloworld
+        permissions:
+            - createFolder
+            - upload
+            - download
         hide:
             # relative path from base folder
             - private
             - private2
+            - new folder
+            - documents/test
 
     account2:
         password: helloworld2
+        permissions:
         hide:
             - private

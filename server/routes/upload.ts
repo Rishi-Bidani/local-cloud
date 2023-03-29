@@ -39,6 +39,10 @@ const upload = multer({ storage: storage }).any();
 
 router.post("/", authenticator, async (req: express.Request, res: express.Response) => {
     console.log("uploading file...");
+
+    const canUpload = res.locals.canUpload;
+    if (!canUpload) return res.status(403).send("Not enough permissions");
+
     upload(req, res, async (err) => {
         if (err) {
             console.log("error: ", err);
