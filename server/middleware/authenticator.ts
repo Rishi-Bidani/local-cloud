@@ -44,16 +44,30 @@ async function jwtauthenticator(
 
             const userAccount = (await settings).accounts[user];
 
+            let permissions: IPermissions;
+            // if admin, set all permissions to true
+            if (user === "admin") {
+                permissions = {
+                    canCreateFolder: true,
+                    canUpload: true,
+                    canDownload: true,
+                    canNavigate: true,
+                    canDeleteFile: true,
+                    canDeleteFolder: true,
+                };
+            } else {
+                permissions = {
+                    canCreateFolder: userAccount.permissions.createFolder ?? false,
+                    canUpload: userAccount.permissions.upload ?? false,
+                    canDownload: userAccount.permissions.download ?? false,
+                    canNavigate: userAccount.permissions.navigate ?? false,
+                    canDeleteFile: userAccount.permissions.delete ?? false,
+                    canDeleteFolder: userAccount.permissions.delete ?? false,
+                };
+            }
             // set permissions to res.locals
-            const permissions: IPermissions = {
-                canCreateFolder: userAccount.permissions.createFolder ?? false,
-                canUpload: userAccount.permissions.upload ?? false,
-                canDownload: userAccount.permissions.download ?? false,
-                canNavigate: userAccount.permissions.navigate ?? false,
-                canDeleteFile: userAccount.permissions.delete ?? false,
-                canDeleteFolder: userAccount.permissions.delete ?? false,
-            };
             res.locals.permissions = permissions;
+            res.locals.accountName = user;
             res.locals.account = userAccount;
 
             next();
