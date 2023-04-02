@@ -26,8 +26,6 @@ import SidebarFooter from "./pc/SidebarFooter.vue";
 import Login from "../modals/Login.vue";
 import CreateFolder from "../modals/CreateFolder.vue";
 
-import { ref } from "vue";
-
 function loginModal() {
     const loginModal = document.querySelector("dialog[data-modal='login']") as HTMLDialogElement;
     loginModal.showModal();

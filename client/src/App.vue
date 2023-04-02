@@ -5,6 +5,9 @@
             <header ref="breadcrumbContainer" @wheel="horizontalScroll">
                 <BreadCrumb :navigationPath="navigationPath" />
             </header>
+            <div v-if="navigationError" class="error">
+                {{ navigationError }}
+            </div>
             <!-- drag exit leave-->
             <div class="display-container">
                 <FilesAndFolders :files="files" :folders="folders" @selectedFile="selectedFile" />
@@ -43,12 +46,18 @@ function selectedFile(file: { name: string; size: number } | null) {
     fileInformation.value = file;
 }
 
+const navigationError = ref<string | null>(null);
+
 onMounted(async () => {
     // add event listener to window
-    const response = await Navigate.toPath(navigationPath.value);
-    console.log("Response:", response);
-    files.value = response.files;
-    folders.value = response.folders;
+    const { data: response, error } = await Navigate.toPath(navigationPath.value);
+    if (error) {
+        console.error("[ERROR] Navigate: ", error);
+        navigationError.value = error ?? "error";
+        return;
+    }
+    files.value = response.files ?? [];
+    folders.value = response.folders ?? [];
 });
 </script>
 <style>

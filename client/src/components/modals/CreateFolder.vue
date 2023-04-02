@@ -31,7 +31,6 @@ async function createFolder(event: Event) {
             "Content-Type": "application/json",
         },
     });
-    console.log(response);
     // check status
     if (response.status === 200) {
         // reload page
