@@ -1,5 +1,6 @@
 import express from "express";
 import * as jwt from "jsonwebtoken";
+import Logging from "../functions/logging";
 
 import _settings from "../functions/settings";
 const settings = _settings();
@@ -21,6 +22,7 @@ async function jwtauthenticator(
     res: express.Response,
     next: express.NextFunction
 ) {
+    Logging.attempting(req);
     const accountsExist = (await settings).accounts;
     // check if the settings include accounts
     if (!accountsExist) {

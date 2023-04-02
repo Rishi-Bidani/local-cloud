@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import express from "express";
 
 export enum ApiType {
     GET = "get",
@@ -15,12 +16,21 @@ export default class Logging {
         console.log((await chalk).blue(`[DOWNLOAD] ${apitype.toUpperCase()} ${message}`));
     }
     static async upload(apitype: ApiType, message: string) {
-        console.log((await chalk).yellow(`[UPLOAD] ${apitype.toUpperCase()} ${message}`));
+        console.log((await chalk).magenta(`[UPLOAD] ${apitype.toUpperCase()} ${message}`));
+    }
+    static async create(apitype: ApiType, message: string) {
+        console.log((await chalk).cyan(`[CREATE] ${apitype.toUpperCase()} ${message}`));
     }
     static async delete(apitype: ApiType, message: string) {
         console.log((await chalk).red(`[DELETE] ${apitype.toUpperCase()} ${message}`));
     }
     static async error(apitype: ApiType, message: string) {
         console.log((await chalk).redBright(`[ERROR] ${apitype.toUpperCase()} ${message}`));
+    }
+
+    static async attempting(req: express.Request) {
+        const method = req.method;
+        const url = req.url;
+        console.log((await chalk).yellowBright(`[ATTEMPTING] ${method.toUpperCase()} ${url}`));
     }
 }
