@@ -37,6 +37,10 @@ const props = defineProps<{
 async function deleteFile() {
     const pathname = props.currentPath + "/" + props.fileInformation?.name;
     try {
+        // get confirmation
+        const confirmation = confirm("Are you sure you want to delete this file?");
+        if (!confirmation) return;
+
         const response = await fetch("/delete", {
             method: "DELETE",
             headers: {
@@ -49,6 +53,10 @@ async function deleteFile() {
         if (response.status === 200) {
             // TODO: just remove thefile from dom
             window.location.reload();
+        } else {
+            alert(
+                "Error deleting file\nPlease try again later, or use an account with higher permissions"
+            );
         }
     } catch (error) {
         alert(error);

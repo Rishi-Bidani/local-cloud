@@ -21,6 +21,7 @@ const dropzoneOptions = {
     headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
     },
+    maxFilesize: 60000,
     // addedfile: function (file: { previewElement: any }) {
     //     // Now attach this new element some where in your page
     //     console.log("Added file:", file);

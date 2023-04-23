@@ -30,7 +30,12 @@ const navigationPath: Ref<string> = ref<string>(window.location.pathname);
 const breadcrumbContainer = ref<HTMLDivElement | null>(null);
 const fileInformation = ref<{ name: string; size: number } | null>(null);
 
-const files = ref<Array<{ name: string; size: number }>>([]);
+interface FileInformation {
+    name: string;
+    size: number;
+}
+
+const files: Ref<FileInformation[]> = ref<FileInformation[]>([]);
 const folders = ref<Array<{ name: string }>>([]);
 
 function horizontalScroll(event: WheelEvent) {
@@ -41,7 +46,7 @@ function horizontalScroll(event: WheelEvent) {
     breadcrumbContainer.value!.scrollLeft += event.deltaY;
 }
 
-function selectedFile(file: { name: string; size: number } | null) {
+function selectedFile(file: FileInformation | null): void {
     console.log("Selected file:", file);
     fileInformation.value = file;
 }
@@ -118,6 +123,7 @@ header {
 
     .drop {
         height: 100px;
+        margin-bottom: 50px;
     }
 }
 </style>
