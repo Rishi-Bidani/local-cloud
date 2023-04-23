@@ -20,7 +20,7 @@
                 <img src="~@/assets/icons/download.svg" alt="download" />
                 download
             </a>
-            <button class="button red delete">
+            <button class="button red delete" @click="deleteFile">
                 <img src="~@/assets/icons/delete.svg" alt="delete" />
                 delete
             </button>
@@ -33,6 +33,27 @@ const props = defineProps<{
     fileInformation: { name: string; size: number } | null;
     currentPath: string;
 }>();
+
+async function deleteFile() {
+    const pathname = props.currentPath + "/" + props.fileInformation?.name;
+    try {
+        const response = await fetch("/delete", {
+            method: "DELETE",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ pathname }),
+        });
+
+        if (response.status === 200) {
+            // TODO: just remove thefile from dom
+            window.location.reload();
+        }
+    } catch (error) {
+        alert(error);
+    }
+}
 </script>
 <style scoped>
 .file-information {

@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
+const target = "http://127.0.0.1:5000";
+
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [vue()],
@@ -13,23 +15,22 @@ export default defineConfig({
         proxy: {
             "/navigate": {
                 // target: "http://localhost:5000",
-                target: "http://127.0.0.1:5000",
+                target,
             },
             "/upload": {
-                // target: "http://localhost:5000",
-                target: "http://127.0.0.1:5000",
+                target,
             },
             "/download": {
-                // target: "http://localhost:5000",
-                target: "http://127.0.0.1:5000",
+                target,
             },
             "/auth": {
-                // target: "http://localhost:5000",
-                target: "http://127.0.0.1:5000",
+                target,
             },
             "/create": {
-                // target: "http://localhost:5000",
-                target: "http://127.0.0.1:5000",
+                target,
+            },
+            "/delete": {
+                target,
             },
         },
     },
