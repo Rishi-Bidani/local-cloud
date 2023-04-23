@@ -36,6 +36,9 @@ app.use("/download", downloadRouter);
 
 import { router as CreateRouter } from "./routes/create";
 app.use("/create", CreateRouter);
+
+import { router as DeleteRouter } from "./routes/delete";
+app.use("/delete", DeleteRouter);
 // ====================================================================
 
 app.get("/", (req, res) => {
