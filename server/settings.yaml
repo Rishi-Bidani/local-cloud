@@ -14,7 +14,7 @@ accounts:
             createFolder: true
             upload: true
             download: true
-            delete: true
+            delete: false
             navigate: true
         hide:
             # relative path from base folder

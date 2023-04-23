@@ -3,16 +3,14 @@ const router = express.Router();
 import path from "path";
 import { access } from "fs/promises";
 
-import { getFiles, getFolders } from "../functions/filesfolders";
+import { getFiles, getFolders } from "@functions/filesfolders";
 import authenticator from "../middleware/authenticator";
 
-import _settings from "../functions/settings";
+import _settings from "@functions/settings";
 import { Dirent } from "fs";
 const settings = _settings();
 
-type FileOrFolder = Dirent[] | Files | null;
-
-import Logging, { ApiType } from "../functions/logging";
+import Logging, { ApiType } from "@functions/logging";
 
 interface File {
     name: string;

@@ -1,10 +1,10 @@
 import express from "express";
 import multer from "multer";
 import MulterOptions from "../middleware/multersettings";
-import _settings from "../functions/settings";
+import _settings from "@functions/settings";
 import authenticator from "../middleware/authenticator";
 
-import Logging, { ApiType } from "../functions/logging";
+import Logging, { ApiType } from "@functions/logging";
 
 const settings = _settings();
 // const storage = multer.diskStorage({

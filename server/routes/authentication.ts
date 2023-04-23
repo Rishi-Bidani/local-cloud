@@ -1,5 +1,5 @@
 import express from "express";
-import _settings from "../functions/settings";
+import _settings from "@functions/settings";
 
 const settings = _settings();
 const router = express.Router();

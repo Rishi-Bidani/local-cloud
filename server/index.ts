@@ -4,7 +4,7 @@ import cors from "cors";
 
 import auth from "./middleware/authenticator";
 
-import createStorageFolders from "./functions/createstoragefolders";
+import createStorageFolders from "@functions/createstoragefolders";
 
 // setup the folders - data, temp
 (async function () {
@@ -22,22 +22,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routes =============================================================
-import { authenticationRouter } from "./routes/authentication";
+import { authenticationRouter } from "@routes/authentication";
 app.use("/auth", authenticationRouter);
 
-import { router as navigationRouter } from "./routes/navigation";
+import { router as navigationRouter } from "@routes/navigation";
 app.use("/navigate", navigationRouter);
 
-import { router as uploadRouter } from "./routes/upload";
+import { router as uploadRouter } from "@routes/upload";
 app.use("/upload", uploadRouter);
 
-import { router as downloadRouter } from "./routes/download";
+import { router as downloadRouter } from "@routes/download";
 app.use("/download", downloadRouter);
 
-import { router as CreateRouter } from "./routes/create";
+import { router as CreateRouter } from "@routes/create";
 app.use("/create", CreateRouter);
 
-import { router as DeleteRouter } from "./routes/delete";
+import { router as DeleteRouter } from "@routes/delete";
 app.use("/delete", DeleteRouter);
 // ====================================================================
 

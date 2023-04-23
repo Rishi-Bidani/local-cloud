@@ -3,10 +3,10 @@ import express from "express";
 const router = express.Router();
 
 import path from "path";
-import _settings from "../functions/settings";
+import _settings from "@functions/settings";
 const settings = _settings();
 
-import Logging, { ApiType } from "../functions/logging";
+import Logging, { ApiType } from "@functions/logging";
 
 // TODO: add authentication middleware
 

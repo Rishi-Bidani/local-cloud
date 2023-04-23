@@ -1,10 +1,10 @@
 import express, { Router } from "express";
 import _settings from "../functions/settings";
 import path from "path";
-import isPathValid from "../functions/pathvalidator";
+import isPathValid from "@functions/pathvalidator";
 import fs from "fs/promises";
 import authenticator from "../middleware/authenticator";
-import Logging, { ApiType } from "../functions/logging";
+import Logging, { ApiType } from "@functions/logging";
 
 const settings = _settings();
 const router: Router = express.Router();
