@@ -22,7 +22,7 @@ import Sidebar from "./components/sidebar/Sidebar.vue";
 import BreadCrumb from "./components/breadcrumb/BreadCrumb.vue";
 import Dropzone from "./components/Dropzone.vue";
 
-import { onMounted, ref, Ref, watch } from "vue";
+import { onMounted, ref, Ref, watch, provide } from "vue";
 import Navigate from "./requests/navigation";
 import FilesAndFolders from "./components/FilesAndFolders.vue";
 
@@ -64,6 +64,33 @@ onMounted(async () => {
     files.value = response.files ?? [];
     folders.value = response.folders ?? [];
 });
+
+const checkLoggedIn = (): boolean => {
+    try {
+        return localStorage.getItem("token") ? true : false;
+    } catch (error) {
+        return false;
+    }
+};
+const isLoggedIn = ref<boolean>(checkLoggedIn());
+
+function logout(): void {
+    // ask for confirmation
+    const confirmation = confirm("Are you sure you want to logout?");
+    if (confirmation) {
+        localStorage.removeItem("token");
+        isLoggedIn.value = false;
+    }
+}
+
+function checkAndUpdateLoggedIn() {
+    isLoggedIn.value = checkLoggedIn();
+}
+
+// provide
+provide("isLoggedIn", isLoggedIn);
+provide("logout", logout);
+provide("checkLogin", checkAndUpdateLoggedIn);
 </script>
 <style>
 #app {

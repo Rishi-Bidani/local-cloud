@@ -6,32 +6,24 @@
         <div v-if="!isLoggedIn" class="footer-item login flex" @click="() => $emit('click-login')">
             login
         </div>
-        <div v-else class="footer-item logout flex" @click="logout">logout</div>
+        <div v-else class="footer-item logout flex" @click="logout()">logout</div>
     </footer>
 </template>
 <script setup lang="ts">
-import { Ref, ref } from "vue";
+import { Ref, ref, inject } from "vue";
 
-const isLoggedIn: Ref<boolean> = ref(false);
+const isLoggedIn = inject("isLoggedIn");
+const logout: any = inject("logout");
 
-try {
-    const token = localStorage.getItem("token");
-    if (token) {
-        isLoggedIn.value = true;
-    }
-} catch (error) {
-    console.log(error);
-    // TODO: handle error
-}
-
-function logout() {
-    // ask for confirmation
-    const confirmation = confirm("Are you sure you want to logout?");
-    if (confirmation) {
-        localStorage.removeItem("token");
-        isLoggedIn.value = false;
-    }
-}
+// try {
+//     const token = localStorage.getItem("token");
+//     if (token) {
+//         isLoggedIn.value = true;
+//     }
+// } catch (error) {
+//     console.log(error);
+//     // TODO: handle error
+// }
 </script>
 <style scoped>
 footer {
