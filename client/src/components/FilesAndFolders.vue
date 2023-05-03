@@ -49,7 +49,7 @@
                     src="~@/assets/filelogos/pdf.svg"
                     alt="pdf"
                 />
-                <img v-else src="~@/assets/filelogos/warning.svg" alt="" />
+                <img v-else src="~@/assets/filelogos/warning.svg" alt="" @drag="false" />
                 <figcaption :data-filename="file.name">{{ file.name }}</figcaption>
 
                 <footer class="hidden">
@@ -163,7 +163,6 @@ function deselectActiveFile() {
 
 .active-file {
     background-color: var(--secondary-color);
-    /* padding: 10px; */
     flex-wrap: wrap;
     width: fit-content;
     border-radius: 5px;
@@ -222,7 +221,7 @@ figcaption {
 
     article.files,
     article.folders {
-        --size: 100px;
+        --size: 120px;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(var(--size), 1fr));
         gap: 1rem;

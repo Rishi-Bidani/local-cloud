@@ -6,7 +6,7 @@
 
 ## Features to implement
 
-- [ ] Delete file
+- [x] Delete file
 - [ ] Delete Folder
 - [ ] Download Folder
 - [ ] Show file size in proper format in sidebar

@@ -13,18 +13,42 @@
     </section>
     <section class="mobile">
         <div class="mobile-item">settings</div>
-        <div class="mobile-item">login</div>
+        <!-- <div class="mobile-item">login</div> -->
+        <div v-if="!isLoggedIn" class="mobile-item login flex" @click="() => $emit('click-login')">
+            login
+        </div>
+        <div v-else class="mobile-item logout flex" @click="logout">logout</div>
     </section>
     <Login />
     <CreateFolder />
 </template>
 <script setup lang="ts">
+import { Ref, ref } from "vue";
 import FileInformation from "./pc/FileInformation.vue";
 import SidebarFooter from "./pc/SidebarFooter.vue";
 
 // modals
 import Login from "../modals/Login.vue";
 import CreateFolder from "../modals/CreateFolder.vue";
+
+const checkLoggedIn = (): boolean => {
+    try {
+        return localStorage.getItem("token") ? true : false;
+    } catch (error) {
+        return false;
+    }
+};
+
+const isLoggedIn: Ref<boolean> = ref(checkLoggedIn());
+
+function logout(): void {
+    // ask for confirmation
+    const confirmation: boolean = confirm("Are you sure you want to logout?");
+    if (confirmation) {
+        localStorage.removeItem("token");
+        isLoggedIn.value = false;
+    }
+}
 
 function loginModal() {
     const loginModal = document.querySelector("dialog[data-modal='login']") as HTMLDialogElement;
