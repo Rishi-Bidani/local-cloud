@@ -21,7 +21,7 @@
     <CreateFolder />
 </template>
 <script setup lang="ts">
-import { Ref, ref, inject } from "vue";
+import { inject } from "vue";
 import FileInformation from "./pc/FileInformation.vue";
 import SidebarFooter from "./pc/SidebarFooter.vue";
 
@@ -29,34 +29,13 @@ import SidebarFooter from "./pc/SidebarFooter.vue";
 import Login from "../modals/Login.vue";
 import CreateFolder from "../modals/CreateFolder.vue";
 
-// const checkLoggedIn = (): boolean => {
-//     try {
-//         return localStorage.getItem("token") ? true : false;
-//     } catch (error) {
-//         return false;
-//     }
-// };
-
-// const isLoggedIn: Ref<boolean> = ref(checkLoggedIn());
-
 const isLoggedIn = inject("isLoggedIn");
 const logout: any = inject("logout");
-const checkLogin: any = inject("checkLogin");
-
-// function logout(): void {
-//     // ask for confirmation
-//     const confirmation: boolean = confirm("Are you sure you want to logout?");
-//     if (confirmation) {
-//         localStorage.removeItem("token");
-//         isLoggedIn.value = false;
-//     }
-// }
 
 function loginModal() {
     const loginModal = document.querySelector("dialog[data-modal='login']") as HTMLDialogElement;
     loginModal.showModal();
     // isLoggedIn.value = checkLoggedIn();
-    checkLogin();
 }
 
 function createFolderModal() {

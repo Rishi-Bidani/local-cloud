@@ -47,7 +47,7 @@ function horizontalScroll(event: WheelEvent) {
 }
 
 function selectedFile(file: FileInformation | null): void {
-    console.log("Selected file:", file);
+    // console.log("Selected file:", file);
     fileInformation.value = file;
 }
 
@@ -73,6 +73,12 @@ const checkLoggedIn = (): boolean => {
     }
 };
 const isLoggedIn = ref<boolean>(checkLoggedIn());
+
+// watch changes for isLoggedIn
+watch(isLoggedIn, (newValue) => {
+    // refresh page
+    window.location.reload();
+});
 
 function logout(): void {
     // ask for confirmation

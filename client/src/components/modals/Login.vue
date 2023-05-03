@@ -15,7 +15,7 @@
     </BaseModal>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject } from "vue";
 import BaseModal from "./BaseModal.vue";
 
 // requests
@@ -23,6 +23,8 @@ import authorisation from "../../requests/authentication";
 
 const dialog = ref<HTMLDialogElement | null>(null);
 const errorMessage = ref("");
+
+const checkLogin: any = inject("checkLogin");
 
 onMounted(() => {
     dialog.value = document.querySelector("dialog") as HTMLDialogElement;
@@ -49,6 +51,7 @@ async function loginSubmit(event: Event) {
         // clear and close dialog
         form.reset();
         dialog.value?.close();
+        checkLogin();
     } else if (response.status === 401) {
         errorMessage.value = "Invalid credentials";
         console.log("Invalid credentials");
