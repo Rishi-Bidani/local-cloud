@@ -54,6 +54,16 @@ longer).
 
 These images might be from older versions of the same app and might appear different from the one you setup. Please open
 an issue for requesting icons or suggesting any colour improvements.
+### Version 3
+![image](https://user-images.githubusercontent.com/64310471/235914376-f4aacb69-5589-494a-92df-e93e7c0affc1.png)
+
+![image](https://user-images.githubusercontent.com/64310471/235914944-1fedb49f-1bde-423d-88cd-4af7873e74b5.png)
+
+![image](https://user-images.githubusercontent.com/64310471/235915232-ebe37f29-31df-44ed-bc95-aa41a7f40626.png)
+
+
+
+### Version 2
 ![image](https://user-images.githubusercontent.com/64310471/118494261-996fdd80-b73f-11eb-8013-80794fad875d.png)
 
 ![image](https://user-images.githubusercontent.com/64310471/120432554-b7704b80-c397-11eb-9f53-7ca4c9a59f23.png)
