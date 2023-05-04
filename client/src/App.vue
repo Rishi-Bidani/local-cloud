@@ -11,7 +11,10 @@
             <!-- drag exit leave-->
             <div class="display-container">
                 <FilesAndFolders :files="files" :folders="folders" @selectedFile="selectedFile" />
-                <Dropzone class="drop" />
+                <div class="page-not-found" v-if="!(files || folders)">
+                    <img src="~@/assets/images/404transparent.png" alt="404 image" />
+                </div>
+                <Dropzone v-if="files || folders" class="drop" />
             </div>
         </section>
     </main>
@@ -35,8 +38,8 @@ interface FileInformation {
     size: number;
 }
 
-const files: Ref<FileInformation[]> = ref<FileInformation[]>([]);
-const folders = ref<Array<{ name: string }>>([]);
+const files: Ref<FileInformation[] | null> = ref<FileInformation[]>([]);
+const folders = ref<Array<{ name: string } | null>>([]);
 
 function horizontalScroll(event: WheelEvent) {
     event.preventDefault();
@@ -61,8 +64,8 @@ onMounted(async () => {
         navigationError.value = error ?? "error";
         return;
     }
-    files.value = response.files ?? [];
-    folders.value = response.folders ?? [];
+    files.value = response.files ?? null;
+    folders.value = response.folders ?? null;
 });
 
 const checkLoggedIn = (): boolean => {
@@ -143,6 +146,16 @@ header {
 
 .drop {
     height: 500px;
+}
+
+.page-not-found {
+    width: 100%;
+    display: flex;
+}
+
+.page-not-found img {
+    width: min(100%, 1000px);
+    margin: auto;
 }
 
 @media screen and (max-width: 768px) {

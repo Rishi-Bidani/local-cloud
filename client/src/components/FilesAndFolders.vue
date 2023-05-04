@@ -16,6 +16,7 @@
                 v-for="file in files"
                 :key="file.name"
                 @click="toggleInformation"
+                v-on:click.ctrl.exact="downloadFileDirect"
                 :data-filename="file.name"
                 :data-filesize="file.size"
             >
@@ -137,6 +138,19 @@ function downloadFile(event: MouseEvent) {
         const fullpath = window.location.pathname + fileName;
         if (fileName) {
             window.location.href = `/download?pathname=${fullpath}`;
+        }
+    }
+}
+
+function downloadFileDirect(event: MouseEvent) {
+    event.stopPropagation();
+    const target = event.target as HTMLElement;
+    const figure = target.closest("figure");
+    if (figure) {
+        const fileName = figure.querySelector("figcaption")?.dataset.filename;
+        const fullpath = window.location.pathname + fileName;
+        if (fileName) {
+            window.location.href = `/download/direct?pathname=${fullpath}`;
         }
     }
 }
