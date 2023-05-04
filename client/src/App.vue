@@ -11,10 +11,10 @@
             <!-- drag exit leave-->
             <div class="display-container">
                 <FilesAndFolders :files="files" :folders="folders" @selectedFile="selectedFile" />
-                <div class="page-not-found" v-if="!(files || folders)">
+                <div class="page-not-found" v-if="is404">
                     <img src="~@/assets/images/404transparent.png" alt="404 image" />
                 </div>
-                <Dropzone v-if="files || folders" class="drop" />
+                <Dropzone v-if="!is404" class="drop" />
             </div>
         </section>
     </main>
@@ -38,8 +38,9 @@ interface FileInformation {
     size: number;
 }
 
-const files: Ref<FileInformation[] | null> = ref<FileInformation[]>([]);
-const folders = ref<Array<{ name: string } | null>>([]);
+const is404: Ref<boolean> = ref<boolean>(true);
+const files: Ref<FileInformation[]> = ref<FileInformation[]>([]);
+const folders = ref<Array<{ name: string }>>([]);
 
 function horizontalScroll(event: WheelEvent) {
     event.preventDefault();
@@ -58,14 +59,16 @@ const navigationError = ref<string | null>(null);
 
 onMounted(async () => {
     // add event listener to window
-    const { data: response, error } = await Navigate.toPath(navigationPath.value);
+    const { data: response, error, status } = await Navigate.toPath(navigationPath.value);
     if (error) {
         console.error("[ERROR] Navigate: ", error);
         navigationError.value = error ?? "error";
         return;
     }
-    files.value = response.files ?? null;
-    folders.value = response.folders ?? null;
+    files.value = response.files ?? [];
+    folders.value = response.folders ?? [];
+
+    is404.value = status === 404;
 });
 
 const checkLoggedIn = (): boolean => {
