@@ -23,6 +23,18 @@ accounts:
             - new folder
             - documents/test
 
+    guest2:
+        password: helloworld2
+        permissions:
+            createFolder: true
+            upload: true
+            download: true
+            delete: false
+            navigate: true
+        show:
+            # overrides hide
+            - onlythis
+
     account2:
         password: helloworld2
         permissions:

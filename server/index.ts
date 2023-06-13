@@ -21,12 +21,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(function (req, res, next) {
-    // log the request
-    console.log(req.method, req);
-    next();
-});
-
 // routes =============================================================
 import { authenticationRouter } from "@routes/authentication";
 app.use("/auth", authenticationRouter);

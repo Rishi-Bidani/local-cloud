@@ -13,3 +13,4 @@
 - [ ] Add logs on the console for the various events
 - [ ] rename files
 - [ ] rename folders
+- [ ] create a validator for the settings file, which runs on app startup

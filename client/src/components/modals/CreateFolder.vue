@@ -28,6 +28,7 @@ async function createFolder(event: Event) {
             pathname: currentPath,
         }),
         headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
             "Content-Type": "application/json",
         },
     });

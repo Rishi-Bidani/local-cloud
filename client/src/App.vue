@@ -38,7 +38,7 @@ interface FileInformation {
     size: number;
 }
 
-const is404: Ref<boolean> = ref<boolean>(true);
+const is404: Ref<boolean> = ref<boolean>(false);
 const files: Ref<FileInformation[]> = ref<FileInformation[]>([]);
 const folders = ref<Array<{ name: string }>>([]);
 

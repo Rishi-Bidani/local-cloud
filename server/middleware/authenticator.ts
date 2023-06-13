@@ -17,6 +17,28 @@ interface IPermissions {
     canDeleteFolder: boolean;
 }
 
+function setPermissions(isAdmin: boolean, userAccount: any): IPermissions {
+    if (isAdmin) {
+        return {
+            canCreateFolder: true,
+            canUpload: true,
+            canDownload: true,
+            canNavigate: true,
+            canDeleteFile: true,
+            canDeleteFolder: true,
+        };
+    } else {
+        return {
+            canCreateFolder: userAccount.permissions.createFolder ?? false,
+            canUpload: userAccount.permissions.upload ?? false,
+            canDownload: userAccount.permissions.download ?? false,
+            canNavigate: userAccount.permissions.navigate ?? false,
+            canDeleteFile: userAccount.permissions.delete ?? false,
+            canDeleteFolder: userAccount.permissions.delete ?? false,
+        };
+    }
+}
+
 async function jwtauthenticator(
     req: express.Request,
     res: express.Response,
@@ -46,27 +68,7 @@ async function jwtauthenticator(
 
             const userAccount = (await settings).accounts[user];
 
-            let permissions: IPermissions;
-            // if admin, set all permissions to true
-            if (user === "admin") {
-                permissions = {
-                    canCreateFolder: true,
-                    canUpload: true,
-                    canDownload: true,
-                    canNavigate: true,
-                    canDeleteFile: true,
-                    canDeleteFolder: true,
-                };
-            } else {
-                permissions = {
-                    canCreateFolder: userAccount.permissions.createFolder ?? false,
-                    canUpload: userAccount.permissions.upload ?? false,
-                    canDownload: userAccount.permissions.download ?? false,
-                    canNavigate: userAccount.permissions.navigate ?? false,
-                    canDeleteFile: userAccount.permissions.delete ?? false,
-                    canDeleteFolder: userAccount.permissions.delete ?? false,
-                };
-            }
+            const permissions: IPermissions = setPermissions(user === "admin", userAccount);
             // set permissions to res.locals
             res.locals.permissions = permissions;
             res.locals.accountName = user;
