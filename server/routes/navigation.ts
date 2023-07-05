@@ -3,7 +3,7 @@ const router = express.Router();
 import path from "path";
 import { access } from "fs/promises";
 
-import { getFiles, getFolders } from "@functions/filesfolders";
+import { getFiles, getFolders, removeItemsFromList } from "@functions/filesfolders";
 import authenticator from "../middleware/authenticator";
 
 import _settings from "@functions/settings";
@@ -89,9 +89,9 @@ router.get(":pathname(/*)?", authenticator, async (req, res) => {
     const account = res.locals?.account;
     console.log(accountName);
 
-    if (!account.permissions.navigate) {
-        return res.status(403).json({ error: "Not enough permissions" });
-    }
+    // if (!account.permissions.navigate) {
+    //     return res.status(403).json({ error: "Not enough permissions" });
+    // }
 
     const uploadFolder = (await settings).uploadfolder;
     const pathname = path.join(uploadFolder, req.params.pathname ?? "");
@@ -107,54 +107,130 @@ router.get(":pathname(/*)?", authenticator, async (req, res) => {
     }
 
     if (accountName === "admin") {
-        console.log("admin");
         // admin can access everything
         const files = await getFiles(pathname);
         const folders = await getFolders(pathname);
         return res.json({ files, folders });
-    } else {
-        // return filesBasedOnAccount(pathname, account, res);
-        // ====================================================================================================
-        const hiddenItems =
-            account?.hide?.map((item: string) => {
-                return path.join(uploadFolder, path.normalize(item));
-            }) ?? [];
-        // const showItems =
-        //     account?.show.map((item: string) => {
-        //         return path.join(uploadFolder, path.normalize(item));
-        //     }) ?? [];
-        // TODO: only show showItems, if we're in the root folder... else show everything
-
-        // check if the path is hidden
-        // console.log(pathname, hiddenItems);
-        // isHidden -> true if current path is hidden
-        const isHidden = hiddenItems.some((item: string) => isSubDirectory(item, pathname));
-        if (isHidden) return res.status(403).json({ error: "Not enough permissions" });
-        // get list of hidden folders
-        const hiddenFolders = hiddenItems.filter((item: string) => {
-            return isSubDirectory(pathname, item);
-        });
-        const folders = (await getFolders(pathname))?.reduce((acc: Dirent[], folder: Dirent) => {
-            const folderPath = path.join(pathname, folder.name);
-            if (!hiddenFolders.some((item: string) => isSubDirectory(item, folderPath))) {
-                acc.push(folder);
-            }
-            return acc;
-        }, []);
-        // get list of hidden files
-        const hiddenFiles = hiddenItems.filter((item: string) => {
-            return isSubDirectory(pathname, item);
-        });
-        const files = (await getFiles(pathname))?.reduce((acc: Files, file: File) => {
-            const filePath = path.join(pathname, file.name);
-            if (!hiddenFiles.some((item: string) => isSubDirectory(item, filePath))) {
-                acc.push(file);
-            }
-            return acc;
-        }, []);
-        return res.json({ files, folders });
-        // ====================================================================================================
     }
+
+    // ############## NOT ADMIN AT THIS POINT ##############
+
+    // check if settings has show or hide
+    const show = account?.show;
+    const hide = account?.hide;
+
+    // if show is provided
+    //      check if in root folder
+    //          if yes, show only folder with the show item name
+    //          if no, check if path begins with uploadFolder + show item name
+    //      if in show subfolder, show everything
+    //      else show nothing
+    if (show) {
+        // check if in root folder
+        if (path.relative(pathname, uploadFolder) === "") {
+            console.log("in root folder");
+            // if yes, show only folder with the show item name
+            const foldersToShow = (await getFolders(pathname))?.filter((folder: Dirent) => {
+                return show.some((item: string) => {
+                    return folder.name.startsWith(item);
+                });
+            });
+            // console.log(foldersToShow);
+            // const foldersToShow = intersectionShowFolder(
+            //     (await getFolders(pathname)) || [],
+            //     show,
+            //     "name",
+            //     uploadFolder
+            // );
+            return res.json({ folders: foldersToShow, files: [] });
+        } else {
+            console.log("not in root folder");
+            // if no, check if path begins with uploadFolder + show item name
+            const isInSubFolder = show.some((item: string) => {
+                return pathname.startsWith(path.join(uploadFolder, item));
+            });
+            if (isInSubFolder) {
+                // if in show subfolder, show everything
+                const files = await getFiles(pathname);
+                const folders = await getFolders(pathname);
+                return res.json({ files, folders });
+            } else {
+                // else show nothing
+                return res.json({ files: [], folders: [] });
+            }
+        }
+    }
+
+    // if hide is provided
+    //      hide everything that matches the path of hide item name
+
+    if (hide) {
+        const files = await getFiles(pathname);
+        const folders = await getFolders(pathname);
+
+        const absoluteHide = hide.map((item: string) => {
+            return path.resolve(path.join(uploadFolder, item));
+        });
+
+        const filteredFolders = await removeItemsFromList(
+            folders || [],
+            absoluteHide,
+            "name",
+            pathname
+        );
+
+        const filteredFiles = await removeItemsFromList(
+            files || [],
+            absoluteHide,
+            "name",
+            pathname
+        );
+        return res.json({ files: filteredFiles, folders: filteredFolders });
+    }
+
+    return;
+
+    // return filesBasedOnAccount(pathname, account, res);
+    // ====================================================================================================
+    const hiddenItems =
+        account?.hide?.map((item: string) => {
+            return path.join(uploadFolder, path.normalize(item));
+        }) ?? [];
+    // const showItems =
+    //     account?.show.map((item: string) => {
+    //         return path.join(uploadFolder, path.normalize(item));
+    //     }) ?? [];
+    // TODO: only show showItems, if we're in the root folder... else show everything
+
+    // check if the path is hidden
+    // console.log(pathname, hiddenItems);
+    // isHidden -> true if current path is hidden
+    const isHidden = hiddenItems.some((item: string) => isSubDirectory(item, pathname));
+    if (isHidden) return res.status(403).json({ error: "Not enough permissions" });
+    // get list of hidden folders
+    const hiddenFolders = hiddenItems.filter((item: string) => {
+        return isSubDirectory(pathname, item);
+    });
+    const folders = (await getFolders(pathname))?.reduce((acc: Dirent[], folder: Dirent) => {
+        const folderPath = path.join(pathname, folder.name);
+        if (!hiddenFolders.some((item: string) => isSubDirectory(item, folderPath))) {
+            acc.push(folder);
+        }
+        return acc;
+    }, []);
+    // get list of hidden files
+    const hiddenFiles = hiddenItems.filter((item: string) => {
+        return isSubDirectory(pathname, item);
+    });
+    const files = (await getFiles(pathname))?.reduce((acc: Files, file: File) => {
+        const filePath = path.join(pathname, file.name);
+        if (!hiddenFiles.some((item: string) => isSubDirectory(item, filePath))) {
+            acc.push(file);
+        }
+        return acc;
+    }, []);
+    return res.json({ files, folders });
+    // ====================================================================================================
 
     // ####################################################################################################
     // previously commented out
@@ -183,5 +259,23 @@ router.get(":pathname(/*)?", authenticator, async (req, res) => {
 
     // res.json({ files, folders });
 });
+
+function intersectionShowFolder<T>(
+    folders: T[],
+    searchList: string[],
+    attr: string,
+    uploadFolder: string
+): T[] {
+    const setA = new Set(folders);
+    const setB = new Set(searchList.map((item: string) => path.resolve(uploadFolder, item)));
+    console.log(setB);
+    const intersection = new Set(
+        [...setA].filter((_item: T) => {
+            const item = path.resolve(path.join(uploadFolder, (_item as any)[attr]));
+            return setB.has(item);
+        })
+    );
+    return [...intersection];
+}
 
 export { router };

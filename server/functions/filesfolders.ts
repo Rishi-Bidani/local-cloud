@@ -53,4 +53,24 @@ async function getFolders(pathname: string) {
 
 type FileOrFolder = Dirent[] | Files | null;
 
-export { getFiles, getFolders };
+async function removeItemsFromList<FileFolder>(
+    primaryList: FileFolder[],
+    removeList: string[],
+    attr: string,
+    pathname: string
+): Promise<FileFolder[]> {
+    const filteredList = primaryList.filter((_item: FileFolder) => {
+        const item: string = path.resolve(
+            pathname,
+            (attr.length === 0 ? _item : _item[attr as keyof FileFolder]) as string
+        );
+
+        return !removeList.some((removeItem) => {
+            if (attr.length === 0) return item.startsWith(removeItem);
+            return item.startsWith(removeItem);
+        });
+    });
+    return filteredList;
+}
+
+export { getFiles, getFolders, removeItemsFromList };
