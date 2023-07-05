@@ -2,6 +2,7 @@
     <section class="pc">
         <header>
             <h1>Local Cloud</h1>
+            <Username />
         </header>
         <button class="button create-folder" @click="createFolderModal">create folder</button>
         <a href="/pictures" class="sidebar-item">pictures</a>
@@ -24,6 +25,7 @@
 import { inject } from "vue";
 import FileInformation from "./pc/FileInformation.vue";
 import SidebarFooter from "./pc/SidebarFooter.vue";
+import Username from "./pc/Username.vue";
 
 // modals
 import Login from "../modals/Login.vue";
@@ -116,7 +118,6 @@ section.mobile {
 }
 
 header {
-    padding-block: 1rem;
     font-weight: 900;
 }
 

@@ -23,6 +23,17 @@ class Authorisation {
     static async get() {
         return localStorage.getItem("token");
     }
+
+    static async whoami() {
+        const response = await fetch(`/auth/whoami`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${await Authorisation.get()}`,
+            },
+        });
+        return response;
+    }
 }
 
 export default Authorisation;

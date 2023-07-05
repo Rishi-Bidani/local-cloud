@@ -62,7 +62,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import { defineProps, onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 const viewportWidth = ref(window.innerWidth);
 const isSidebarVisible = ref(viewportWidth.value > 768);
