@@ -1,7 +1,7 @@
 :root {
     --bg-color: hsl(235, 9%, 23%);
     --secondary-color: hsl(233, 15%, 12%);
-    --hover-color: #181c24;
+    --hover-color: hsl(220, 20%, 9%);
     --title-color: #eeeeee;
     --text-color: #8caab7;
     --accent-color: hsl(213, 64%, 47%);

@@ -12,27 +12,20 @@
         <FileInformation :file-information="fileInformation" :current-path="currentPath" />
         <SidebarFooter @click-login="loginModal" />
     </section>
-    <section class="mobile">
-        <div class="mobile-item">settings</div>
-        <!-- <div class="mobile-item">login</div> -->
-        <div v-if="!isLoggedIn" class="mobile-item login flex" @click="loginModal">login</div>
-        <div v-else class="mobile-item logout flex" @click="logout()">logout</div>
-    </section>
+    <BottomBar />
+
     <Login />
     <CreateFolder />
 </template>
 <script setup lang="ts">
-import { inject } from "vue";
 import FileInformation from "./pc/FileInformation.vue";
 import SidebarFooter from "./pc/SidebarFooter.vue";
 import Username from "./pc/Username.vue";
+import BottomBar from "./mobile/BottomBar.vue";
 
 // modals
 import Login from "../modals/Login.vue";
 import CreateFolder from "../modals/CreateFolder.vue";
-
-const isLoggedIn = inject("isLoggedIn");
-const logout: any = inject("logout");
 
 function loginModal() {
     const loginModal = document.querySelector("dialog[data-modal='login']") as HTMLDialogElement;
@@ -54,38 +47,11 @@ const currentPath = window.location.pathname;
 </script>
 <style scoped>
 section.pc,
-section.mobile {
-    background-color: var(--secondary-color);
-}
 section.pc {
+    background-color: var(--secondary-color);
     display: none;
     overflow: hidden;
     overflow-y: auto;
-}
-
-section.mobile {
-    --height: 50px;
-    width: 100%;
-    height: var(--height);
-    position: absolute;
-    bottom: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    place-items: center;
-    z-index: 1;
-}
-.mobile-item {
-    border-left: 1px solid var(--accent-color);
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.mobile-item:first-child {
-    border-left: none;
 }
 
 .create-folder {
@@ -104,10 +70,6 @@ section.mobile {
 }
 
 @media screen and (min-width: 768px) {
-    section.mobile {
-        display: none;
-    }
-
     section.pc {
         width: 300px;
         height: 100%;
