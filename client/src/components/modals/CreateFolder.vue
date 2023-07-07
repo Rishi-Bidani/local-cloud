@@ -42,11 +42,7 @@ async function createFolder(event: Event) {
         window.location.reload();
     } else {
         // write message to error
-        const error = document.querySelector(".error") as HTMLParagraphElement;
-        // get error message from response
         errorMessage.value = await response.text();
-        // console.log(error);
-        // error.textContent = message || "Something went wrong";
     }
 }
 </script>
