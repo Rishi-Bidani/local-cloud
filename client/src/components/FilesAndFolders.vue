@@ -5,6 +5,7 @@
                 v-for="folder in folders"
                 :key="folder.name"
                 @click="(e) => navigateTo(e, folder.name)"
+                @contextmenu.prevent="contextmenu"
             >
                 <img src="~@/assets/icons/folder.svg" alt="folder" />
                 <figcaption>{{ folder.name }}</figcaption>
@@ -60,9 +61,31 @@
             </figure>
         </article>
     </div>
+    <ContextMenu class="hidden" v-click-outside="closeContextMenu" v-esc="closeContextMenu">
+        <template #menuitem>
+            <div class="item">zip</div>
+            <div class="item">delete</div>
+        </template>
+    </ContextMenu>
 </template>
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
+import ContextMenu from "./ContextMenu.vue";
+
+function contextmenu(event: MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const contextMenu = document.querySelector(".context-menu") as HTMLElement;
+    contextMenu.classList.remove("hidden");
+    contextMenu.style.top = `${event.clientY}px`;
+    contextMenu.style.left = `${event.clientX}px`;
+}
+
+function closeContextMenu() {
+    const contextMenu = document.querySelector(".context-menu") as HTMLElement;
+    contextMenu.classList.add("hidden");
+}
 
 const viewportWidth = ref(window.innerWidth);
 const isSidebarVisible = ref(viewportWidth.value > 768);
@@ -168,6 +191,17 @@ function deselectActiveFile() {
 }
 </script>
 <style scoped>
+.item {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    color: var(--contextmenu-text-color);
+}
+
+.item:hover {
+    background-color: var(--contextmenu-hover-color);
+}
+
 .container {
     display: flex;
     flex-flow: column;

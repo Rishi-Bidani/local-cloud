@@ -10,7 +10,12 @@
     --accent-color-2: hsl(355, 68%, 57%);
     --accent-color-2-hover: hsl(355, 100%, 67%);
     /* --accent-color-2-hover: hsl(0, 100%, 55%); */
-    --white: #f3f3f3;
+    --white: hsl(0, 0%, 95%);
+
+    /* Context menu colours */
+    --contextmenu-text-color: hsl(0, 0%, 20%);
+    --contextmenu-bg-color: hsl(0, 0%, 95%);
+    --contextmenu-hover-color: hsl(0, 0%, 85%);
 }
 
 * {
