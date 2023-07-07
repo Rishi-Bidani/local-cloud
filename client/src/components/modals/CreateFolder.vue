@@ -5,13 +5,16 @@
                 <label for="folder-name">Folder Name</label>
                 <input type="text" name="folder-name" id="folder-name" />
             </div>
-            <p class="error"></p>
+            <p class="error">{{ errorMessage }}</p>
             <button type="submit">Create</button>
         </section>
     </BaseModal>
 </template>
 <script setup lang="ts">
 import BaseModal from "./BaseModal.vue";
+import { Ref, ref } from "vue";
+
+const errorMessage: Ref<string> = ref("");
 
 async function createFolder(event: Event) {
     event.preventDefault();
@@ -35,13 +38,15 @@ async function createFolder(event: Event) {
     // check status
     if (response.status === 200) {
         // reload page
+        errorMessage.value = "";
         window.location.reload();
     } else {
         // write message to error
         const error = document.querySelector(".error") as HTMLParagraphElement;
         // get error message from response
-        const message = await response.text();
-        error.textContent = message || "Something went wrong";
+        errorMessage.value = await response.text();
+        // console.log(error);
+        // error.textContent = message || "Something went wrong";
     }
 }
 </script>
