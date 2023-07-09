@@ -39,4 +39,24 @@ router.post("/login", async (req: express.Request, res: express.Response) => {
     }
 });
 
+router.get("/whoami", async (req: express.Request, res: express.Response) => {
+    try {
+        const authHeader = req.headers["authorization"];
+        const token = authHeader && authHeader.split(" ")[1];
+        // if there is no token, return 401
+        if (token == null) return res.sendStatus(401);
+
+        // verify the token
+        const secretKey = (await settings).secretkey;
+        jwt.verify(token, secretKey, async (err: any, user: any) => {
+            if (err) {
+                return res.status(403).send("logged out");
+            }
+            return res.status(200).send(user);
+        });
+    } catch (error) {
+        return res.status(500).send("Internal server error");
+    }
+});
+
 export { router as authenticationRouter };
