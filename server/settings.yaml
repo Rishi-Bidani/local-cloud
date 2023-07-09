@@ -30,9 +30,15 @@ accounts:
             upload: true
             download: true
             delete: false
+            # ===========================================================================
+            # navigate: needs to be explicitly set to false to hide all files and folders
+            # CAUTION:
+            #       this will only hide items for navigation -
+            #       knowing the full path of an item will still allow access to it
+            # ===========================================================================
             navigate: true
         show:
-            # overrides hide
+            # overrides hide and only shows the provided folder in the root directory
             - onlythis
 
     account2:
