@@ -1,6 +1,6 @@
 <template>
     <section class="mobile">
-        <div class="mobile-item">more</div>
+        <div class="mobile-item" @click="moreInformation">more</div>
         <!-- <div class="mobile-item">login</div> -->
         <div class="mobile-item create-folder" @click="createFolderModal">+</div>
         <div v-if="!isLoggedIn" class="mobile-item login flex" @click="loginModal">login</div>
@@ -25,6 +25,13 @@ function createFolderModal() {
     ) as HTMLDialogElement;
     createFolderModal.showModal();
 }
+
+function moreInformation() {
+    const moreInformationModal = document.querySelector(
+        "dialog[data-modal='more-information']"
+    ) as HTMLDialogElement;
+    moreInformationModal.showModal();
+}
 </script>
 <style scoped>
 .create-folder {
@@ -40,7 +47,7 @@ section.mobile {
     /* background-color: var(--secondary-color); */
     width: 100%;
     height: var(--height);
-    position: absolute;
+    position: fixed;
     bottom: 0;
     display: grid;
     grid-template-columns: 1fr var(--height) 1fr;

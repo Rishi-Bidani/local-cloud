@@ -39,6 +39,15 @@ onMounted(() => {
         .on("complete", (file: any) => {
             console.log("Dropzone complete");
             _dropzone.removeFile(file);
+        })
+        .on("success", (file: any, response: any) => {
+            console.log("Dropzone success");
+            console.log("Response: ", response);
+        })
+        .on("error", (file: any, errorMessage: any) => {
+            console.log("Dropzone error");
+            console.log("Error: ", errorMessage);
+            alert(errorMessage);
         });
 });
 </script>

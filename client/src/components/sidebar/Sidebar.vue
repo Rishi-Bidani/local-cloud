@@ -16,6 +16,7 @@
 
     <Login />
     <CreateFolder />
+    <MoreInformation />
 </template>
 <script setup lang="ts">
 import FileInformation from "./pc/FileInformation.vue";
@@ -26,6 +27,7 @@ import BottomBar from "./mobile/BottomBar.vue";
 // modals
 import Login from "../modals/Login.vue";
 import CreateFolder from "../modals/CreateFolder.vue";
+import MoreInformation from "../modals/MoreInformation.vue";
 
 function loginModal() {
     const loginModal = document.querySelector("dialog[data-modal='login']") as HTMLDialogElement;
