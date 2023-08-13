@@ -12,7 +12,7 @@ accounts:
         password: helloworld
         permissions:
             createFolder: true
-            upload: true
+            upload: false
             download: true
             delete: false
             navigate: true
