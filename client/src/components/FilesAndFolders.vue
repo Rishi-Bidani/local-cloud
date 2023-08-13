@@ -64,7 +64,7 @@
     <ContextMenu class="hidden" v-click-outside="Context.close" v-esc="Context.close">
         <template #menuitem>
             <div class="item" @click="Context.exexuteOption('zip')">zip</div>
-            <div class="item">delete</div>
+            <div class="item" @click="Context.exexuteOption('delete')">delete</div>
         </template>
     </ContextMenu>
 </template>

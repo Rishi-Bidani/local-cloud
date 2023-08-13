@@ -27,9 +27,44 @@ class ZipOption extends ContextOption {
     }
 }
 
+class DeleteOption extends ContextOption {
+    constructor() {
+        super("delete");
+    }
+
+    async execute() {
+        if (Context.filename === null) {
+            alert("No file selected");
+            return;
+        }
+
+        console.log("delete");
+        let fullpath = window.location.pathname.replace(/^\/|\/$/g, "") + "/" + Context.filename;
+        console.log(fullpath);
+        if (confirm(`[DANGER] Are you sure you want to delete ${Context.filename}?`)) {
+            const response = await fetch(`/delete/folder`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ pathname: fullpath }),
+            });
+            const data = await response.text();
+            console.log(data);
+            // if deleted successfully, reload page
+            if (response.status === 200) {
+                window.location.reload();
+            }
+        } else {
+            console.log("delete cancelled");
+        }
+    }
+}
+
 class Context {
     static filename: string | null = null;
-    static options: Array<ContextOption> = [new ZipOption()];
+    static options: Array<ContextOption> = [new ZipOption(), new DeleteOption()];
 
     static open(event: MouseEvent, _filename: string) {
         event.preventDefault();
