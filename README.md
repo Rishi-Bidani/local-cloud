@@ -1,7 +1,5 @@
 # local-cloud
 
-Looking for contributors. Please check the future plans if you wish to contribute and make a pull request.
-
 This program can turn your desktop into a local cloud server. This is a website which will run locally over your wifi(
 without port forwarding) and will be accessible to all your devices.
 
@@ -9,41 +7,23 @@ You can now access and transfer files from your different devices with ease. The
 implemented using vuejs. Version 1 was a pilot project and is not recommended for use(it is not supported by me any
 longer).
 
-## Version 2.4 is Here
+## Version 3
 
-### What's new
+- Converted to typescript
+- New fresh UI, see images below
+- Configuration file for authentication - don't expose all your files to everyone
 
-- Log the contents on the server console (The logging is colour coded)
+## Donation
 
-    - Red = Error/Delete
-    - Green = Access Files/ Download
-    - Blue = Upload/ Create new folder
+Support me to keep making this project better :heart:
 
-- Fixed bug - earlier if you uploaded a file that exists in root, into some subfolder, the root file would get deleted.
-- Several minor bugs fixed.
-- File Upload size increased to 60,000 MB from 256MB
-- Executables have been made available (since version 2.3)
-
-## Version 2.3 is Here
-
-### What's new
-
-- Delete Files
-- Download from releases, the app is finally PACKAGED as an executable!! You don't need to download nodejs or anything
-  else anymore
-- delete folder (in context menu- right click)
-- download entire folder (in context menu- right click)
-- Upload folder has shifted to home directory
-    - For windows => Users > username > HomeCloud
-- You don't need to look for your ipv4 address anymore, it displays it for you
-  <br />
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/rishibidani?country.x=AU&locale.x=en_AU)
 
 ## Table Of Contents
 
 - [Images](#images):file_folder:
 - [Setup Requirements](#setup) :rocket:
 - [Access the Website](#access):key:
-- [Docker Setup](#docker):whale:
 - [Libraries Used](#dependencies):computer:
 - [Future Plans](#plans):bulb:
 
@@ -61,12 +41,6 @@ an issue for requesting icons or suggesting any colour improvements.
 
 ![image](https://user-images.githubusercontent.com/64310471/235915232-ebe37f29-31df-44ed-bc95-aa41a7f40626.png)
 
-
-
-### Version 2
-![image](https://user-images.githubusercontent.com/64310471/118494261-996fdd80-b73f-11eb-8013-80794fad875d.png)
-
-![image](https://user-images.githubusercontent.com/64310471/120432554-b7704b80-c397-11eb-9f53-7ca4c9a59f23.png)
 
 <br />
 <a id="setup"></a>
@@ -131,27 +105,6 @@ If your wish to set it up for development follow these steps, else check the rel
 
 <br />
 
-<a id="docker"></a>
-
-## Running inside of Docker :whale:
-
-To run local-cloud inside of Docker, run the following command in the root directory
-
-```bash
-docker build -t local-cloud .
-docker run -d -p 5000:5000 -v "uploads:/usr/src/app/uploads" local-cloud
-```
-
-### Docker Compose
-
-If you want to use Docker Compose, run the following command
-
-```bash
-docker-compose up -d
-```
-
-<br />
-
 <a id="dependencies"></a>
 
 ## Libraries used - Links to some main ones npm/official website :computer:
@@ -183,12 +136,10 @@ docker-compose up -d
 - [x] Implement some security features - Restricted access to other files on the system by blocking requests outside the
   home directory - This has been done for navigation(getting directory content), for downloading files and folders and
   for deleting files or folders
-  - [ ] File Chunking/Streaming for smoother downloads of larger files *currently working on this*
-- [ ] Improve UI
-- [ ] Password protect files (for downloading on other devices)
+- [x] Password protect files (for downloading on other devices)
 - [ ] Non downloadable files
 - [ ] Move files into different directories
-- [ ] Updated docker support -> *Currently not working*
+- [ ] Updated docker support -> *not working on this, and not in the forseeable roadmap*
 
 ## Development oriented plans :bulb:
 
@@ -208,13 +159,9 @@ docker-compose up -d
 ## Icon Credits
 
 - <div>Icons made by <a href="https://www.flaticon.com/authors/xnimrodx" title="xnimrodx">xnimrodx</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-
 - <div>Icons made by <a href="https://www.flaticon.com/authors/dinosoftlabs" title="DinosoftLabs">DinosoftLabs</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-
 - <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-
 - <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-
 - <div>Icons made by <a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
 ## Favicon
