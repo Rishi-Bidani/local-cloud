@@ -9,6 +9,9 @@ longer).
 
 ## Version 3
 
+Currently the server is written in typescript which will work well for development environments with a bit of setup, however I have made the decision to migrate the server to Go to make setup easier and the package more easily distributable.
+Please check the other development branches for updates.
+
 - Converted to typescript
 - New fresh UI, see images below
 - Configuration file for authentication - don't expose all your files to everyone
