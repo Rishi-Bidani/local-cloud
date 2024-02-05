@@ -1,0 +1,75 @@
+production: false
+
+# This is where the files will be stored
+# If not set, the default is
+# Windows:  USERPROFILE environment variable if defined. Otherwise it uses the path to the profile directory of the current user.
+# Linux:    HOME environment variable. Otherwise it uses the effective UID to look up the user's home directory.
+basefolder:
+
+# this is a master key that is used to encrypt the passwords
+# to invalidate all passwords, simply change this key
+# MAKE IT SECURE
+secretkey: th!s!s@very$ecret#ey
+
+accounts:
+    # admin account is required
+    admin:
+        password: secretadmin
+
+    guestaccounts:
+        # ===========================================================================
+        # All other accounts are optional
+        # --------------------------------
+        # format for accounts:
+        # --------------------------------
+        # accountname:
+        #     password: password
+        #     permissions:
+        #         createFolder: bool
+        #         upload: bool
+        #         download: bool
+        #         delete: bool
+        #         navigate: bool
+        #     hide:
+        #         - relative path from base folder
+        #     show:
+        #         - relative path from base folder
+        # ===========================================================================
+        guest:
+            password: helloworld
+            permissions:
+                createFolder: true
+                upload: false
+                download: true
+                delete: false
+                navigate: true
+            hide:
+                # relative path from base folder
+                - private
+                - private2
+                - new folder
+                - documents/test
+
+        guest2:
+            password: helloworld2
+            permissions:
+                createFolder: true
+                upload: true
+                download: true
+                delete: false
+                # ===========================================================================
+                # navigate: needs to be explicitly set to false to hide all files and folders
+                # CAUTION:
+                #       this will only hide items for navigation -
+                #       knowing the full path of an item will still allow access to it
+                # ===========================================================================
+                navigate: true
+            show:
+                # overrides hide and only shows the provided folder in the root directory
+                - onlythis
+
+        account2:
+            password: helloworld2
+            permissions:
+            hide:
+                - private

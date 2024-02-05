@@ -1,14 +1,19 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
 // import * as localIpV4Address from "local-ipv4-address";
 
 import auth from "./middleware/authenticator";
-
 import createStorageFolders from "@functions/createstoragefolders";
+
+// get the settings
+import _settings from "@functions/settings";
+const settings = _settings();
 
 // setup the folders - data, temp
 (async function () {
     await createStorageFolders();
+    await settings;
 })();
 
 // create require
@@ -20,6 +25,13 @@ const http = Server(app);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// if in production, serve the static files from ../client/assets
+settings.then((settings) => {
+    const isProduction = settings.production;
+    if (isProduction) {
+        app.use(express.static(path.resolve(__dirname, "..", "client")));
+    }
+});
 
 // routes =============================================================
 import { authenticationRouter } from "@routes/authentication";
@@ -41,8 +53,13 @@ import { router as DeleteRouter } from "@routes/delete";
 app.use("/delete", DeleteRouter);
 // ====================================================================
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
+app.get("/", async (req, res) => {
+    const isProduction = (await settings).production;
+    if (isProduction) {
+        res.sendFile(path.resolve(__dirname, "..", "client", "index.html"));
+    } else {
+        res.send("Hello World! This is a development server.");
+    }
 });
 
 // route purely for testing authorisation

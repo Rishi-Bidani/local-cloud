@@ -1,13 +1,39 @@
-production: false
+production: true
 
+# This is where the files will be stored
+# If not set, the default is
+# Windows:  USERPROFILE environment variable if defined. Otherwise it uses the path to the profile directory of the current user.
+# Linux:    HOME environment variable. Otherwise it uses the effective UID to look up the user's home directory.
 basefolder:
 
+# this is a master key that is used to encrypt the passwords
+# to invalidate all passwords, simply change this key
+# MAKE IT SECURE
 secretkey: th!s!s@very$ecret#ey
 
 accounts:
+    # admin account is required
     admin:
         password: secretadmin
 
+    # ===========================================================================
+    # All other accounts are optional
+    # --------------------------------
+    # format for accounts:
+    # --------------------------------
+    # accountname:
+    #     password: password
+    #     permissions:
+    #         createFolder: bool
+    #         upload: bool
+    #         download: bool
+    #         delete: bool
+    #         navigate: bool
+    #     hide:
+    #         - relative path from base folder
+    #     show:
+    #         - relative path from base folder
+    # ===========================================================================
     guest:
         password: helloworld
         permissions:
