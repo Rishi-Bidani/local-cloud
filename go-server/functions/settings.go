@@ -34,7 +34,7 @@ type Settings struct {
 	} `yaml:"accounts"`
 }
 
-func ParseSettings(filepath string) (*Settings, error) {
+func parseSettings(filepath string) (*Settings, error) {
 	settings := &Settings{}
 
 	yamlFile, err := os.ReadFile(filepath)
@@ -62,4 +62,17 @@ func ParseSettings(filepath string) (*Settings, error) {
 	settings.Basefolder = path.Join(settings.Basefolder.(string), "localcloud")
 
 	return settings, nil
+}
+
+
+func GetSettings(filepath string) Settings {
+	// Settings
+	_settings, err := parseSettings(filepath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if _settings == nil {
+		log.Fatal("Settings is nil")
+	}
+	return *_settings
 }

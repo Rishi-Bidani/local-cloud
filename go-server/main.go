@@ -9,6 +9,8 @@ import (
 	"os"
 
 	functions "github.com/Rishi-Bidani/localcloud/functions"
+	"github.com/Rishi-Bidani/localcloud/global"
+	"github.com/Rishi-Bidani/localcloud/routes"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -39,6 +41,8 @@ func prettyPrint(i interface{}) string {
 }
 
 func main() {
+	settings := functions.GetSettings(global.SETTINGS_FILE)
+
 	router := echo.New()
 	// Middleware
 	router.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
@@ -46,26 +50,15 @@ func main() {
 	}))
 	router.Use(middleware.Recover())
 
-	// Settings
-	_settings, err := functions.ParseSettings("settings.yaml")
-	if err != nil {
-		log.Fatal(err)
-	}
-	if _settings == nil {
-		log.Fatal("Settings is nil")
-	}
-	settings := *_settings
-
 	// create base folders if they don't exist
 	functions.CreateFolders(settings.Basefolder.(string))
-
-	// TODO: Remove this line
-	fmt.Println(prettyPrint(settings))
 
 	// Routes
 	router.GET("/", func(c echo.Context) error {
 		return c.String(200, "Hello, World!")
 	})
+
+	routes.SetupUploadRoutes(router)
 
 	// Start server
 	PORT := getPort("5000")
