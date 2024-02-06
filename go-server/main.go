@@ -43,6 +43,8 @@ func prettyPrint(i interface{}) string {
 func main() {
 	settings := functions.GetSettings(global.SETTINGS_FILE)
 
+	fmt.Println(functions.GetFilesAndFolders("./"))
+
 	router := echo.New()
 	// Middleware
 	router.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
@@ -58,7 +60,9 @@ func main() {
 		return c.String(200, "Hello, World!")
 	})
 
-	routes.SetupUploadRoutes(router)
+	api := router.Group("/api")
+
+	routes.SetupUploadRoutes(api)
 
 	// Start server
 	PORT := getPort("5000")

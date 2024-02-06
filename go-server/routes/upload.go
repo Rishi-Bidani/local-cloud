@@ -7,17 +7,10 @@ import (
 	"os"
 	"path"
 
-	"github.com/Rishi-Bidani/localcloud/functions"
-	"github.com/Rishi-Bidani/localcloud/global"
+	global "github.com/Rishi-Bidani/localcloud/global"
 	"github.com/labstack/echo/v4"
 )
 
-func getUploadFolder() string {
-	settings := functions.GetSettings(global.SETTINGS_FILE)
-	baseFolder := settings.Basefolder.(string)
-	uploadFolder := path.Join(baseFolder, "data")
-	return uploadFolder
-}
 
 func upload(c echo.Context) error {
 	// if empty, return error
@@ -39,7 +32,7 @@ func upload(c echo.Context) error {
 		defer src.Close()
 
 		// Destination
-		dst, err := os.Create(path.Join(getUploadFolder(), file.Filename))
+		dst, err := os.Create(path.Join(global.GetUploadFolder(), file.Filename))
 		if err != nil {
 			return c.String(http.StatusInternalServerError, fmt.Sprint("Error Uploading File"))
 		}
@@ -53,6 +46,6 @@ func upload(c echo.Context) error {
 	return c.String(http.StatusOK, fmt.Sprintf("%d files uploaded successfully", len(files)))
 }
 
-func SetupUploadRoutes(router *echo.Echo) {
+func SetupUploadRoutes(router *echo.Group) {
 	router.POST("/upload", upload)
 }
