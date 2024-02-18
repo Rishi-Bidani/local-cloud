@@ -51,6 +51,8 @@ func main() {
 		Format: "${time_rfc3339} | ${status} | ${latency_human} | ${remote_ip} | ${method} ${uri} \n",
 	}))
 	router.Use(middleware.Recover())
+	// increase body limit - for file uploads
+	router.Use(middleware.BodyLimit("10G"))
 
 	// create base folders if they don't exist
 	functions.CreateFolders(settings.Basefolder.(string))
@@ -61,8 +63,11 @@ func main() {
 	})
 
 	api := router.Group("/api")
+	upload := api.Group("/upload")
+	create := api.Group("/create")
 
-	routes.SetupUploadRoutes(api)
+	routes.SetupUploadRoutes(upload)
+	routes.SetupCreateRoutes(create)
 
 	// Start server
 	PORT := getPort("5000")

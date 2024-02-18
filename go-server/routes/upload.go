@@ -12,7 +12,7 @@ import (
 )
 
 
-func upload(c echo.Context) error {
+func RouteUpload(c echo.Context) error {
 	// if empty, return error
 	if c.Request().ContentLength == 0 {
 		return c.String(http.StatusBadRequest, "No file uploaded")
@@ -47,5 +47,5 @@ func upload(c echo.Context) error {
 }
 
 func SetupUploadRoutes(router *echo.Group) {
-	router.POST("/upload", upload)
+	router.POST("/upload", RouteUpload)
 }
